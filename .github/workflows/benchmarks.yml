@@ -1,0 +1,68 @@
+name: Cross-runtime benchmarks
+
+on:
+  workflow_dispatch:
+    inputs:
+      profile:
+        description: Benchmark tier
+        type: choice
+        options: [nightly, weekly, smoke]
+        default: nightly
+  schedule:
+    - cron: '23 3 * * *'
+    - cron: '41 4 * * 0'
+
+permissions:
+  contents: read
+
+jobs:
+  run:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, macos-15]
+    runs-on: ${{ matrix.os }}
+    env:
+      HARA_ROOT: ${{ github.workspace }}/vendor/hara
+      HARA_BENCH_ROOT: ${{ github.workspace }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: hara-lang/hara
+          path: vendor/hara
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Install comparison runtimes (Linux)
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y sbcl chezscheme guile-3.0 luajit
+      - name: Install comparison runtimes (macOS)
+        if: runner.os == 'macOS'
+        run: brew install sbcl chezscheme guile luajit
+      - name: Select profile
+        id: profile
+        shell: bash
+        run: |
+          value="${{ inputs.profile }}"
+          if [ -z "$value" ]; then
+            if [ "${{ github.event.schedule }}" = "41 4 * * 0" ]; then value=weekly; else value=nightly; fi
+          fi
+          echo "value=$value" >> "$GITHUB_OUTPUT"
+      - name: Run algorithm corpus
+        run: python -m hara_bench run --suite algorithms --profile "${{ steps.profile.outputs.value }}" --hara-root "$HARA_ROOT"
+      - name: Normalize evidence
+        if: always()
+        run: test ! -f results/local/language.json || python -m hara_bench import-language results/local/language.json results/local/normalized.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: benchmark-${{ runner.os }}-${{ runner.arch }}-${{ steps.profile.outputs.value }}
+          path: results/local/*
+          if-no-files-found: warn
+          retention-days: 90

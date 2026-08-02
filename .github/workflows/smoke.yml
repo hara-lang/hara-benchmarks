@@ -1,0 +1,32 @@
+name: Benchmark smoke
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: hara-lang/hara
+          path: vendor/hara
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m unittest discover -v
+      - name: Run portable smoke corpus
+        run: python -m hara_bench run --suite algorithms --profile smoke --runtime python-prepared --runtime c-prepared
+      - name: Normalize smoke evidence
+        run: python -m hara_bench import-language results/local/language.json results/local/normalized.json
+      - run: python -m hara_bench validate results/local/normalized.json
+      - run: python -m hara_bench validate data
+      - run: python -m hara_bench build-site
+      - name: Verify dashboard assets
+        run: test -s dist/index.html && test -s dist/data/runs.json

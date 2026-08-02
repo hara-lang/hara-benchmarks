@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://benchmarks.hara-lang.org/schema/run.schema.json",
+  "title": "Hara benchmark run",
+  "type": "object",
+  "required": ["schema_version", "run", "environment", "measurements"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "run": {
+      "type": "object",
+      "required": ["id", "profile"],
+      "properties": {
+        "id": {"type": "string"},
+        "profile": {"type": "string"},
+        "source": {"type": "string"}
+      }
+    },
+    "environment": {"type": "object"},
+    "versions": {"type": "object"},
+    "measurements": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["suite", "workload", "runtime", "status"],
+        "properties": {
+          "suite": {"type": "string"},
+          "workload": {"type": "string"},
+          "runtime": {"type": "string"},
+          "status": {"enum": ["ok", "unsupported", "error"]},
+          "reason": {"type": ["string", "null"]},
+          "cold_start_ns": {"type": ["number", "null"]},
+          "first_call_ns": {"type": ["number", "null"]},
+          "warmup_samples_ns": {"type": "array", "items": {"type": "number"}},
+          "steady_state": {
+            "type": "object",
+            "properties": {"samples_ns": {"type": "array", "items": {"type": "number"}}}
+          },
+          "peak_rss_bytes": {"type": ["number", "null"]},
+          "artifact_bytes": {"type": ["number", "null"]}
+        }
+      }
+    }
+  }
+}
+

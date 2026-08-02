@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Hara Benchmarks</title>
+  <meta name="description" content="Reproducible performance results for Hara and comparable language runtimes.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header><p class="eyebrow">HARA LANGUAGE</p><h1>Benchmark Observatory</h1>
+    <p>Absolute performance, relative performance, startup, warm-up, memory, and artifact size—published with raw evidence.</p>
+  </header>
+  <main>
+    <section class="controls" aria-label="Filters">
+      <label>Suite<select id="suite"><option value="">All suites</option></select></label>
+      <label>Workload<select id="workload"><option value="">All workloads</option></select></label>
+      <label>Platform<select id="platform"><option value="">All platforms</option></select></label>
+      <label>Metric<select id="metric"><option value="steady">Steady state</option><option value="cold">Cold start</option><option value="first">First call</option><option value="memory">Peak memory</option><option value="size">Artifact size</option></select></label>
+    </section>
+    <p id="summary" class="summary">Loading results…</p>
+    <section id="results" class="results"></section>
+    <section class="method"><h2>How to read this</h2><p>Lower is better. Relative values are normalized to the fastest successful runtime for the selected workload and platform. Unsupported features remain visible instead of silently changing semantics.</p></section>
+  </main>
+  <footer><a href="data/runs.json">Raw normalized data</a> · <a href="https://github.com/hara-lang/hara-benchmarks">Source and methodology</a></footer>
+  <script src="app.js"></script>
+</body>
+</html>
+

@@ -2,6 +2,13 @@
   "schema_version": 1,
   "runs": [
     {
+      "id": "2026-08-02T13-45-47.490839+00-00",
+      "path": "runs/macos-arm64/2026/08/02/2026-08-02-interactive-smoke-attempt-1.json",
+      "platform": "macos-arm64",
+      "profile": "smoke",
+      "source": "imported-language-runner"
+    },
+    {
       "id": "2026-08-02-seed-attempt-1",
       "path": "runs/macos-arm64/2026/08/02/2026-08-02-seed-attempt-1.json",
       "platform": "macos-arm64",

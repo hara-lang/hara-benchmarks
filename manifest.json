@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "runs": [
+    {
+      "id": "2026-08-02-seed-attempt-1",
+      "path": "runs/macos-arm64/2026/08/02/2026-08-02-seed-attempt-1.json",
+      "platform": "macos-arm64",
+      "profile": "algorithm",
+      "source": "imported-language-runner"
+    }
+  ]
+}

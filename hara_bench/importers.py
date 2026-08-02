@@ -16,9 +16,11 @@ def import_language(path: Path) -> dict[str, Any]:
             "suite": "algorithms",
             "workload": row.get("workload", "unknown"),
             "runtime": row.get("runtime", "unknown"),
+            "mode": "eval" if row.get("runtime", "").endswith("-eval") else "prepared",
             "status": status,
             "reason": row.get("reason"),
-            "cold_start_ns": source.get("startup", {}).get(row.get("runtime"), {}).get("p50_ns"),
+            "cold_total_ns": source.get("startup", {}).get(row.get("runtime"), {}).get("p50_ns"),
+            "prepare_ns": row.get("prepare_ns"),
             "first_call_ns": row.get("first_ns"),
             "warmup_samples_ns": row.get("samples_ns", [])[:5],
             "steady_state": {"samples_ns": samples},
@@ -34,6 +36,10 @@ def import_language(path: Path) -> dict[str, Any]:
         },
         "environment": source.get("environment", environment()),
         "versions": source.get("versions", {}),
+        "provenance": {
+            "benchmark_revision": source.get("environment", {}).get("benchmark_revision"),
+            "hara_revision": source.get("environment", {}).get("git_revision"),
+            "hara_dirty": source.get("environment", {}).get("git_dirty"),
+        },
         "measurements": measurements,
     }
-

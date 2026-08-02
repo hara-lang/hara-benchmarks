@@ -5,7 +5,7 @@
   "type": "object",
   "required": ["schema_version", "run", "environment", "measurements"],
   "properties": {
-    "schema_version": {"const": 1},
+    "schema_version": {"enum": [1, 2]},
     "run": {
       "type": "object",
       "required": ["id", "profile"],
@@ -26,9 +26,11 @@
           "suite": {"type": "string"},
           "workload": {"type": "string"},
           "runtime": {"type": "string"},
+          "mode": {"enum": ["prepared", "eval"]},
           "status": {"enum": ["ok", "unsupported", "error"]},
           "reason": {"type": ["string", "null"]},
-          "cold_start_ns": {"type": ["number", "null"]},
+          "cold_total_ns": {"type": ["number", "null"]},
+          "prepare_ns": {"type": ["number", "null"]},
           "first_call_ns": {"type": ["number", "null"]},
           "warmup_samples_ns": {"type": "array", "items": {"type": "number"}},
           "steady_state": {
@@ -42,4 +44,3 @@
     }
   }
 }
-

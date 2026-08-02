@@ -14,8 +14,10 @@
     (let [windows (parse-long windows-text)
           calls (parse-long calls-text)
           source (hex-decode source-hex)
+          prepare-started (System/nanoTime)
           prepared (when (= mode "prepared")
                      (eval (read-string (str "(fn [] " source ")"))))
+          prepare-ns (when prepared (- (System/nanoTime) prepare-started))
           evaluate (fn []
                      (let [value (if prepared
                                    (prepared)
@@ -31,7 +33,8 @@
                               (quot (- (System/nanoTime) window-started) calls)))
                           (range windows))]
         (println (str "{\"runtime\":\"bb\",\"workload\":\"" id
-                      "\",\"first_ns\":" first-ns
+                      "\",\"prepare_ns\":" (or prepare-ns "null")
+                      ",\"first_ns\":" first-ns
                       ",\"samples_ns\":[" (clojure.string/join "," samples) "]}"))))))
 
 (when (seq *command-line-args*)

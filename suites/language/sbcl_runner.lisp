@@ -34,8 +34,10 @@
                        1d9))))
       (let* ((source (hex-decode source-hex))
              (form (read-from-string source))
+             (prepare-started (clock-ns))
              (prepared (when (string= mode "prepared")
                          (compile nil `(lambda () ,form))))
+             (prepare-ns (when prepared (- (clock-ns) prepare-started)))
              (eval-once
                (lambda ()
                  (let ((value (if prepared (funcall prepared)
@@ -50,5 +52,5 @@
             (let ((window-started (clock-ns)))
               (dotimes (c calls) (funcall eval-once))
               (push (round (/ (- (clock-ns) window-started) calls)) samples)))
-          (format t "{\"runtime\":\"sbcl\",\"workload\":\"~a\",\"first_ns\":~a,\"samples_ns\":[~{~a~^,~}]}~%"
-                  id first-ns (nreverse samples)))))))
+          (format t "{\"runtime\":\"sbcl\",\"workload\":\"~a\",\"prepare_ns\":~a,\"first_ns\":~a,\"samples_ns\":[~{~a~^,~}]}~%"
+                  id (or prepare-ns "null") first-ns (nreverse samples)))))))

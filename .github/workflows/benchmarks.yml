@@ -39,6 +39,9 @@ jobs:
           distribution: temurin
           java-version: '21'
       - uses: dtolnay/rust-toolchain@stable
+      - uses: DeLaGuardo/setup-clojure@13.4
+        with:
+          bb: latest
       - name: Install comparison runtimes (Linux)
         if: runner.os == 'Linux'
         run: sudo apt-get update && sudo apt-get install -y sbcl chezscheme guile-3.0 luajit
@@ -59,6 +62,9 @@ jobs:
       - name: Normalize evidence
         if: always()
         run: test ! -f results/local/language.json || python -m hara_bench import-language results/local/language.json results/local/normalized.json
+      - name: Validate normalized evidence
+        if: always()
+        run: test ! -f results/local/normalized.json || python -m hara_bench validate results/local/normalized.json
       - uses: actions/upload-artifact@v4
         if: always()
         with:

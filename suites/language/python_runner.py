@@ -12,10 +12,13 @@ def main():
     sys.setrecursionlimit(100_000)
     windows, calls = int(windows_text), int(calls_text)
     prepared = None
+    prepare_ns = None
     if mode == "prepared":
+        prepare_started = time.perf_counter_ns()
         scope = {}
         exec(compile(source, workload, "exec"), scope)
         prepared = scope["benchmark"]
+        prepare_ns = time.perf_counter_ns() - prepare_started
 
     def evaluate():
         if prepared is None:
@@ -37,7 +40,8 @@ def main():
             evaluate()
         samples.append((time.perf_counter_ns() - started) // calls)
     print(json.dumps({"runtime": "python", "workload": workload,
-                      "first_ns": first_ns, "samples_ns": samples},
+                      "prepare_ns": prepare_ns, "first_ns": first_ns,
+                      "samples_ns": samples},
                      separators=(",", ":")))
 
 

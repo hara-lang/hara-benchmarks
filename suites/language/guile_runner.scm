@@ -42,14 +42,16 @@
       (string-set! out (quotient i 2)
                    (integer->char (string->number (substring s i (+ i 2)) 16))))))
 
+(define (clock-ns)
+  (round (* 1000000000 (/ (get-internal-run-time) internal-time-units-per-second))))
+
 (define source (hex-decode source-hex))
 (define form (read (open-input-string source)))
+(define prepare-started (clock-ns))
 (define prepared
   (and (string=? mode "prepared")
        (eval `(lambda () ,form) (interaction-environment))))
-
-(define (clock-ns)
-  (round (* 1000000000 (/ (get-internal-run-time) internal-time-units-per-second))))
+(define prepare-ns (and prepared (- (clock-ns) prepare-started)))
 
 (define (->string v)
   (call-with-string-output-port (lambda (p) (display v p))))
@@ -76,7 +78,8 @@
                 (cons (round (/ (- (clock-ns) window-started) calls)) acc))))))
 
 (display (string-append
-          "{\"runtime\":\"guile\",\"workload\":\"" id "\",\"first_ns\":"
+          "{\"runtime\":\"guile\",\"workload\":\"" id "\",\"prepare_ns\":"
+          (if prepare-ns (number->string (round prepare-ns)) "null") ",\"first_ns\":"
           (number->string (round first-ns)) ",\"samples_ns\":["
           (let join ((rest samples))
             (if (null? rest)

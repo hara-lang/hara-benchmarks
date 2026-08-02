@@ -70,5 +70,12 @@ work is not labelled as a persistent-map comparison). A result file is
 append-only evidence: reruns use a new run id and attempt rather than overwriting
 history.
 
-See each suite README for runtime prerequisites and methodology.
+## Dashboard views
 
+The published observatory exposes the prepared steady-state matrix, geometric-
+mean overall and category rankings, separate lifecycle phases, exact workload
+and harness source, preparation commands, runtime versions, and run provenance.
+Rankings are computed only across the common successful workload set for the
+selected run and platform; coverage and unsupported features remain visible.
+
+See each suite README for runtime prerequisites and methodology.

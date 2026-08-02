@@ -47,7 +47,9 @@ end
 local source, err = decode_hex(source_hex)
 if not source then fail(err) end
 local prepared, prepared_err
+local prepare_started = clock_ns()
 if mode == "prepared" then prepared, prepared_err = load(source, "workload") end
+local prepare_ns = mode == "prepared" and math.floor(clock_ns() - prepare_started + 0.5) or nil
 if mode == "prepared" and not prepared then fail(prepared_err) end
 
 local function eval_once()
@@ -79,5 +81,5 @@ local function json_escape(value)
 end
 
 io.write('{"runtime":"luajit","workload":"' .. json_escape(id) ..
-  '","first_ns":' .. first_ns .. ',"samples_ns":[' ..
+  '","prepare_ns":' .. (prepare_ns or 'null') .. ',"first_ns":' .. first_ns .. ',"samples_ns":[' ..
   table.concat(samples, ",") .. "]}\n")

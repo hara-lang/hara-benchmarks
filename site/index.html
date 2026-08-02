@@ -1,29 +1,16 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Hara Benchmarks</title>
-  <meta name="description" content="Reproducible performance results for Hara and comparable language runtimes.">
-  <link rel="stylesheet" href="styles.css">
-</head>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Hara Benchmark Observatory</title><meta name="description" content="Reproducible cross-runtime benchmark results, source, lifecycle costs and rankings."><link rel="stylesheet" href="styles.css"></head>
 <body>
-  <header><p class="eyebrow">HARA LANGUAGE</p><h1>Benchmark Observatory</h1>
-    <p>Absolute performance, relative performance, startup, warm-up, memory, and artifact size—published with raw evidence.</p>
-  </header>
+  <header class="hero"><div><p class="eyebrow">HARA LANGUAGE · PERFORMANCE EVIDENCE</p><h1>Benchmark<br>Observatory</h1></div><div class="hero-copy"><p>Explore the result, then inspect exactly what produced it.</p><p id="run-summary" class="muted">Loading benchmark evidence…</p></div></header>
+  <nav class="tabs" role="tablist" aria-label="Benchmark views"><button role="tab" data-view="matrix" aria-selected="true">Results matrix</button><button role="tab" data-view="rankings">Rankings</button><button role="tab" data-view="lifecycle">Preparation & lifecycle</button><button role="tab" data-view="code">Code & harness</button><button role="tab" data-view="runs">Runs & versions</button></nav>
   <main>
-    <section class="controls" aria-label="Filters">
-      <label>Suite<select id="suite"><option value="">All suites</option></select></label>
-      <label>Workload<select id="workload"><option value="">All workloads</option></select></label>
-      <label>Platform<select id="platform"><option value="">All platforms</option></select></label>
-      <label>Metric<select id="metric"><option value="steady">Steady state</option><option value="cold">Cold start</option><option value="first">First call</option><option value="memory">Peak memory</option><option value="size">Artifact size</option></select></label>
-    </section>
-    <p id="summary" class="summary">Loading results…</p>
-    <section id="results" class="results"></section>
-    <section class="method"><h2>How to read this</h2><p>Lower is better. Relative values are normalized to the fastest successful runtime for the selected workload and platform. Unsupported features remain visible instead of silently changing semantics.</p></section>
+    <section class="toolbar" aria-label="Result filters"><label>Run<select id="run"></select></label><label>Platform<select id="platform"></select></label><label>Units<select id="units"><option value="auto">Automatic</option><option value="ms">Milliseconds</option><option value="us">Microseconds</option><option value="ns">Nanoseconds</option></select></label><label>Display<select id="display"><option value="absolute">Absolute</option><option value="relative">Relative to fastest</option></select></label></section>
+    <section id="matrix" class="view active" role="tabpanel"><div class="section-head"><div><p class="eyebrow">THE IMPORTANT NUMBERS</p><h2>Prepared steady-state matrix</h2></div><p>Rows are equivalent workloads. Columns are runtimes. Lower is better.</p></div><div id="matrix-content" class="table-scroll"></div></section>
+    <section id="rankings" class="view" role="tabpanel"><div class="section-head"><div><p class="eyebrow">COMMON WORKLOAD SET</p><h2>Runtime rankings</h2></div><p>Geometric-mean slowdown against the fastest runtime per workload, with coverage kept visible.</p></div><div id="category-tabs" class="pills"></div><div id="ranking-content"></div></section>
+    <section id="lifecycle" class="view" role="tabpanel"><div class="section-head"><div><p class="eyebrow">WHERE TIME GOES</p><h2>Preparation and execution</h2></div><p>Lifecycle phases are separate. Cold totals are not presented as pure runtime startup.</p></div><div class="toolbar compact"><label>Workload<select id="lifecycle-workload"></select></label><label>Phase<select id="phase"><option value="prepare_ns">Preparation</option><option value="cold_total_ns">Cold total</option><option value="first_call_ns">First call</option><option value="warmup">Warm-up</option><option value="steady">Steady state</option><option value="peak_rss_bytes">Peak memory</option><option value="artifact_bytes">Artifact size</option></select></label></div><div id="lifecycle-content"></div></section>
+    <section id="code" class="view" role="tabpanel"><div class="section-head"><div><p class="eyebrow">NO HIDDEN IMPLEMENTATION</p><h2>Exact tested code</h2></div><p>Workload source, preparation, runner harness and correctness checksum.</p></div><div class="toolbar compact"><label>Workload<select id="code-workload"></select></label></div><div id="language-tabs" class="pills"></div><div id="code-content"></div></section>
+    <section id="runs" class="view" role="tabpanel"><div class="section-head"><div><p class="eyebrow">PROVENANCE</p><h2>Runs, versions and machine</h2></div><p>Results only mean something when their environment is visible.</p></div><div id="runs-content"></div></section>
   </main>
-  <footer><a href="data/runs.json">Raw normalized data</a> · <a href="https://github.com/hara-lang/hara-benchmarks">Source and methodology</a></footer>
-  <script src="app.js"></script>
-</body>
-</html>
-
+  <footer><a href="data/runs.json">Normalized results</a><a href="data/catalog.json">Source catalog</a><a href="https://github.com/hara-lang/hara-benchmarks">Repository & methodology</a></footer><script src="app.js"></script>
+</body></html>

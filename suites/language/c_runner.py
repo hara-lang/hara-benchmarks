@@ -2,6 +2,7 @@
 import subprocess
 import sys
 import tempfile
+import time
 from pathlib import Path
 
 
@@ -21,11 +22,12 @@ int main(int argc, char **argv) {{
   const char *id = argv[1];
   int64_t expected = strtoll(argv[2], NULL, 10);
   int windows = atoi(argv[3]), calls = atoi(argv[4]);
+  uint64_t prepare_ns = strtoull(argv[5], NULL, 10);
   uint64_t started = now_ns();
   int64_t value = benchmark();
   uint64_t first = now_ns() - started;
   if (value != expected) {{ fprintf(stderr, "%s: expected %" PRId64 ", got %" PRId64 "\n", id, expected, value); return 1; }}
-  printf("{{\"runtime\":\"c\",\"workload\":\"%s\",\"first_ns\":%" PRIu64 ",\"samples_ns\":[", id, first);
+  printf("{{\"runtime\":\"c\",\"workload\":\"%s\",\"prepare_ns\":%" PRIu64 ",\"first_ns\":%" PRIu64 ",\"samples_ns\":[", id, prepare_ns, first);
   for (int window = 0; window < windows; window++) {{
     started = now_ns();
     for (int call = 0; call < calls; call++) value = benchmark();
@@ -47,9 +49,11 @@ def main():
     with tempfile.TemporaryDirectory(prefix="hara-c-bench-") as directory:
         root = Path(directory)
         source_path, binary = root / "benchmark.c", root / "benchmark"
+        prepare_started = time.perf_counter_ns()
         source_path.write_text(TEMPLATE.format(source=source))
         subprocess.run(["cc", "-O3", "-std=c11", str(source_path), "-o", str(binary)], check=True)
-        completed = subprocess.run([str(binary), workload, expected, windows, calls])
+        prepare_ns = time.perf_counter_ns() - prepare_started
+        completed = subprocess.run([str(binary), workload, expected, windows, calls, str(prepare_ns)])
         raise SystemExit(completed.returncode)
 
 

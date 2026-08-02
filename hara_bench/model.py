@@ -9,7 +9,7 @@ from pathlib import Path
 from typing import Any
 
 
-SCHEMA_VERSION = 1
+SCHEMA_VERSION = 2
 
 
 def percentile(values: list[int | float], fraction: float) -> float | None:
@@ -48,8 +48,8 @@ def validate_run(data: dict[str, Any]) -> list[str]:
     for key in ("schema_version", "run", "environment", "measurements"):
         if key not in data:
             errors.append(f"missing top-level field: {key}")
-    if data.get("schema_version") != SCHEMA_VERSION:
-        errors.append(f"schema_version must be {SCHEMA_VERSION}")
+    if data.get("schema_version") not in (1, SCHEMA_VERSION):
+        errors.append(f"schema_version must be 1 or {SCHEMA_VERSION}")
     measurements = data.get("measurements", [])
     if not isinstance(measurements, list):
         errors.append("measurements must be an array")
@@ -66,6 +66,42 @@ def validate_run(data: dict[str, Any]) -> list[str]:
     return errors
 
 
+def median_ns(row: dict[str, Any]) -> float | None:
+    if row.get("status") != "ok":
+        return None
+    return summarize(row.get("steady_state", {}).get("samples_ns", []))["p50"]
+
+
+def geometric_mean(values: list[float]) -> float | None:
+    positive = [value for value in values if value > 0]
+    if not positive or len(positive) != len(values):
+        return None
+    return math.exp(sum(math.log(value) for value in positive) / len(positive))
+
+
+def rank_runtimes(measurements: list[dict[str, Any]], workloads: set[str] | None = None) -> list[dict[str, Any]]:
+    """Rank prepared runtimes on their common successful workload set."""
+    prepared = [row for row in measurements if row.get("mode", "prepared") == "prepared"]
+    runtimes = sorted({row["runtime"] for row in prepared})
+    available = workloads or {row["workload"] for row in prepared}
+    index = {(row["runtime"], row["workload"]): row for row in prepared}
+    common = sorted(workload for workload in available if all(
+        median_ns(index.get((runtime, workload), {})) is not None for runtime in runtimes))
+    fastest = {workload: min(median_ns(index[(runtime, workload)]) for runtime in runtimes)
+               for workload in common}
+    ranked = []
+    for runtime in runtimes:
+        ratios = [median_ns(index[(runtime, workload)]) / fastest[workload] for workload in common]
+        supported = sum(median_ns(index.get((runtime, workload), {})) is not None for workload in available)
+        wins = sum(abs(ratio - 1.0) < 1e-12 for ratio in ratios)
+        ranked.append({"runtime": runtime, "score": geometric_mean(ratios), "wins": wins,
+                       "supported": supported, "total": len(available), "common": common})
+    ranked.sort(key=lambda row: (row["score"] is None, row["score"] or math.inf, -row["supported"]))
+    for position, row in enumerate(ranked, 1):
+        row["rank"] = position
+    return ranked
+
+
 def read_json(path: Path) -> dict[str, Any]:
     with path.open(encoding="utf-8") as handle:
         return json.load(handle)
@@ -74,4 +110,3 @@ def read_json(path: Path) -> dict[str, Any]:
 def write_json(path: Path, value: Any) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(value, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-

@@ -21,6 +21,7 @@ jobs:
         with:
           python-version: '3.12'
       - run: python -m unittest discover -v
+      - run: node --check site/app.js
       - name: Run portable smoke corpus
         run: python -m hara_bench run --suite algorithms --profile smoke --runtime python-prepared --runtime c-prepared
       - name: Normalize smoke evidence
@@ -29,4 +30,4 @@ jobs:
       - run: python -m hara_bench validate data
       - run: python -m hara_bench build-site
       - name: Verify dashboard assets
-        run: test -s dist/index.html && test -s dist/data/runs.json
+        run: test -s dist/index.html && test -s dist/data/runs.json && test -s dist/data/catalog.json

@@ -17,8 +17,10 @@ class SiteTest(unittest.TestCase):
                 "measurements": []}))
             self.assertEqual(build(data, root / "dist"), 1)
             self.assertTrue((root / "dist/index.html").exists())
+            catalog = json.loads((root / "dist/data/catalog.json").read_text())
+            self.assertEqual(len(catalog["workloads"]), 8)
+            self.assertIn("harness", catalog["workloads"][0]["implementations"]["hara"])
 
 
 if __name__ == "__main__":
     unittest.main()
-

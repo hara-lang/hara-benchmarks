@@ -21,6 +21,26 @@ class SiteTest(unittest.TestCase):
             self.assertEqual(len(catalog["workloads"]), 8)
             self.assertIn("harness", catalog["workloads"][0]["implementations"]["hara"])
 
+    def test_hara_centric_language_and_brand_tokens(self):
+        html = Path("site/index.html").read_text()
+        script = Path("site/app.js").read_text()
+        css = Path("site/styles.css").read_text()
+        self.assertIn("Hara against each reference", html)
+        self.assertIn("Hara is", script)
+        for forbidden in ("Runtime rankings", "fastest runtime", "win${", "cell-rank"):
+            self.assertNotIn(forbidden, html + script)
+        for token in ("#020408", "#071018", "#41f5e4", "#a7fff7", "#e4eff7", "#8da2b4", "#526a7b"):
+            self.assertIn(token, css)
+        self.assertIn(
+            "const REFERENCE_ORDER=['c','java','chez','sbcl','luajit','python','bb','guile']",
+            script,
+        )
+        for key in (
+            "view", "run", "platform", "units", "category", "workload",
+            "lifecycleComparator", "codeComparator", "phase",
+        ):
+            self.assertIn(f"p.set('{key}'", script)
+
 
 if __name__ == "__main__":
     unittest.main()

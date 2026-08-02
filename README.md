@@ -22,8 +22,8 @@ Each normalized result can report:
 - p50/p95 and coefficient of variation derived from raw nanosecond samples;
 - peak resident memory, executable/artifact size and compressed size;
 - explicit `unsupported` results with a reason, never a substituted workload;
-- absolute time and ratios normalized to the fastest result in the same
-  workload/platform comparison.
+- absolute Hara time and a pairwise ratio between Hara and each reference
+  runtime over their common successful workloads.
 
 Hosted CI is useful comparative evidence, not a stable performance laboratory.
 Pull requests therefore gate correctness and schema validity, while trends are
@@ -72,10 +72,11 @@ history.
 
 ## Dashboard views
 
-The published observatory exposes the prepared steady-state matrix, geometric-
-mean overall and category rankings, separate lifecycle phases, exact workload
-and harness source, preparation commands, runtime versions, and run provenance.
-Rankings are computed only across the common successful workload set for the
-selected run and platform; coverage and unsupported features remain visible.
+The published observatory leads with Hara's absolute results and shows neutral,
+pairwise comparisons between Hara and each reference runtime. Overall and
+category ratios use the geometric mean of the common successful workload set
+for that individual pair; coverage and unsupported features remain visible.
+Lifecycle and code views compare Hara with one selected reference while keeping
+exact source, preparation commands, runtime versions, and run provenance.
 
 See each suite README for runtime prerequisites and methodology.

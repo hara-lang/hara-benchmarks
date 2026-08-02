@@ -79,27 +79,54 @@ def geometric_mean(values: list[float]) -> float | None:
     return math.exp(sum(math.log(value) for value in positive) / len(positive))
 
 
-def rank_runtimes(measurements: list[dict[str, Any]], workloads: set[str] | None = None) -> list[dict[str, Any]]:
-    """Rank prepared runtimes on their common successful workload set."""
+def compare_hara(
+    measurements: list[dict[str, Any]],
+    comparator: str,
+    workloads: set[str] | None = None,
+    hara_runtime: str | None = None,
+) -> dict[str, Any]:
+    """Compare Hara with one reference runtime over their common workloads."""
     prepared = [row for row in measurements if row.get("mode", "prepared") == "prepared"]
-    runtimes = sorted({row["runtime"] for row in prepared})
+    runtimes = {row["runtime"] for row in prepared}
+    if hara_runtime is None:
+        candidates = sorted(runtime for runtime in runtimes if runtime.startswith("hara-"))
+        hara_runtime = next(
+            (runtime for runtime in candidates if "whole-wasm" in runtime),
+            candidates[0] if candidates else None,
+        )
+    if hara_runtime is None or hara_runtime not in runtimes:
+        raise ValueError("no prepared Hara runtime is present")
+    if comparator not in runtimes or comparator.startswith("hara-"):
+        raise ValueError(f"invalid reference runtime: {comparator}")
     available = workloads or {row["workload"] for row in prepared}
     index = {(row["runtime"], row["workload"]): row for row in prepared}
-    common = sorted(workload for workload in available if all(
-        median_ns(index.get((runtime, workload), {})) is not None for runtime in runtimes))
-    fastest = {workload: min(median_ns(index[(runtime, workload)]) for runtime in runtimes)
-               for workload in common}
-    ranked = []
-    for runtime in runtimes:
-        ratios = [median_ns(index[(runtime, workload)]) / fastest[workload] for workload in common]
-        supported = sum(median_ns(index.get((runtime, workload), {})) is not None for workload in available)
-        wins = sum(abs(ratio - 1.0) < 1e-12 for ratio in ratios)
-        ranked.append({"runtime": runtime, "score": geometric_mean(ratios), "wins": wins,
-                       "supported": supported, "total": len(available), "common": common})
-    ranked.sort(key=lambda row: (row["score"] is None, row["score"] or math.inf, -row["supported"]))
-    for position, row in enumerate(ranked, 1):
-        row["rank"] = position
-    return ranked
+    common = sorted(workload for workload in available if
+                    median_ns(index.get((hara_runtime, workload), {})) is not None and
+                    median_ns(index.get((comparator, workload), {})) is not None)
+    ratios = [median_ns(index[(hara_runtime, workload)]) /
+              median_ns(index[(comparator, workload)]) for workload in common]
+    return {
+        "hara_runtime": hara_runtime,
+        "comparator": comparator,
+        "ratio": geometric_mean(ratios),
+        "common": common,
+        "excluded": sorted(set(available) - set(common)),
+        "hara_supported": sum(median_ns(index.get((hara_runtime, workload), {})) is not None
+                              for workload in available),
+        "comparator_supported": sum(median_ns(index.get((comparator, workload), {})) is not None
+                                    for workload in available),
+        "total": len(available),
+    }
+
+
+def describe_hara_ratio(ratio: float | None) -> str:
+    if ratio is None:
+        return "No common measurements"
+    if abs(ratio - 1.0) <= 0.01:
+        return "Hara and the reference are approximately equal"
+    if ratio < 1:
+        return f"Hara is {1 / ratio:.2f}× faster"
+    return f"Hara is {ratio:.2f}× slower"
 
 
 def read_json(path: Path) -> dict[str, Any]:

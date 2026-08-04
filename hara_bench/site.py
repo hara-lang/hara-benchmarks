@@ -18,6 +18,7 @@ LANGUAGES = {
     "luajit": ("lua_source", "Lua", "adapters/luajit/lua_runner.lua"),
     "bb": ("bb_source", "Clojure", "suites/language/bb_runner.clj"),
     "clojure": ("bb_source", "Clojure", "suites/language/clojure_runner.clj"),
+    "node": ("node_source", "JavaScript", "suites/language/node_runner.mjs"),
     "python": ("python_source", "Python", "suites/language/python_runner.py"),
     "pypy": ("python_source", "Python", "suites/language/python_runner.py"),
     "c": ("c_source", "C", "suites/language/c_runner.py"),
@@ -38,15 +39,21 @@ def runtime_catalog() -> dict[str, Any]:
 
 def source_catalog() -> dict[str, Any]:
     corpus = read_json(ROOT / "suites/language/general-workloads.json")
+    external_sources = {
+        "node": read_json(ROOT / "suites/language/node_workloads.json")["workloads"],
+    }
     workloads = []
     for workload in corpus["workloads"]:
         implementations = {}
         for runtime, (field, language, harness_path) in LANGUAGES.items():
-            if field not in workload:
+            source = workload.get(field)
+            if source is None:
+                source = external_sources.get(runtime, {}).get(workload["id"])
+            if source is None:
                 continue
             harness = ROOT / harness_path
             implementations[runtime] = {
-                "language": language, "source": workload[field],
+                "language": language, "source": source,
                 "harness": harness.read_text(encoding="utf-8"), "harness_path": harness_path,
                 "prepare": preparation(runtime),
             }
@@ -68,6 +75,7 @@ def preparation(runtime: str) -> dict[str, Any]:
         "java": ("Generate class and compile without debug metadata", "javac -g:none HaraAlgorithmBenchmark.java"),
         "python": ("compile(source, workload, 'exec'), then resolve benchmark", "python3 python_runner.py prepared …"),
         "pypy": ("Use the identical Python source under PyPy's tracing JIT", "pypy3 python_runner.py prepared …"),
+        "node": ("Compile the JavaScript source once with V8 and repeatedly invoke the resolved benchmark", "node node_runner.mjs prepared …"),
         "sbcl": ("Read form and compile a zero-argument lambda", "sbcl --script sbcl_runner.lisp prepared …"),
         "chez": ("Read form and eval a zero-argument lambda", "chez --script chez_runner.scm prepared …"),
         "guile": ("Read form and eval a zero-argument lambda", "guile -s guile_runner.scm prepared …"),

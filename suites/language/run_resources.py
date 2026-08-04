@@ -3,8 +3,8 @@
 
 This is a thin wrapper around ``run.py`` so the benchmark coordinator remains
 usable on developer machines while CI can add RSS, executable-size and source-
-size evidence. It also enables PyPy and Clojure/HotSpot while reusing the exact
-Python and Clojure sources used by CPython and Babashka.
+size evidence. It enables PyPy, Clojure/HotSpot and Node.js/V8 while keeping
+runtime-specific sources explicit and inspectable.
 """
 from __future__ import annotations
 
@@ -115,6 +115,23 @@ def output_path(argv: list[str], default: Path) -> Path:
         return default.resolve()
 
 
+def node_version() -> str:
+    try:
+        return subprocess.run(
+            [
+                "node",
+                "-p",
+                "`Node ${process.version} / V8 ${process.versions.v8}`",
+            ],
+            text=True,
+            capture_output=True,
+            timeout=30,
+            check=True,
+        ).stdout.strip()
+    except (OSError, subprocess.SubprocessError):
+        return "unavailable"
+
+
 def main() -> int:
     coordinator = load_coordinator()
     coordinator.LANGUAGE_RUNTIMES["pypy"] = {
@@ -133,6 +150,38 @@ def main() -> int:
         "source_field": "bb_source",
         "binary": "clojure",
     }
+
+    node_sources = json.loads(
+        (HERE / "node_workloads.json").read_text(encoding="utf-8")
+    )["workloads"]
+    base_adapters = coordinator.adapters
+
+    def adapters_with_node():
+        result = base_adapters()
+
+        def node_adapter(mode: str, workload: dict[str, Any], windows: int, calls: int):
+            source = node_sources.get(workload["id"])
+            if source is None:
+                raise KeyError(f"Node source missing for {workload['id']}")
+            return [
+                "node",
+                str(HERE / "node_runner.mjs"),
+                mode,
+                workload["id"],
+                source.encode().hex(),
+                workload["expected"],
+                str(windows),
+                str(calls),
+            ]
+
+        for mode in ("eval", "prepared"):
+            result[f"node-{mode}"] = (
+                lambda workload, windows, calls, mode=mode:
+                node_adapter(mode, workload, windows, calls)
+            )
+        return result
+
+    coordinator.adapters = adapters_with_node
 
     def timed_with_resources(command: list[str]):
         timer = "/usr/bin/time"
@@ -175,6 +224,7 @@ def main() -> int:
         data = json.loads(path.read_text(encoding="utf-8"))
         versions = data.setdefault("versions", {})
         versions["pypy"] = coordinator.version(["pypy3", "--version"])
+        versions["node"] = node_version()
         try:
             clojure_version = subprocess.run(
                 [

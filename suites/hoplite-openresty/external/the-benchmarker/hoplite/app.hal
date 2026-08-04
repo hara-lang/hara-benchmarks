@@ -1,0 +1,32 @@
+(ns benchmark.hoplite
+  (:require [hoplite.core :as h]
+            [xt.lang.common-string :as string]))
+
+(defn empty-response
+  [_request]
+  {:status 200
+   :headers {"content-type" "text/plain; charset=utf-8"}
+   :body ""})
+
+(defn user-id
+  [request]
+  {:status 200
+   :headers {"content-type" "text/plain; charset=utf-8"}
+   :body (string/substring (:path request) 6 nil)})
+
+(def app
+  (h/app
+    {:name "the-benchmarker"
+     :resources
+     [["/"
+       {:get {:name :root
+              :route/adapter :request
+              :handler #'empty-response}}]
+      ["/user"
+       {:post {:name :create-user
+               :route/adapter :request
+               :handler #'empty-response}}
+       ["/:id"
+        {:get {:name :user-id
+               :route/adapter :request
+               :handler #'user-id}}]]]}))

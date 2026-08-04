@@ -5,7 +5,7 @@
   "type": "object",
   "required": ["schema_version", "run", "environment", "measurements"],
   "properties": {
-    "schema_version": {"enum": [1, 2]},
+    "schema_version": {"enum": [1, 2, 3]},
     "run": {
       "type": "object",
       "required": ["id", "profile"],
@@ -37,8 +37,15 @@
             "type": "object",
             "properties": {"samples_ns": {"type": "array", "items": {"type": "number"}}}
           },
-          "peak_rss_bytes": {"type": ["number", "null"]},
-          "artifact_bytes": {"type": ["number", "null"]}
+          "converged_window": {"type": ["integer", "null"]},
+          "peak_rss_bytes": {"type": ["number", "null"], "minimum": 0},
+          "idle_rss_bytes": {"type": ["number", "null"], "minimum": 0},
+          "source_bytes": {"type": ["number", "null"], "minimum": 0},
+          "artifact_bytes": {"type": ["number", "null"], "minimum": 0},
+          "compressed_artifact_bytes": {"type": ["number", "null"], "minimum": 0},
+          "runtime_executable_bytes": {"type": ["number", "null"], "minimum": 0},
+          "runtime_bundle_bytes": {"type": ["number", "null"], "minimum": 0},
+          "container_image_bytes": {"type": ["number", "null"], "minimum": 0}
         }
       }
     }

@@ -1,0 +1,14 @@
+framework:
+  website: opensource.greenways.ai/hoplite/
+  version: edge
+  image: ghcr.io/greenways-ai/hoplite:latest
+  files:
+    - source: app.hal
+      target: app.hal
+    - source: project.edn
+      target: project.edn
+
+language:
+  engines:
+    default:
+      command: hoplite serve foreground --mode prod --profile server /usr/src/app

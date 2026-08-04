@@ -18,6 +18,7 @@ LANGUAGES = {
     "luajit": ("lua_source", "Lua", "adapters/luajit/lua_runner.lua"),
     "bb": ("bb_source", "Clojure", "suites/language/bb_runner.clj"),
     "python": ("python_source", "Python", "suites/language/python_runner.py"),
+    "pypy": ("python_source", "Python", "suites/language/python_runner.py"),
     "c": ("c_source", "C", "suites/language/c_runner.py"),
     "java": ("java_source", "Java", "suites/language/java_runner.py"),
 }
@@ -28,6 +29,10 @@ CATEGORY = {
     "queens-backtracking": "Search & mutation", "heap-permute": "Search & mutation",
     "collatz-range": "Irregular control",
 }
+
+
+def runtime_catalog() -> dict[str, Any]:
+    return read_json(ROOT / "config/runtimes.json")
 
 
 def source_catalog() -> dict[str, Any]:
@@ -47,7 +52,12 @@ def source_catalog() -> dict[str, Any]:
         workloads.append({"id": workload["id"], "category": CATEGORY.get(workload["id"], workload.get("group")),
                           "group": workload.get("group"), "operations": workload.get("operations"),
                           "expected": workload["expected"], "implementations": implementations})
-    return {"schema_version": 1, "methodology": corpus.get("methodology"), "workloads": workloads}
+    return {
+        "schema_version": 2,
+        "methodology": corpus.get("methodology"),
+        "runtime_catalog": runtime_catalog(),
+        "workloads": workloads,
+    }
 
 
 def preparation(runtime: str) -> dict[str, Any]:
@@ -56,6 +66,7 @@ def preparation(runtime: str) -> dict[str, Any]:
         "c": ("Generate translation unit and compile with cc -O3", "cc -O3 -std=c11 benchmark.c -o benchmark"),
         "java": ("Generate class and compile without debug metadata", "javac -g:none HaraAlgorithmBenchmark.java"),
         "python": ("compile(source, workload, 'exec'), then resolve benchmark", "python3 python_runner.py prepared …"),
+        "pypy": ("Use the identical Python source under PyPy's tracing JIT", "pypy3 python_runner.py prepared …"),
         "sbcl": ("Read form and compile a zero-argument lambda", "sbcl --script sbcl_runner.lisp prepared …"),
         "chez": ("Read form and eval a zero-argument lambda", "chez --script chez_runner.scm prepared …"),
         "guile": ("Read form and eval a zero-argument lambda", "guile -s guile_runner.scm prepared …"),

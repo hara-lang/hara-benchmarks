@@ -1,4 +1,4 @@
-name: Cross-runtime benchmarks
+name: Canonical benchmark evidence
 
 on:
   workflow_dispatch:
@@ -13,41 +13,39 @@ on:
     - cron: '41 4 * * 0'
 
 permissions:
-  contents: read
+  contents: write
+
+concurrency:
+  group: benchmark-${{ github.event_name }}-${{ github.event.schedule || inputs.profile || 'manual' }}
+  cancel-in-progress: false
 
 jobs:
-  run:
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-24.04, macos-15]
-    runs-on: ${{ matrix.os }}
+  canonical:
+    runs-on: ubuntu-24.04
+    container:
+      image: ubuntu:24.04
+      options: --cpus 4 --memory 7g
     env:
       HARA_ROOT: ${{ github.workspace }}/vendor/hara
       HARA_BENCH_ROOT: ${{ github.workspace }}
+      HARA_BENCH_CONTAINER_IMAGE: ubuntu:24.04
     steps:
+      - name: Install runner dependencies
+        run: |
+          apt-get update
+          DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+            build-essential ca-certificates curl git time python3 python3-pip \
+            openjdk-21-jdk-headless sbcl chezscheme guile-3.0 luajit pypy3
       - uses: actions/checkout@v4
       - uses: actions/checkout@v4
         with:
           repository: hara-lang/hara
           path: vendor/hara
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-      - uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: '21'
+          submodules: recursive
       - uses: dtolnay/rust-toolchain@stable
       - uses: DeLaGuardo/setup-clojure@13.4
         with:
           bb: latest
-      - name: Install comparison runtimes (Linux)
-        if: runner.os == 'Linux'
-        run: sudo apt-get update && sudo apt-get install -y sbcl chezscheme guile-3.0 luajit
-      - name: Install comparison runtimes (macOS)
-        if: runner.os == 'macOS'
-        run: brew install sbcl chezscheme guile luajit
       - name: Select profile
         id: profile
         shell: bash
@@ -57,18 +55,61 @@ jobs:
             if [ "${{ github.event.schedule }}" = "41 4 * * 0" ]; then value=weekly; else value=nightly; fi
           fi
           echo "value=$value" >> "$GITHUB_OUTPUT"
+      - name: Record immutable revisions
+        run: |
+          echo "HARA_BENCHMARK_REVISION=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
+          echo "HARA_REVISION=$(git -C "$HARA_ROOT" rev-parse HEAD)" >> "$GITHUB_ENV"
       - name: Run algorithm corpus
-        run: python -m hara_bench run --suite algorithms --profile "${{ steps.profile.outputs.value }}" --hara-root "$HARA_ROOT"
+        run: python3 -m hara_bench run --suite algorithms --profile "${{ steps.profile.outputs.value }}" --hara-root "$HARA_ROOT"
       - name: Normalize evidence
         if: always()
-        run: test ! -f results/local/language.json || python -m hara_bench import-language results/local/language.json results/local/normalized.json
+        run: test ! -f results/local/language.json || python3 -m hara_bench import-language results/local/language.json results/local/normalized.json
       - name: Validate normalized evidence
         if: always()
-        run: test ! -f results/local/normalized.json || python -m hara_bench validate results/local/normalized.json
+        run: test ! -f results/local/normalized.json || python3 -m hara_bench validate results/local/normalized.json
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: benchmark-${{ runner.os }}-${{ runner.arch }}-${{ steps.profile.outputs.value }}
+          name: benchmark-linux-x86_64-${{ steps.profile.outputs.value }}
           path: results/local/*
-          if-no-files-found: warn
+          if-no-files-found: error
           retention-days: 90
+
+  publish:
+    needs: canonical
+    if: needs.canonical.result == 'success'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: source
+          fetch-depth: 0
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: benchmark-*
+          path: artifacts
+      - name: Prepare benchmark history branch
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir history
+          git -C history init
+          git -C history remote add origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          if git -C history fetch --depth=1 origin benchmarks-data; then
+            git -C history checkout -B benchmarks-data FETCH_HEAD
+          else
+            git -C history checkout --orphan benchmarks-data
+          fi
+      - name: Promote validated evidence
+        run: PYTHONPATH=source python3 source/scripts/publish_results.py --inputs artifacts --output history
+      - name: Commit benchmark history
+        run: |
+          git -C history config user.name github-actions[bot]
+          git -C history config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git -C history add runs manifest.json
+          if git -C history diff --cached --quiet; then
+            echo "Benchmark evidence already published"
+            exit 0
+          fi
+          git -C history commit -m "publish benchmark run ${{ github.run_id }}"
+          git -C history push origin HEAD:benchmarks-data

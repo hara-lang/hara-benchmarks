@@ -6,13 +6,20 @@ from typing import Any
 from .model import SCHEMA_VERSION, environment, read_json
 
 
+RESOURCE_FIELDS = (
+    "peak_rss_bytes", "idle_rss_bytes", "source_bytes", "artifact_bytes",
+    "compressed_artifact_bytes", "runtime_executable_bytes",
+    "runtime_bundle_bytes", "container_image_bytes",
+)
+
+
 def import_language(path: Path) -> dict[str, Any]:
     source = read_json(path)
     measurements = []
     for row in source.get("measurements", []):
         samples = row.get("samples_ns", [])
         status = row.get("status", "ok" if samples else "unsupported")
-        measurements.append({
+        normalized = {
             "suite": "algorithms",
             "workload": row.get("workload", "unknown"),
             "runtime": row.get("runtime", "unknown"),
@@ -24,9 +31,10 @@ def import_language(path: Path) -> dict[str, Any]:
             "first_call_ns": row.get("first_ns"),
             "warmup_samples_ns": row.get("samples_ns", [])[:5],
             "steady_state": {"samples_ns": samples},
-            "peak_rss_bytes": row.get("peak_rss_bytes"),
-            "artifact_bytes": row.get("artifact_bytes"),
-        })
+            "converged_window": row.get("analysis", {}).get("converged_window"),
+        }
+        normalized.update({field: row.get(field) for field in RESOURCE_FIELDS})
+        measurements.append(normalized)
     return {
         "schema_version": SCHEMA_VERSION,
         "run": {

@@ -1,0 +1,132 @@
+{
+  "schema_version": 1,
+  "groups": {
+    "dynamic-jit": {
+      "title": "In-class dynamic JIT",
+      "short": "Dynamic JIT",
+      "description": "The primary peer set: dynamically typed runtimes that optimise hot code at runtime.",
+      "accent": "cyan",
+      "priority": 10
+    },
+    "lisp": {
+      "title": "Lisp family",
+      "short": "Lisp",
+      "description": "Language-family comparison across Common Lisp, Scheme and Clojure implementations.",
+      "accent": "violet",
+      "priority": 20
+    },
+    "reference-native": {
+      "title": "Native reference ceiling",
+      "short": "Native reference",
+      "description": "Ahead-of-time native code. Useful as a ceiling, but not an in-class peer.",
+      "accent": "amber",
+      "priority": 30
+    },
+    "reference-managed": {
+      "title": "Managed JIT reference",
+      "short": "Managed reference",
+      "description": "A statically typed managed runtime with a mature JIT. Shown as context, not as Hara's class.",
+      "accent": "blue",
+      "priority": 40
+    },
+    "interpreter": {
+      "title": "Interpreter baseline",
+      "short": "Interpreter",
+      "description": "Widely used dynamic runtimes without an enabled JIT in the measured lane.",
+      "accent": "slate",
+      "priority": 50
+    }
+  },
+  "runtimes": {
+    "hara": {
+      "name": "Hara whole-Wasm",
+      "groups": ["dynamic-jit", "lisp"],
+      "status": "measured",
+      "primary": true,
+      "runtime_prefix": "hara-"
+    },
+    "luajit": {
+      "name": "LuaJIT",
+      "groups": ["dynamic-jit"],
+      "status": "measured",
+      "runtime_prefix": "luajit-"
+    },
+    "pypy": {
+      "name": "PyPy",
+      "groups": ["dynamic-jit"],
+      "status": "measured",
+      "runtime_prefix": "pypy-"
+    },
+    "node": {
+      "name": "Node.js / V8",
+      "groups": ["dynamic-jit"],
+      "status": "planned",
+      "runtime_prefix": "node-"
+    },
+    "ruby": {
+      "name": "Ruby / YJIT",
+      "groups": ["dynamic-jit"],
+      "status": "planned",
+      "runtime_prefix": "ruby-yjit-"
+    },
+    "clojure": {
+      "name": "Clojure / HotSpot",
+      "groups": ["dynamic-jit", "lisp"],
+      "status": "planned",
+      "runtime_prefix": "clojure-"
+    },
+    "sbcl": {
+      "name": "SBCL",
+      "groups": ["lisp"],
+      "status": "measured",
+      "runtime_prefix": "sbcl-"
+    },
+    "chez": {
+      "name": "Chez Scheme",
+      "groups": ["lisp"],
+      "status": "measured",
+      "runtime_prefix": "chez-"
+    },
+    "guile": {
+      "name": "GNU Guile",
+      "groups": ["lisp"],
+      "status": "measured",
+      "runtime_prefix": "guile-"
+    },
+    "bb": {
+      "name": "Babashka",
+      "groups": ["lisp", "interpreter"],
+      "status": "measured",
+      "runtime_prefix": "bb-"
+    },
+    "racket": {
+      "name": "Racket CS",
+      "groups": ["lisp"],
+      "status": "planned",
+      "runtime_prefix": "racket-"
+    },
+    "python": {
+      "name": "CPython",
+      "groups": ["interpreter"],
+      "status": "measured",
+      "runtime_prefix": "python-"
+    },
+    "c": {
+      "name": "C",
+      "groups": ["reference-native"],
+      "status": "measured",
+      "runtime_prefix": "c-"
+    },
+    "java": {
+      "name": "Java / HotSpot",
+      "groups": ["reference-managed"],
+      "status": "measured",
+      "runtime_prefix": "java-"
+    }
+  },
+  "display_order": [
+    "luajit", "pypy", "node", "ruby", "clojure",
+    "sbcl", "chez", "guile", "bb", "racket",
+    "c", "java", "python"
+  ]
+}

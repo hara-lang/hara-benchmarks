@@ -50,7 +50,7 @@ def command_run(args: argparse.Namespace) -> int:
         print(f"Hara checkout not found at {hara_root}; pass --hara-root or set HARA_ROOT", file=sys.stderr)
         return 2
     if args.suite == "algorithms":
-        coordinator = ROOT / "suites/language/run.py"
+        coordinator = ROOT / "suites/language/run_resources.py"
         profile = {"nightly": "algorithm", "weekly": "standard"}.get(args.profile, args.profile)
         output = ROOT / "results/local/language.json"
         cmd = [sys.executable, str(coordinator), "--profile", profile,

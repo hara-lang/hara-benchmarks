@@ -4,8 +4,8 @@ Reproducible, inspectable performance evidence for Hara and Hoplite, published a
 
 The observatory is deliberately not a single global ranking. It presents Hara through separate comparison classes:
 
-- **In-class dynamic JIT:** Hara, LuaJIT and PyPy now; Node/V8, Ruby/YJIT and Clojure/HotSpot next.
-- **Lisp family:** Hara, SBCL, Chez Scheme, GNU Guile and Babashka; Clojure and Racket CS next.
+- **In-class dynamic JIT:** Hara, LuaJIT, PyPy and Clojure/HotSpot now; Node/V8 and Ruby/YJIT next.
+- **Lisp family:** Hara, SBCL, Chez Scheme, GNU Guile, Babashka and Clojure/HotSpot; Racket CS next.
 - **Reference ceilings:** C as the native reference and Java/HotSpot as the managed reference.
 - **Interpreter baseline:** CPython and small-startup runtimes where useful.
 - **HTTP:** a controlled Hoplite/OpenResty suite plus independently maintained public framework suites.
@@ -43,7 +43,7 @@ python -m hara_bench validate results/local/normalized.json
 python -m hara_bench build-site --data data --output dist
 ```
 
-The resource-aware coordinator requires `/usr/bin/time`. PyPy is measured with the exact same source as CPython.
+The resource-aware coordinator requires `/usr/bin/time`. PyPy is measured with the exact same source as CPython. Clojure/HotSpot is measured with the exact same Clojure forms as Babashka, using pinned Clojure dependencies and a separately reported JVM dependency bundle.
 
 ## Canonical GitHub evidence
 

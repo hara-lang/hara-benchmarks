@@ -19,18 +19,22 @@ class SiteTest(unittest.TestCase):
             catalog = json.loads((root / "dist/data/catalog.json").read_text())
             self.assertEqual(len(catalog["workloads"]), 8)
             self.assertIn("runtime_catalog", catalog)
-            implementations = catalog["workloads"][0]["implementations"]
-            self.assertIn("pypy", implementations)
-            self.assertIn("clojure", implementations)
-            self.assertEqual(
-                implementations["bb"]["source"],
-                implementations["clojure"]["source"],
-            )
+            for workload in catalog["workloads"]:
+                implementations = workload["implementations"]
+                self.assertIn("pypy", implementations)
+                self.assertIn("clojure", implementations)
+                self.assertIn("node", implementations)
+                self.assertEqual(
+                    implementations["bb"]["source"],
+                    implementations["clojure"]["source"],
+                )
 
     def test_runtime_taxonomy(self):
         catalog = runtime_catalog()
         self.assertEqual(catalog["runtimes"]["hara"]["groups"], ["dynamic-jit", "lisp"])
         self.assertIn("dynamic-jit", catalog["runtimes"]["pypy"]["groups"])
+        self.assertEqual(catalog["runtimes"]["node"]["status"], "measured")
+        self.assertEqual(catalog["runtimes"]["node"]["groups"], ["dynamic-jit"])
         self.assertEqual(catalog["runtimes"]["clojure"]["status"], "measured")
         self.assertEqual(
             catalog["runtimes"]["clojure"]["groups"],

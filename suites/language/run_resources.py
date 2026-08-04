@@ -24,7 +24,8 @@ HERE = Path(__file__).resolve().parent
 COORDINATOR = HERE / "run.py"
 CLOJURE_VERSION = "1.12.5"
 CLOJURE_DEPS = (
-    '{:deps {org.clojure/clojure {:mvn/version "' + CLOJURE_VERSION + '"}}}'
+    '{:mvn/repos {"central" {:url "https://repo.maven.apache.org/maven2/"}} '
+    ':deps {org.clojure/clojure {:mvn/version "' + CLOJURE_VERSION + '"}}}'
 )
 
 

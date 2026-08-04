@@ -39,12 +39,13 @@ jobs:
       HARA_ROOT: ${{ github.workspace }}/vendor/hara
       HARA_BENCH_ROOT: ${{ github.workspace }}
       HARA_BENCH_CONTAINER_IMAGE: ubuntu:24.04
+      CLOJURE_DEPS: '{:mvn/repos {"central" {:url "https://repo.maven.apache.org/maven2/"}} :deps {org.clojure/clojure {:mvn/version "1.12.5"}}}'
     steps:
       - name: Install runner dependencies
         run: |
           apt-get update
           DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-            build-essential ca-certificates curl git time python3 python3-pip \
+            build-essential ca-certificates curl git gzip tar time python3 python3-pip \
             openjdk-21-jdk-headless sbcl chezscheme guile-3.0 luajit pypy3
       - uses: actions/checkout@v4
       - uses: actions/checkout@v4
@@ -61,12 +62,35 @@ jobs:
       - uses: dtolnay/rust-toolchain@stable
       - uses: DeLaGuardo/setup-clojure@13.4
         with:
-          cli: 1.12.5.1664
           bb: latest
+      - name: Install pinned Clojure CLI
+        shell: bash
+        run: |
+          curl --fail --location --retry 5 --retry-all-errors --connect-timeout 15 \
+            --output /tmp/linux-install-clojure.sh \
+            https://download.clojure.org/install/linux-install-1.12.5.1664.sh
+          chmod +x /tmp/linux-install-clojure.sh
+          /tmp/linux-install-clojure.sh --prefix /usr/local
+          clojure -Sdescribe
+      - name: Resolve Java toolchain
+        shell: bash
+        run: |
+          javac_path=$(readlink -f "$(command -v javac)")
+          java_home=$(dirname "$(dirname "$javac_path")")
+          test -x "$java_home/bin/javac"
+          test -x "$java_home/bin/java"
+          echo "HARA_BENCH_JAVA_HOME=$java_home" >> "$GITHUB_ENV"
       - name: Prime pinned Clojure dependencies
         working-directory: suites/language
-        run: >-
-          clojure -Sdeps '{:deps {org.clojure/clojure {:mvn/version "1.12.5"}}}' -P
+        shell: bash
+        run: |
+          for attempt in 1 2 3 4 5; do
+            if clojure -Sdeps "$CLOJURE_DEPS" -P; then
+              exit 0
+            fi
+            sleep $((attempt * 5))
+          done
+          exit 1
       - name: Select profile
         id: profile
         shell: bash

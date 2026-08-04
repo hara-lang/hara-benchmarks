@@ -12,6 +12,23 @@ class WorkflowContractTest(unittest.TestCase):
         self.assertIn("- cron: '41 4 * * 0'", workflow)
         self.assertIn("git -C history push origin HEAD:benchmarks-data", workflow)
 
+    def test_canonical_container_installs_portable_java_and_clojure(self):
+        workflow = Path(".github/workflows/benchmarks.yml").read_text(encoding="utf-8")
+        self.assertIn(
+            "https://download.clojure.org/install/linux-install-1.12.5.1664.sh",
+            workflow,
+        )
+        self.assertIn("repo.maven.apache.org/maven2/", workflow)
+        self.assertIn("--retry 5 --retry-all-errors", workflow)
+        self.assertIn("for attempt in 1 2 3 4 5", workflow)
+        self.assertIn('echo "HARA_BENCH_JAVA_HOME=$java_home"', workflow)
+        self.assertNotIn("cli: 1.12.5.1664", workflow)
+
+    def test_smoke_exercises_java_and_canonical_clojure_repository(self):
+        workflow = Path(".github/workflows/smoke.yml").read_text(encoding="utf-8")
+        self.assertIn("--runtime java-prepared", workflow)
+        self.assertIn("repo.maven.apache.org/maven2/", workflow)
+
     def test_benchmark_data_push_rebuilds_pages_from_main(self):
         workflow = Path(".github/workflows/pages.yml").read_text(encoding="utf-8")
         self.assertIn("branches: [main, benchmarks-data]", workflow)

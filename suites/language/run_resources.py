@@ -86,6 +86,7 @@ def clojure_bundle_bytes() -> int | None:
             capture_output=True,
             timeout=120,
             check=True,
+            cwd=HERE,
         )
     except (OSError, subprocess.SubprocessError):
         return None
@@ -139,9 +140,10 @@ def main() -> int:
             raise RuntimeError("/usr/bin/time is required for resource measurements")
         flag = "-v" if platform.system() == "Linux" else "-l"
         started = time.perf_counter_ns()
+        run_cwd = HERE if command and command[0] == "clojure" else coordinator.ROOT
         result = subprocess.run(
             [timer, flag, *command],
-            cwd=coordinator.ROOT,
+            cwd=run_cwd,
             text=True,
             capture_output=True,
             timeout=1200,
@@ -173,16 +175,25 @@ def main() -> int:
         data = json.loads(path.read_text(encoding="utf-8"))
         versions = data.setdefault("versions", {})
         versions["pypy"] = coordinator.version(["pypy3", "--version"])
-        versions["clojure"] = coordinator.version(
-            [
-                "clojure",
-                "-Sdeps",
-                CLOJURE_DEPS,
-                "-M",
-                "-e",
-                "(println (clojure-version))",
-            ]
-        )
+        try:
+            clojure_version = subprocess.run(
+                [
+                    "clojure",
+                    "-Sdeps",
+                    CLOJURE_DEPS,
+                    "-M",
+                    "-e",
+                    "(println (clojure-version))",
+                ],
+                cwd=HERE,
+                text=True,
+                capture_output=True,
+                timeout=120,
+                check=True,
+            ).stdout.strip().splitlines()[0]
+        except (OSError, subprocess.SubprocessError, IndexError):
+            clojure_version = "unavailable"
+        versions["clojure"] = clojure_version
         data.setdefault("environment", {}).update({
             "container_image": os.environ.get("HARA_BENCH_CONTAINER_IMAGE"),
             "runner": os.environ.get("RUNNER_NAME"),

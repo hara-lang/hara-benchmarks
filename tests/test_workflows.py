@@ -12,6 +12,24 @@ class WorkflowContractTest(unittest.TestCase):
         self.assertIn("- cron: '41 4 * * 0'", workflow)
         self.assertIn("git -C history push origin HEAD:benchmarks-data", workflow)
 
+    def test_main_push_uses_the_complete_prepared_peer_set(self):
+        workflow = Path(".github/workflows/benchmarks.yml").read_text(encoding="utf-8")
+        prepared = (
+            "hara-rust-whole-wasm-prepared", "luajit-prepared", "pypy-prepared",
+            "node-prepared", "ruby-yjit-prepared", "clojure-prepared",
+            "sbcl-prepared", "chez-prepared", "guile-prepared", "bb-prepared",
+            "python-prepared", "c-prepared", "java-prepared",
+        )
+        for runtime in prepared:
+            self.assertIn(f"--runtime {runtime}", workflow)
+        runtime_line = next(
+            line for line in workflow.splitlines()
+            if line.strip().startswith('runtime_args="--runtime')
+        )
+        self.assertNotIn("-eval", runtime_line)
+        self.assertIn("RUNTIME_ARGS: ${{ steps.profile.outputs.runtime_args }}", workflow)
+        self.assertIn("$RUNTIME_ARGS", workflow)
+
     def test_canonical_container_installs_portable_java_clojure_and_chez(self):
         workflow = Path(".github/workflows/benchmarks.yml").read_text(encoding="utf-8")
         self.assertIn(

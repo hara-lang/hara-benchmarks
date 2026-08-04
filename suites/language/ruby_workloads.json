@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "runtime": "ruby-yjit",
+  "language": "Ruby",
+  "workloads": {
+    "sieve-array": "def benchmark\n  flags = Array.new(256, 1)\n  p = 2\n  while p * p < 256\n    if flags[p] != 0\n      k = p * p\n      while k < 256\n        flags[k] = 0\n        k += p\n      end\n    end\n    p += 1\n  end\n  total = 0\n  i = 2\n  while i < 256\n    total += flags[i]\n    i += 1\n  end\n  total\nend",
+    "towers-recursive": "def towers(n)\n  n == 0 ? 0 : 1 + towers(n - 1) + towers(n - 1)\nend\n\ndef benchmark\n  towers(18)\nend",
+    "queens-backtracking": "def benchmark\n  cols = Array.new(8, 0)\n  safe = lambda do |row, col|\n    prior = 0\n    while prior < row\n      placed = cols[prior]\n      return false if placed == col || (placed - col).abs == row - prior\n      prior += 1\n    end\n    true\n  end\n  place = nil\n  place = lambda do |row|\n    return 1 if row == 8\n    total = 0\n    col = 0\n    while col < 8\n      if safe.call(row, col)\n        cols[row] = col\n        total += place.call(row + 1)\n      end\n      col += 1\n    end\n    total\n  end\n  place.call(0)\nend",
+    "heap-permute": "def benchmark\n  values = (0...8).to_a\n  permute = nil\n  permute = lambda do |n|\n    return 1 if n == 1\n    total = 0\n    i = 0\n    while i < n\n      total += permute.call(n - 1)\n      j = n.even? ? i : 0\n      values[j], values[n - 1] = values[n - 1], values[j]\n      i += 1\n    end\n    total\n  end\n  permute.call(8)\nend",
+    "ackermann-deep": "def ack(m, n)\n  return n + 1 if m == 0\n  return ack(m - 1, 1) if n == 0\n  ack(m - 1, ack(m, n - 1))\nend\n\ndef benchmark\n  ack(3, 8)\nend",
+    "tak-branching": "def tak(x, y, z)\n  x <= y ? z : tak(tak(x - 1, y, z), tak(y - 1, z, x), tak(z - 1, x, y))\nend\n\ndef benchmark\n  tak(18, 12, 6)\nend",
+    "collatz-range": "def benchmark\n  total = 0\n  n = 1\n  while n <= 10_000\n    value = n\n    while value != 1\n      value = value.even? ? value / 2 : 3 * value + 1\n      total += 1\n    end\n    n += 1\n  end\n  total\nend",
+    "matrix-multiply": "def benchmark\n  a = (1..16).to_a\n  b = [1, 4, 7, 10, 13, 16, 2, 5, 8, 11, 14, 0, 3, 6, 9, 12]\n  c = Array.new(16, 0)\n  iteration = 0\n  while iteration < 100\n    row = 0\n    while row < 4\n      col = 0\n      while col < 4\n        value = 0\n        k = 0\n        while k < 4\n          value += a[row * 4 + k] * b[k * 4 + col]\n          k += 1\n        end\n        c[row * 4 + col] = value\n        col += 1\n      end\n      row += 1\n    end\n    iteration += 1\n  end\n  c.sum\nend"
+  }
+}

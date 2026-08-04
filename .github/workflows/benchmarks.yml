@@ -45,6 +45,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '24.18.0'
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '4.0.6'
       - uses: dtolnay/rust-toolchain@stable
       - uses: DeLaGuardo/setup-clojure@13.4
         with:

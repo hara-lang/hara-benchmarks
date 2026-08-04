@@ -10,11 +10,8 @@ Measured now:
 - LuaJIT
 - PyPy, using the identical Python source used by CPython
 - Node.js / V8, using explicit JavaScript implementations of the shared algorithms
+- Ruby / YJIT, with YJIT required rather than inferred from the Ruby build
 - Clojure / HotSpot, using the identical Clojure source used by Babashka
-
-Planned adapters:
-
-- Ruby / YJIT
 
 ## Lisp family
 
@@ -58,6 +55,21 @@ C and Java remain visible, but are categorised and coloured separately from Hara
 
 The canonical lane pins Node 24 LTS rather than following the moving Current release.
 
+## Ruby / YJIT lane
+
+`ruby_workloads.json` contains an idiomatic Ruby implementation for each shared workload. `ruby_runner.rb` is always invoked through `ruby --yjit` and exits with an error unless `RubyVM::YJIT.enabled?` is true. The prepared lane evaluates source once, resolves the benchmark method and then samples repeated calls so compilation and warm-up remain visible. Every run records:
+
+- the exact Ruby release and YJIT-enabled state
+- process cold start
+- source evaluation and first-call cost
+- warm-up samples and convergence
+- steady-state timing
+- peak RSS
+- Ruby executable size
+- source bytes
+
+Ruby is pinned to 4.0.6 in canonical CI. RSS remains a first-class result because YJIT intentionally consumes extra memory for generated code and metadata.
+
 ## Clojure lane
 
 The Clojure runner wraps each `bb_source` form in a zero-argument function, compiles it through Clojure 1.12.5, and invokes it repeatedly in one JVM so HotSpot can optimise hot paths. Dependency resolution is primed before startup measurement. The result records:
@@ -74,4 +86,4 @@ Because Babashka and Clojure consume the same source field, their difference is 
 
 ## Resource collection
 
-`run_resources.py` wraps the existing coordinator with `/usr/bin/time`, records peak RSS, runtime executable size, runtime bundle size and source size, and adds the PyPy, Node and Clojure adapters. The normalized schema keeps source, runtime, bundle, generated artifact and image sizes separate.
+`run_resources.py` wraps the existing coordinator with `/usr/bin/time`, records peak RSS, runtime executable size, runtime bundle size and source size, and adds the PyPy, Node, Ruby and Clojure adapters. The normalized schema keeps source, runtime, bundle, generated artifact and image sizes separate.

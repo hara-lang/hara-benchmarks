@@ -24,6 +24,7 @@ class SiteTest(unittest.TestCase):
                 self.assertIn("pypy", implementations)
                 self.assertIn("clojure", implementations)
                 self.assertIn("node", implementations)
+                self.assertIn("ruby", implementations)
                 self.assertEqual(
                     implementations["bb"]["source"],
                     implementations["clojure"]["source"],
@@ -35,6 +36,8 @@ class SiteTest(unittest.TestCase):
         self.assertIn("dynamic-jit", catalog["runtimes"]["pypy"]["groups"])
         self.assertEqual(catalog["runtimes"]["node"]["status"], "measured")
         self.assertEqual(catalog["runtimes"]["node"]["groups"], ["dynamic-jit"])
+        self.assertEqual(catalog["runtimes"]["ruby"]["status"], "measured")
+        self.assertEqual(catalog["runtimes"]["ruby"]["groups"], ["dynamic-jit"])
         self.assertEqual(catalog["runtimes"]["clojure"]["status"], "measured")
         self.assertEqual(
             catalog["runtimes"]["clojure"]["groups"],

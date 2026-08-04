@@ -19,6 +19,7 @@ LANGUAGES = {
     "bb": ("bb_source", "Clojure", "suites/language/bb_runner.clj"),
     "clojure": ("bb_source", "Clojure", "suites/language/clojure_runner.clj"),
     "node": ("node_source", "JavaScript", "suites/language/node_runner.mjs"),
+    "ruby": ("ruby_source", "Ruby", "suites/language/ruby_runner.rb"),
     "python": ("python_source", "Python", "suites/language/python_runner.py"),
     "pypy": ("python_source", "Python", "suites/language/python_runner.py"),
     "c": ("c_source", "C", "suites/language/c_runner.py"),
@@ -41,6 +42,7 @@ def source_catalog() -> dict[str, Any]:
     corpus = read_json(ROOT / "suites/language/general-workloads.json")
     external_sources = {
         "node": read_json(ROOT / "suites/language/node_workloads.json")["workloads"],
+        "ruby": read_json(ROOT / "suites/language/ruby_workloads.json")["workloads"],
     }
     workloads = []
     for workload in corpus["workloads"]:
@@ -76,6 +78,7 @@ def preparation(runtime: str) -> dict[str, Any]:
         "python": ("compile(source, workload, 'exec'), then resolve benchmark", "python3 python_runner.py prepared …"),
         "pypy": ("Use the identical Python source under PyPy's tracing JIT", "pypy3 python_runner.py prepared …"),
         "node": ("Compile the JavaScript source once with V8 and repeatedly invoke the resolved benchmark", "node node_runner.mjs prepared …"),
+        "ruby": ("Evaluate the Ruby source once, resolve the benchmark method, and invoke it with YJIT enabled", "ruby --yjit ruby_runner.rb prepared …"),
         "sbcl": ("Read form and compile a zero-argument lambda", "sbcl --script sbcl_runner.lisp prepared …"),
         "chez": ("Read form and eval a zero-argument lambda", "chez --script chez_runner.scm prepared …"),
         "guile": ("Read form and eval a zero-argument lambda", "guile -s guile_runner.scm prepared …"),

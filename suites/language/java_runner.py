@@ -35,21 +35,32 @@ TEMPLATE = '''public final class HaraAlgorithmBenchmark {{
 '''
 
 
+def java_tools() -> tuple[str | None, str | None]:
+    java_home = os.environ.get("HARA_BENCH_JAVA_HOME")
+    if java_home:
+        home = Path(java_home)
+        javac, java = home / "bin/javac", home / "bin/java"
+        if javac.is_file() and java.is_file():
+            return str(javac), str(java)
+
+    javac, java = shutil.which("javac"), shutil.which("java")
+    if javac and java:
+        return javac, java
+
+    homebrew = Path("/opt/homebrew/opt/openjdk@21/bin")
+    if homebrew.is_dir():
+        return str(homebrew / "javac"), str(homebrew / "java")
+    return None, None
+
+
 def main():
     if len(sys.argv) != 7:
         raise SystemExit("java_runner expects MODE ID SOURCE_HEX EXPECTED WINDOWS CALLS")
     _, workload, source_hex, expected, windows, calls = sys.argv[1:]
     source = bytes.fromhex(source_hex).decode()
-    java_home = os.environ.get("HARA_BENCH_JAVA_HOME")
-    homebrew = Path("/opt/homebrew/opt/openjdk@21/bin")
-    if java_home:
-        javac, java = str(Path(java_home) / "bin/javac"), str(Path(java_home) / "bin/java")
-    elif homebrew.is_dir():
-        javac, java = str(homebrew / "javac"), str(homebrew / "java")
-    else:
-        javac, java = shutil.which("javac"), shutil.which("java")
+    javac, java = java_tools()
     if not javac or not java:
-        raise SystemExit("java and javac must be on PATH or HARA_BENCH_JAVA_HOME must be set")
+        raise SystemExit("java and javac must be on PATH or HARA_BENCH_JAVA_HOME must contain bin/java and bin/javac")
     with tempfile.TemporaryDirectory(prefix="hara-java-bench-") as directory:
         root = Path(directory)
         source_path = root / "HaraAlgorithmBenchmark.java"

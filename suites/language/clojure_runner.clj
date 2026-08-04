@@ -23,7 +23,7 @@
       (fail! "clojure_runner"
              "expects MODE ID SOURCE_HEX EXPECTED WINDOWS CALLS"
              2))
-    (when-not (#{{"prepared" "eval"}} mode)
+    (when-not (or (= mode "prepared") (= mode "eval"))
       (fail! id (str "unsupported mode " mode) 2))
     (let [windows (parse-long windows-text)
           calls (parse-long calls-text)

@@ -36,6 +36,13 @@ jobs:
       - uses: DeLaGuardo/setup-clojure@13.4
         with:
           cli: 1.12.5.1664
+      - name: Install Chez Scheme command
+        shell: bash
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends chezscheme
+          sudo ln -sf "$(command -v chezscheme)" /usr/local/bin/chez
+          chez --version
       - name: Prime pinned Clojure dependencies
         working-directory: suites/language
         run: clojure -Sdeps "$CLOJURE_DEPS" -P
@@ -47,7 +54,7 @@ jobs:
         run: >-
           python -m hara_bench run --suite algorithms --profile smoke
           --runtime python-prepared --runtime c-prepared --runtime java-prepared
-          --runtime clojure-prepared --runtime node-prepared
+          --runtime chez-prepared --runtime clojure-prepared --runtime node-prepared
           --runtime ruby-yjit-prepared
       - name: Normalize smoke evidence
         run: python -m hara_bench import-language results/local/language.json results/local/normalized.json

@@ -42,11 +42,14 @@ jobs:
       CLOJURE_DEPS: '{:mvn/repos {"central" {:url "https://repo.maven.apache.org/maven2/"}} :deps {org.clojure/clojure {:mvn/version "1.12.5"}}}'
     steps:
       - name: Install runner dependencies
+        shell: bash
         run: |
           apt-get update
           DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
             build-essential ca-certificates curl git gzip tar time python3 python3-pip \
             openjdk-21-jdk-headless sbcl chezscheme guile-3.0 luajit pypy3
+          ln -sf "$(command -v chezscheme)" /usr/local/bin/chez
+          chez --version
       - uses: actions/checkout@v4
       - uses: actions/checkout@v4
         with:
@@ -103,8 +106,9 @@ jobs:
           fi
           echo "value=$value" >> "$GITHUB_OUTPUT"
       - name: Record immutable revisions
+        shell: bash
         run: |
-          echo "HARA_BENCHMARK_REVISION=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
+          echo "HARA_BENCHMARK_REVISION=$GITHUB_SHA" >> "$GITHUB_ENV"
           echo "HARA_REVISION=$(git -C "$HARA_ROOT" rev-parse HEAD)" >> "$GITHUB_ENV"
       - name: Run algorithm corpus
         run: python3 -m hara_bench run --suite algorithms --profile "${{ steps.profile.outputs.value }}" --hara-root "$HARA_ROOT"

@@ -21,6 +21,7 @@ C and Java stay visible, but they are rendered with reference colours and never 
 | In class | Hara whole-Wasm | Product runtime under test. |
 | In class | LuaJIT | Small, mature dynamic tracing JIT and a strong footprint comparator. |
 | In class | PyPy | Reuses the exact Python implementations while replacing CPython with a tracing JIT. |
+| In class | Node.js / V8 | Widely recognised server-side dynamic JIT with explicit first-call and warm-up behaviour. Node and V8 versions are recorded together. |
 | In class + Lisp | Clojure / HotSpot | Runs the exact Clojure forms used by Babashka, with JVM warm-up, RSS and dependency-bundle size recorded separately. |
 | Lisp | SBCL | High-performance Common Lisp implementation. |
 | Lisp | Chez Scheme | Mature native-code Scheme implementation. |
@@ -32,9 +33,8 @@ C and Java stay visible, but they are rendered with reference colours and never 
 
 ### Add next
 
-1. **Node.js / V8** — the most recognisable dynamic-JIT reference and important for server-side adoption comparisons.
-2. **Ruby / YJIT** — a dynamic object model with a modern production JIT; useful because its memory trade-off should be visible.
-3. **Racket CS** — broadens the Lisp lane without pretending every Lisp has the same execution model.
+1. **Ruby / YJIT** — a dynamic object model with a modern production JIT; useful because its memory trade-off should be visible.
+2. **Racket CS** — broadens the Lisp lane without pretending every Lisp has the same execution model.
 
 PHP JIT and Julia should wait. PHP is dominated by request lifecycle/framework behaviour, while Julia specialises around numerical compilation and would pull the corpus away from Hara's general dynamic-language claim.
 
@@ -78,7 +78,7 @@ No single “smallest” score should mix these dimensions. A language can have 
 The canonical public lane runs inside a pinned Ubuntu 24.04 job container. Nightly and weekly workflows:
 
 1. check out immutable Hara and benchmark revisions;
-2. install the declared runtime set;
+2. install the declared runtime set, including the exact Node 24 LTS release;
 3. prime pinned Clojure dependencies before any process-start measurement;
 4. run the corpus and collect resource metadata;
 5. validate normalized JSON against the schema;

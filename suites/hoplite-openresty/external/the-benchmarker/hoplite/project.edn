@@ -1,0 +1,16 @@
+{:hara/type :project
+ :hara/version "1.0.0"
+ :project/id benchmark/hoplite
+ :project/version "0.1.0"
+ :project/source-paths ["."]
+ :project/test-paths []
+ :project/extension-paths []
+ :project/capabilities #{:host/nginx}
+ :project/main benchmark.hoplite
+ :project/default-profile :server
+ :project/profiles
+ {:server
+  {:profile/language :hoplite
+   :profile/main benchmark.hoplite/app
+   :profile/options {:port 3000
+                     :workers 4}}}}

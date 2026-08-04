@@ -47,7 +47,7 @@ The resource-aware coordinator requires `/usr/bin/time`. PyPy is measured with t
 
 ## Canonical GitHub evidence
 
-The scheduled workflow runs inside an Ubuntu 24.04 job container with fixed CPU and memory limits. Validated runs are uploaded as workflow artifacts and then promoted to the `benchmarks-data` branch. A push to either `main` or `benchmarks-data` rebuilds GitHub Pages from the current site code plus the durable run history.
+Relevant pushes to `main` run the canonical smoke profile inside an Ubuntu 24.04 job container with fixed CPU and memory limits. Nightly and weekly schedules run the larger profiles. Validated runs are uploaded as workflow artifacts and promoted to the `benchmarks-data` branch automatically. A push to either `main` or `benchmarks-data` rebuilds GitHub Pages from the current site code plus the durable run history.
 
 Hosted-runner results are comparative evidence. Machine identity, revisions, runtime versions and container identity remain attached to every run so results are not presented as universal absolutes.
 

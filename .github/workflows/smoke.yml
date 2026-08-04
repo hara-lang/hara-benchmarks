@@ -21,6 +21,9 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.18.0'
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -34,10 +37,12 @@ jobs:
           clojure -Sdeps '{:deps {org.clojure/clojure {:mvn/version "1.12.5"}}}' -P
       - run: python -m unittest discover -v
       - run: node --check site/app.js
+      - run: node --check suites/language/node_runner.mjs
       - name: Run portable smoke corpus
         run: >-
           python -m hara_bench run --suite algorithms --profile smoke
-          --runtime python-prepared --runtime c-prepared --runtime clojure-prepared
+          --runtime python-prepared --runtime c-prepared
+          --runtime clojure-prepared --runtime node-prepared
       - name: Normalize smoke evidence
         run: python -m hara_bench import-language results/local/language.json results/local/normalized.json
       - run: python -m hara_bench validate results/local/normalized.json

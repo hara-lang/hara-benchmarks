@@ -11,6 +11,10 @@ class WorkflowContractTest(unittest.TestCase):
         self.assertIn("- cron: '23 3 * * *'", workflow)
         self.assertIn("- cron: '41 4 * * 0'", workflow)
         self.assertIn("git -C history push origin HEAD:benchmarks-data", workflow)
+        self.assertIn(
+            "cancel-in-progress: ${{ github.event_name == 'push' }}",
+            workflow,
+        )
 
     def test_main_push_uses_the_complete_prepared_peer_set(self):
         workflow = Path(".github/workflows/benchmarks.yml").read_text(encoding="utf-8")

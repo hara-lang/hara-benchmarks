@@ -9,11 +9,11 @@ Measured now:
 - Hara whole-Wasm
 - LuaJIT
 - PyPy, using the identical Python source used by CPython
+- Node.js / V8, using explicit JavaScript implementations of the shared algorithms
 - Clojure / HotSpot, using the identical Clojure source used by Babashka
 
 Planned adapters:
 
-- Node.js / V8
 - Ruby / YJIT
 
 ## Lisp family
@@ -43,6 +43,21 @@ C and Java remain visible, but are categorised and coloured separately from Hara
 - `eval` includes source evaluation and remains a lifecycle result.
 - C and Java are prepared-only because their compiler step is recorded separately.
 
+## Node.js / V8 lane
+
+`node_workloads.json` contains one idiomatic JavaScript implementation for every workload in the shared corpus. `node_runner.mjs` compiles the selected source into a benchmark function and then invokes it repeatedly in one Node process, allowing the warm-up samples to expose V8 optimisation rather than hiding it behind a single aggregate. Every run records:
+
+- the exact Node and V8 versions
+- process cold start
+- source compilation and first-call cost
+- warm-up samples and convergence
+- steady-state timing
+- peak RSS
+- Node executable size
+- source bytes
+
+The canonical lane pins Node 24 LTS rather than following the moving Current release.
+
 ## Clojure lane
 
 The Clojure runner wraps each `bb_source` form in a zero-argument function, compiles it through Clojure 1.12.5, and invokes it repeatedly in one JVM so HotSpot can optimise hot paths. Dependency resolution is primed before startup measurement. The result records:
@@ -59,4 +74,4 @@ Because Babashka and Clojure consume the same source field, their difference is 
 
 ## Resource collection
 
-`run_resources.py` wraps the existing coordinator with `/usr/bin/time`, records peak RSS, runtime executable size, runtime bundle size and source size, and adds the PyPy and Clojure adapters. The normalized schema keeps source, runtime, bundle, generated artifact and image sizes separate.
+`run_resources.py` wraps the existing coordinator with `/usr/bin/time`, records peak RSS, runtime executable size, runtime bundle size and source size, and adds the PyPy, Node and Clojure adapters. The normalized schema keeps source, runtime, bundle, generated artifact and image sizes separate.

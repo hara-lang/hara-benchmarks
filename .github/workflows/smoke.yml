@@ -12,6 +12,8 @@ jobs:
   validate:
     runs-on: ubuntu-24.04
     timeout-minutes: 30
+    env:
+      CLOJURE_DEPS: '{:mvn/repos {"central" {:url "https://repo.maven.apache.org/maven2/"}} :deps {org.clojure/clojure {:mvn/version "1.12.5"}}}'
     steps:
       - uses: actions/checkout@v4
       - uses: actions/checkout@v4
@@ -36,8 +38,7 @@ jobs:
           cli: 1.12.5.1664
       - name: Prime pinned Clojure dependencies
         working-directory: suites/language
-        run: >-
-          clojure -Sdeps '{:deps {org.clojure/clojure {:mvn/version "1.12.5"}}}' -P
+        run: clojure -Sdeps "$CLOJURE_DEPS" -P
       - run: python -m unittest discover -v
       - run: node --check site/app.js
       - run: node --check suites/language/node_runner.mjs
@@ -45,7 +46,7 @@ jobs:
       - name: Run portable smoke corpus
         run: >-
           python -m hara_bench run --suite algorithms --profile smoke
-          --runtime python-prepared --runtime c-prepared
+          --runtime python-prepared --runtime c-prepared --runtime java-prepared
           --runtime clojure-prepared --runtime node-prepared
           --runtime ruby-yjit-prepared
       - name: Normalize smoke evidence

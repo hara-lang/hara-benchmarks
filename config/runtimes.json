@@ -60,7 +60,7 @@
     "node": {
       "name": "Node.js / V8",
       "groups": ["dynamic-jit"],
-      "status": "planned",
+      "status": "measured",
       "runtime_prefix": "node-"
     },
     "ruby": {
@@ -125,7 +125,7 @@
     }
   },
   "display_order": [
-    "luajit", "pypy", "clojure", "node", "ruby",
+    "luajit", "pypy", "node", "clojure", "ruby",
     "sbcl", "chez", "guile", "bb", "racket",
     "c", "java", "python"
   ]

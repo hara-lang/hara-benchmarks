@@ -17,6 +17,7 @@ LANGUAGES = {
     "guile": ("scheme_source", "Scheme", "suites/language/guile_runner.scm"),
     "luajit": ("lua_source", "Lua", "adapters/luajit/lua_runner.lua"),
     "bb": ("bb_source", "Clojure", "suites/language/bb_runner.clj"),
+    "clojure": ("bb_source", "Clojure", "suites/language/clojure_runner.clj"),
     "python": ("python_source", "Python", "suites/language/python_runner.py"),
     "pypy": ("python_source", "Python", "suites/language/python_runner.py"),
     "c": ("c_source", "C", "suites/language/c_runner.py"),
@@ -72,6 +73,7 @@ def preparation(runtime: str) -> dict[str, Any]:
         "guile": ("Read form and eval a zero-argument lambda", "guile -s guile_runner.scm prepared …"),
         "luajit": ("Load source as a prepared Lua function", "luajit lua_runner.lua prepared …"),
         "bb": ("Read source and eval a zero-argument function", "bb bb_runner.clj prepared …"),
+        "clojure": ("Compile the same Clojure form used by Babashka and warm it on HotSpot", "clojure -M clojure_runner.clj prepared …"),
     }
     description, command = details[runtime]
     return {"description": description, "command": command}

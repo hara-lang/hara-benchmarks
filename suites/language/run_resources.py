@@ -3,7 +3,8 @@
 
 This is a thin wrapper around ``run.py`` so the benchmark coordinator remains
 usable on developer machines while CI can add RSS, executable-size and source-
-size evidence. It also enables PyPy by reusing the exact Python implementation.
+size evidence. It also enables PyPy and Clojure/HotSpot while reusing the exact
+Python and Clojure sources used by CPython and Babashka.
 """
 from __future__ import annotations
 
@@ -15,11 +16,16 @@ import shutil
 import subprocess
 import sys
 import time
+from functools import lru_cache
 from pathlib import Path
 from typing import Any
 
 HERE = Path(__file__).resolve().parent
 COORDINATOR = HERE / "run.py"
+CLOJURE_VERSION = "1.12.5"
+CLOJURE_DEPS = (
+    '{:deps {org.clojure/clojure {:mvn/version "' + CLOJURE_VERSION + '"}}}'
+)
 
 
 def load_coordinator():
@@ -70,6 +76,37 @@ def source_bytes(command: list[str]) -> int | None:
         return None
 
 
+@lru_cache(maxsize=1)
+def clojure_bundle_bytes() -> int | None:
+    """Measure the pinned Clojure dependency classpath, excluding directories."""
+    try:
+        result = subprocess.run(
+            ["clojure", "-Sdeps", CLOJURE_DEPS, "-Spath"],
+            text=True,
+            capture_output=True,
+            timeout=120,
+            check=True,
+            cwd=HERE,
+        )
+    except (OSError, subprocess.SubprocessError):
+        return None
+    total = 0
+    found = False
+    for item in result.stdout.strip().split(os.pathsep):
+        path = Path(item)
+        try:
+            if path.is_file():
+                total += path.stat().st_size
+                found = True
+        except OSError:
+            continue
+    return total if found else None
+
+
+def runtime_bundle_bytes(command: list[str]) -> int | None:
+    return clojure_bundle_bytes() if command and command[0] == "clojure" else None
+
+
 def output_path(argv: list[str], default: Path) -> Path:
     try:
         index = argv.index("--output")
@@ -85,6 +122,17 @@ def main() -> int:
         "source_field": "python_source",
         "binary": "pypy3",
     }
+    coordinator.LANGUAGE_RUNTIMES["clojure"] = {
+        "command": [
+            "clojure",
+            "-Sdeps",
+            CLOJURE_DEPS,
+            "-M",
+            str(HERE / "clojure_runner.clj"),
+        ],
+        "source_field": "bb_source",
+        "binary": "clojure",
+    }
 
     def timed_with_resources(command: list[str]):
         timer = "/usr/bin/time"
@@ -92,9 +140,10 @@ def main() -> int:
             raise RuntimeError("/usr/bin/time is required for resource measurements")
         flag = "-v" if platform.system() == "Linux" else "-l"
         started = time.perf_counter_ns()
+        run_cwd = HERE if command and command[0] == "clojure" else coordinator.ROOT
         result = subprocess.run(
             [timer, flag, *command],
-            cwd=coordinator.ROOT,
+            cwd=run_cwd,
             text=True,
             capture_output=True,
             timeout=1200,
@@ -114,6 +163,7 @@ def main() -> int:
         payload: dict[str, Any] = json.loads(line)
         payload["peak_rss_bytes"] = parse_peak_rss(result.stderr)
         payload["runtime_executable_bytes"] = executable_bytes(command)
+        payload["runtime_bundle_bytes"] = runtime_bundle_bytes(command)
         payload["source_bytes"] = source_bytes(command)
         return elapsed, payload
 
@@ -123,7 +173,27 @@ def main() -> int:
     path = output_path(sys.argv, coordinator.ROOT / "target/lisp-hara-benchmark.json")
     if path.exists():
         data = json.loads(path.read_text(encoding="utf-8"))
-        data.setdefault("versions", {})["pypy"] = coordinator.version(["pypy3", "--version"])
+        versions = data.setdefault("versions", {})
+        versions["pypy"] = coordinator.version(["pypy3", "--version"])
+        try:
+            clojure_version = subprocess.run(
+                [
+                    "clojure",
+                    "-Sdeps",
+                    CLOJURE_DEPS,
+                    "-M",
+                    "-e",
+                    "(println (clojure-version))",
+                ],
+                cwd=HERE,
+                text=True,
+                capture_output=True,
+                timeout=120,
+                check=True,
+            ).stdout.strip().splitlines()[0]
+        except (OSError, subprocess.SubprocessError, IndexError):
+            clojure_version = "unavailable"
+        versions["clojure"] = clojure_version
         data.setdefault("environment", {}).update({
             "container_image": os.environ.get("HARA_BENCH_CONTAINER_IMAGE"),
             "runner": os.environ.get("RUNNER_NAME"),

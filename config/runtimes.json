@@ -72,7 +72,7 @@
     "clojure": {
       "name": "Clojure / HotSpot",
       "groups": ["dynamic-jit", "lisp"],
-      "status": "planned",
+      "status": "measured",
       "runtime_prefix": "clojure-"
     },
     "sbcl": {
@@ -125,7 +125,7 @@
     }
   },
   "display_order": [
-    "luajit", "pypy", "node", "ruby", "clojure",
+    "luajit", "pypy", "clojure", "node", "ruby",
     "sbcl", "chez", "guile", "bb", "racket",
     "c", "java", "python"
   ]

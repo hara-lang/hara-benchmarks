@@ -21,6 +21,7 @@ C and Java stay visible, but they are rendered with reference colours and never 
 | In class | Hara whole-Wasm | Product runtime under test. |
 | In class | LuaJIT | Small, mature dynamic tracing JIT and a strong footprint comparator. |
 | In class | PyPy | Reuses the exact Python implementations while replacing CPython with a tracing JIT. |
+| In class + Lisp | Clojure / HotSpot | Runs the exact Clojure forms used by Babashka, with JVM warm-up, RSS and dependency-bundle size recorded separately. |
 | Lisp | SBCL | High-performance Common Lisp implementation. |
 | Lisp | Chez Scheme | Mature native-code Scheme implementation. |
 | Lisp | GNU Guile | Dynamic Scheme implementation with a different runtime profile. |
@@ -33,8 +34,7 @@ C and Java stay visible, but they are rendered with reference colours and never 
 
 1. **Node.js / V8** — the most recognisable dynamic-JIT reference and important for server-side adoption comparisons.
 2. **Ruby / YJIT** — a dynamic object model with a modern production JIT; useful because its memory trade-off should be visible.
-3. **Clojure / HotSpot** — both an in-class dynamic-JIT lane and the most relevant JVM Lisp comparison.
-4. **Racket CS** — broadens the Lisp lane without pretending every Lisp has the same execution model.
+3. **Racket CS** — broadens the Lisp lane without pretending every Lisp has the same execution model.
 
 PHP JIT and Julia should wait. PHP is dominated by request lifecycle/framework behaviour, while Julia specialises around numerical compilation and would pull the corpus away from Hara's general dynamic-language claim.
 
@@ -79,11 +79,12 @@ The canonical public lane runs inside a pinned Ubuntu 24.04 job container. Night
 
 1. check out immutable Hara and benchmark revisions;
 2. install the declared runtime set;
-3. run the corpus and collect resource metadata;
-4. validate normalized JSON against the schema;
-5. upload raw evidence as a workflow artifact;
-6. promote validated results to the `benchmarks-data` branch; and
-7. trigger the Pages build from `main` plus that data history.
+3. prime pinned Clojure dependencies before any process-start measurement;
+4. run the corpus and collect resource metadata;
+5. validate normalized JSON against the schema;
+6. upload raw evidence as a workflow artifact;
+7. promote validated results to the `benchmarks-data` branch; and
+8. trigger the Pages build from `main` plus that data history.
 
 The data promotion step is idempotent and uses the run identifier in its path. Failed or invalid runs remain workflow artifacts but are not published.
 

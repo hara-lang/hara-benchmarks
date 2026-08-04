@@ -45,7 +45,12 @@ jobs:
       - uses: dtolnay/rust-toolchain@stable
       - uses: DeLaGuardo/setup-clojure@13.4
         with:
+          cli: 1.12.5.1664
           bb: latest
+      - name: Prime pinned Clojure dependencies
+        working-directory: suites/language
+        run: >-
+          clojure -Sdeps '{:deps {org.clojure/clojure {:mvn/version "1.12.5"}}}' -P
       - name: Select profile
         id: profile
         shell: bash

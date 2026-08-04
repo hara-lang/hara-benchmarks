@@ -1,78 +1,47 @@
-# lisp-hara benchmark
+# Language corpus
 
-Balanced application-kernel comparison of the Hara Rust runtime tiers against
-**SBCL**, **Chez Scheme**, **GNU Guile**, **LuaJIT**, **Babashka**, **Python**,
-**C**, and **Java**. The original tiny
-microbenchmarks remain in `suites/runtime/`; this corpus exercises mutable
-arrays, mutable objects, persistent data, recursion, and mixed control flow.
+The language corpus answers three separate questions rather than producing one undifferentiated league table.
 
-## Requirements
+## In-class dynamic JIT
 
-```shell
-brew install sbcl chezscheme guile
-```
+Measured now:
 
-The extended lanes also use `bb`, `python3`, `cc`, and JDK 21. Java defaults
-to Homebrew's `/opt/homebrew/opt/openjdk@21`; override it with
-`HARA_BENCH_JAVA_HOME`.
+- Hara whole-Wasm
+- LuaJIT
+- PyPy, using the identical Python source used by CPython
 
-Plus the hara benchmark binaries (built automatically unless `--no-build`):
+Planned adapters:
 
-- `rust/target/release/hara-runtime-benchmark`
-- `target/runtime-benchmark/{vm,trace-checked,trace-native}/release/hara-bytecode-benchmark`
+- Node.js / V8
+- Ruby / YJIT
+- Clojure / HotSpot
 
-## Usage
+## Lisp family
 
-```shell
-python3 -m hara_bench run --suite algorithms --profile smoke
-python3 -m hara_bench run --suite algorithms --profile weekly
-python3 -m hara_bench run --suite algorithms --profile nightly
-python3 -m hara_bench run --suite algorithms --runtime sbcl-prepared --runtime hara-rust-trace-native-prepared
+Measured now:
 
-# General-computing acceptance slice: Sieve, Towers, Queens, Heap permutation
-python3 suites/language/run.py --profile standard \
-  --corpus suites/language/general-workloads.json \
-  --runtime sbcl-prepared --runtime chez-prepared --runtime guile-prepared \
-  --runtime luajit-prepared --runtime hara-rust-whole-wasm-prepared \
-  --output target/general-computing-standard.json
-```
+- Hara
+- SBCL
+- Chez Scheme
+- GNU Guile
+- Babashka
 
-Runtime names carry an explicit `-eval` or `-prepared` lane. Compare only
-within a lane. Hara's tree evaluator participates in `-eval`; bytecode and
-trace tiers participate in both compile/execute and prepared execution.
+Clojure / HotSpot and Racket CS are the next additions.
 
-Results default to `target/lisp-hara-benchmark.{json,md}` (gitignored
-scratch — comparison evidence, not regression gating).
+## References and baselines
 
-## Semantics
+- C is the ahead-of-time native reference.
+- Java / HotSpot is the managed JIT reference.
+- CPython is the familiar dynamic interpreter baseline.
 
-Mirrors the luajit-hara suite so numbers are comparable across suites:
+C and Java remain visible, but are categorised and coloured separately from Hara's in-class dynamic-JIT comparison.
 
-- `workloads.json` carries per-language source fields (`hara_source`,
-  `scheme_source`, `cl_source`, `bb_source`) plus a shared `expected` checksum.
-- `-eval` parses/loads and evaluates source on every measured call.
-- `-prepared` reads and compiles/loads once, then invokes repeatedly.
-- Mutable table rows use Hara `object`/`array` (through their canonical
-  native calls), Scheme/Common Lisp hash tables and vectors, and Lua tables.
-  Persistent transformations are named and reported separately.
-- Unsupported runtime/workload combinations are retained in the feature
-  coverage table with their error; they are never silently substituted.
-- Lisp sources are hand-written **untyped** idiomatic equivalents (no
-  SBCL type declarations or `optimize` declarations, portable R6RS-ish
-  Scheme) — an implementation snapshot, not a source-normalized shootout.
-- Scheme runners time with wall clock (Chez `current-time`) / run time
-  (Guile `get-internal-run-time`); SBCL uses `get-internal-run-time`
-  (CPU time, like the Lua runner's `os.clock`).
+## Modes
 
-## Files
+- `prepared` measures already parsed/compiled work and is the primary steady-state comparison.
+- `eval` includes source evaluation and remains a lifecycle result.
+- C and Java are prepared-only because their compiler step is recorded separately.
 
-- `workloads.json` — the shared corpus
-- `general-workloads.json` — the first general-computing acceptance slice,
-  derived from established benchmark families rather than micro-kernels
-- `chez_runner.scm`, `guile_runner.scm`, `sbcl_runner.lisp` — per-runtime
-  runners implementing the `ID SOURCE_HEX EXPECTED WINDOWS CALLS` contract
-- `bb_runner.clj`, `python_runner.py`, `c_runner.py`, `java_runner.py` — the
-  additional dynamic and compiled runtime adapters; C and Java expose only a
-  prepared lane
-- `run.py` — the coordinator (windowed sampling, steady-state median,
-  JSON + Markdown output)
+## Resource collection
+
+`run_resources.py` wraps the existing coordinator with `/usr/bin/time`, records peak RSS, runtime executable size and source size, and adds the PyPy adapter. The normalized schema keeps source, runtime, bundle, generated artifact and image sizes separate.

@@ -22,6 +22,7 @@ C and Java stay visible, but they are rendered with reference colours and never 
 | In class | LuaJIT | Small, mature dynamic tracing JIT and a strong footprint comparator. |
 | In class | PyPy | Reuses the exact Python implementations while replacing CPython with a tracing JIT. |
 | In class | Node.js / V8 | Widely recognised server-side dynamic JIT with explicit first-call and warm-up behaviour. Node and V8 versions are recorded together. |
+| In class | Ruby / YJIT | Modern production JIT for a highly dynamic object model. The lane makes YJIT mandatory and exposes its memory trade-off alongside speed. |
 | In class + Lisp | Clojure / HotSpot | Runs the exact Clojure forms used by Babashka, with JVM warm-up, RSS and dependency-bundle size recorded separately. |
 | Lisp | SBCL | High-performance Common Lisp implementation. |
 | Lisp | Chez Scheme | Mature native-code Scheme implementation. |
@@ -33,8 +34,7 @@ C and Java stay visible, but they are rendered with reference colours and never 
 
 ### Add next
 
-1. **Ruby / YJIT** — a dynamic object model with a modern production JIT; useful because its memory trade-off should be visible.
-2. **Racket CS** — broadens the Lisp lane without pretending every Lisp has the same execution model.
+1. **Racket CS** — broadens the Lisp lane without pretending every Lisp has the same execution model.
 
 PHP JIT and Julia should wait. PHP is dominated by request lifecycle/framework behaviour, while Julia specialises around numerical compilation and would pull the corpus away from Hara's general dynamic-language claim.
 
@@ -48,6 +48,7 @@ PHP JIT and Julia should wait. PHP is dominated by request lifecycle/framework b
 - Use geometric means only over pairwise common workloads; never impute missing results.
 - Show absolute values alongside ratios.
 - Treat GitHub-hosted numbers as comparative evidence, not laboratory-grade absolute records.
+- Fail a JIT-labelled lane when its JIT is unavailable or disabled.
 
 ## Metrics
 
@@ -71,14 +72,14 @@ PHP JIT and Julia should wait. PHP is dominated by request lifecycle/framework b
 - generated artifact bytes and compressed artifact bytes
 - OCI image compressed and unpacked size for deployable products
 
-No single “smallest” score should mix these dimensions. A language can have a tiny source artifact and a large runtime, or the reverse.
+No single “smallest” score should mix these dimensions. A language can have a tiny source artifact and a large runtime, or the reverse. This is particularly important for YJIT, which deliberately trades additional JIT code and metadata memory for execution speed.
 
 ## GitHub execution and publication
 
 The canonical public lane runs inside a pinned Ubuntu 24.04 job container. Nightly and weekly workflows:
 
 1. check out immutable Hara and benchmark revisions;
-2. install the declared runtime set, including the exact Node 24 LTS release;
+2. install the declared runtime set, including exact Node 24 LTS and Ruby 4.0.6 releases;
 3. prime pinned Clojure dependencies before any process-start measurement;
 4. run the corpus and collect resource metadata;
 5. validate normalized JSON against the schema;

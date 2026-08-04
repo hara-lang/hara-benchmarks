@@ -9,7 +9,7 @@ from pathlib import Path
 from typing import Any
 
 
-SCHEMA_VERSION = 2
+SCHEMA_VERSION = 3
 
 
 def percentile(values: list[int | float], fraction: float) -> float | None:
@@ -48,13 +48,18 @@ def validate_run(data: dict[str, Any]) -> list[str]:
     for key in ("schema_version", "run", "environment", "measurements"):
         if key not in data:
             errors.append(f"missing top-level field: {key}")
-    if data.get("schema_version") not in (1, SCHEMA_VERSION):
-        errors.append(f"schema_version must be 1 or {SCHEMA_VERSION}")
+    if data.get("schema_version") not in (1, 2, SCHEMA_VERSION):
+        errors.append(f"schema_version must be 1, 2 or {SCHEMA_VERSION}")
     measurements = data.get("measurements", [])
     if not isinstance(measurements, list):
         errors.append("measurements must be an array")
         return errors
     required = ("suite", "workload", "runtime", "status")
+    byte_fields = (
+        "peak_rss_bytes", "idle_rss_bytes", "source_bytes", "artifact_bytes",
+        "compressed_artifact_bytes", "runtime_executable_bytes",
+        "runtime_bundle_bytes", "container_image_bytes",
+    )
     for index, row in enumerate(measurements):
         for key in required:
             if key not in row:
@@ -63,6 +68,10 @@ def validate_run(data: dict[str, Any]) -> list[str]:
             steady = row.get("steady_state", {})
             if not isinstance(steady.get("samples_ns"), list) or not steady["samples_ns"]:
                 errors.append(f"measurements[{index}] has no steady-state samples")
+        for key in byte_fields:
+            value = row.get(key)
+            if value is not None and (not isinstance(value, (int, float)) or value < 0):
+                errors.append(f"measurements[{index}] {key} must be a non-negative number or null")
     return errors
 
 

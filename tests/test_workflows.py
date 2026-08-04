@@ -10,7 +10,7 @@ class WorkflowContractTest(unittest.TestCase):
         self.assertIn("value=smoke", workflow)
         self.assertIn("- cron: '23 3 * * *'", workflow)
         self.assertIn("- cron: '41 4 * * 0'", workflow)
-        self.assertIn("git push origin HEAD:benchmarks-data", workflow)
+        self.assertIn("git -C history push origin HEAD:benchmarks-data", workflow)
 
     def test_benchmark_data_push_rebuilds_pages_from_main(self):
         workflow = Path(".github/workflows/pages.yml").read_text(encoding="utf-8")

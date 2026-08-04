@@ -72,7 +72,7 @@
     "clojure": {
       "name": "Clojure / HotSpot",
       "groups": ["dynamic-jit", "lisp"],
-      "status": "planned",
+      "status": "measured",
       "runtime_prefix": "clojure-"
     },
     "sbcl": {

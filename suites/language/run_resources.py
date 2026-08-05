@@ -15,6 +15,7 @@ import platform
 import shutil
 import subprocess
 import sys
+import tempfile
 import time
 from functools import lru_cache
 from pathlib import Path
@@ -219,19 +220,40 @@ def main() -> int:
         timer = "/usr/bin/time"
         if not Path(timer).exists():
             raise RuntimeError("/usr/bin/time is required for resource measurements")
-        flag = "-v" if platform.system() == "Linux" else "-l"
+        linux = platform.system() == "Linux"
         started = time.perf_counter_ns()
         run_cwd = HERE if command and command[0] == "clojure" else coordinator.ROOT
-        result = subprocess.run(
-            [timer, flag, *command],
-            cwd=run_cwd,
-            text=True,
-            capture_output=True,
-            timeout=1200,
-            check=False,
-        )
-        elapsed = time.perf_counter_ns() - started
+        time_path: Path | None = None
+        try:
+            if linux:
+                handle = tempfile.NamedTemporaryFile(
+                    prefix="hara-bench-time-", suffix=".txt", delete=False
+                )
+                time_path = Path(handle.name)
+                handle.close()
+                timed_command = [timer, "-v", "-o", str(time_path), *command]
+            else:
+                timed_command = [timer, "-l", *command]
+            result = subprocess.run(
+                timed_command,
+                cwd=run_cwd,
+                text=True,
+                capture_output=True,
+                timeout=1200,
+                check=False,
+            )
+            elapsed = time.perf_counter_ns() - started
+            timing_output = (
+                time_path.read_text(encoding="utf-8")
+                if time_path is not None and time_path.exists()
+                else result.stderr
+            )
+        finally:
+            if time_path is not None:
+                time_path.unlink(missing_ok=True)
         if result.returncode:
+            # GNU time writes its measurements to a separate file, preserving the
+            # adapter's real stderr so CI reports compilation and runtime errors.
             raise subprocess.CalledProcessError(
                 result.returncode, command, output=result.stdout, stderr=result.stderr
             )
@@ -242,7 +264,7 @@ def main() -> int:
         if line is None:
             raise RuntimeError(f"adapter emitted no JSON: {' '.join(command)}")
         payload: dict[str, Any] = json.loads(line)
-        payload["peak_rss_bytes"] = parse_peak_rss(result.stderr)
+        payload["peak_rss_bytes"] = parse_peak_rss(timing_output)
         payload["runtime_executable_bytes"] = executable_bytes(command)
         payload["runtime_bundle_bytes"] = runtime_bundle_bytes(command)
         payload["source_bytes"] = source_bytes(command)

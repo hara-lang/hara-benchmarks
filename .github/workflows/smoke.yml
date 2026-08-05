@@ -37,17 +37,12 @@ jobs:
       - uses: DeLaGuardo/setup-clojure@13.4
         with:
           cli: 1.12.5.1664
-      - name: Install Chez Scheme command
+      - name: Install Chez Scheme
         shell: bash
         run: |
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends chezscheme
-          cat <<'SH' | sudo tee /usr/local/bin/chez >/dev/null
-          #!/bin/sh
-          exec /usr/bin/chezscheme "$@"
-          SH
-          sudo chmod +x /usr/local/bin/chez
-          chez --version
+          /usr/bin/chezscheme --version
       - name: Prime pinned Clojure dependencies
         working-directory: suites/language
         run: clojure -Sdeps "$CLOJURE_DEPS" -P

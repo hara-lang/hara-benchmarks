@@ -47,9 +47,8 @@ class WorkflowContractTest(unittest.TestCase):
         self.assertIn("for attempt in 1 2 3 4 5", workflow)
         self.assertIn('echo "HARA_BENCH_JAVA_HOME=$java_home"', workflow)
         self.assertIn("HARA_BENCH_CHEZ_EXECUTABLE: /usr/bin/chezscheme", workflow)
-        self.assertIn('exec /usr/bin/chezscheme "$@"', workflow)
-        self.assertNotIn('ln -sf "$(command -v chezscheme)"', workflow)
-        self.assertIn("chez --version", workflow)
+        self.assertIn("/usr/bin/chezscheme --version", workflow)
+        self.assertNotIn("/usr/local/bin/chez", workflow)
         self.assertIn('HARA_BENCHMARK_REVISION=$GITHUB_SHA', workflow)
         self.assertNotIn("cli: 1.12.5.1664", workflow)
 
@@ -59,8 +58,8 @@ class WorkflowContractTest(unittest.TestCase):
         self.assertIn("--runtime chez-prepared", workflow)
         self.assertIn("apt-get install -y --no-install-recommends chezscheme", workflow)
         self.assertIn("HARA_BENCH_CHEZ_EXECUTABLE: /usr/bin/chezscheme", workflow)
-        self.assertIn('exec /usr/bin/chezscheme "$@"', workflow)
-        self.assertNotIn('ln -sf "$(command -v chezscheme)"', workflow)
+        self.assertIn("/usr/bin/chezscheme --version", workflow)
+        self.assertNotIn("/usr/local/bin/chez", workflow)
         self.assertIn("repo.maven.apache.org/maven2/", workflow)
         self.assertIn("Verify smoke runtime coverage", workflow)
 

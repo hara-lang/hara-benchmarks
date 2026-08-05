@@ -57,15 +57,31 @@ class WorkflowContractTest(unittest.TestCase):
         self.assertIn('ln -sf "$(command -v chezscheme)" /usr/local/bin/chez', workflow)
         self.assertIn("repo.maven.apache.org/maven2/", workflow)
 
-    def test_benchmark_data_push_rebuilds_pages_from_main(self):
+    def test_published_data_explicitly_dispatches_pages(self):
+        workflow = Path(".github/workflows/benchmarks.yml").read_text(encoding="utf-8")
+        self.assertIn("actions: write", workflow)
+        self.assertIn("id: history", workflow)
+        self.assertIn('echo "changed=true" >> "$GITHUB_OUTPUT"', workflow)
+        self.assertIn("if: steps.history.outputs.changed == 'true'", workflow)
+        self.assertIn("uses: actions/github-script@v7", workflow)
+        self.assertIn("createWorkflowDispatch", workflow)
+        self.assertIn("workflow_id: 'pages.yml'", workflow)
+        self.assertIn("ref: 'main'", workflow)
+
+    def test_benchmark_data_rebuilds_pages_from_main(self):
         workflow = Path(".github/workflows/pages.yml").read_text(encoding="utf-8")
         self.assertIn("branches: [main, benchmarks-data]", workflow)
+        self.assertIn("workflow_dispatch:", workflow)
         self.assertIn("ref: main", workflow)
         self.assertIn(
             "git fetch origin benchmarks-data:refs/remotes/origin/benchmarks-data",
             workflow,
         )
         self.assertIn("git archive origin/benchmarks-data runs", workflow)
+        self.assertIn(
+            "python scripts/verify_dashboard_data.py dist/data/runs.json",
+            workflow,
+        )
         self.assertNotIn("if: github.ref == 'refs/heads/main'", workflow)
         self.assertIn("uses: actions/deploy-pages@v4", workflow)
 

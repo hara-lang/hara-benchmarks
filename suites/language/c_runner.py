@@ -6,7 +6,8 @@ import time
 from pathlib import Path
 
 
-TEMPLATE = r'''#include <inttypes.h>
+TEMPLATE = r'''#define _POSIX_C_SOURCE 200809L
+#include <inttypes.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -15,10 +16,17 @@ volatile int64_t benchmark_seed = 0;
 {source}
 static uint64_t now_ns(void) {{
   struct timespec value;
-  clock_gettime(CLOCK_MONOTONIC_RAW, &value);
+  if (clock_gettime(CLOCK_MONOTONIC, &value) != 0) {{
+    perror("clock_gettime");
+    exit(2);
+  }}
   return (uint64_t)value.tv_sec * 1000000000ULL + (uint64_t)value.tv_nsec;
 }}
 int main(int argc, char **argv) {{
+  if (argc != 6) {{
+    fputs("compiled C benchmark expects ID EXPECTED WINDOWS CALLS PREPARE_NS\n", stderr);
+    return 2;
+  }}
   const char *id = argv[1];
   int64_t expected = strtoll(argv[2], NULL, 10);
   int windows = atoi(argv[3]), calls = atoi(argv[4]);
@@ -50,10 +58,16 @@ def main():
         root = Path(directory)
         source_path, binary = root / "benchmark.c", root / "benchmark"
         prepare_started = time.perf_counter_ns()
-        source_path.write_text(TEMPLATE.format(source=source))
-        subprocess.run(["cc", "-O3", "-std=c11", str(source_path), "-o", str(binary)], check=True)
+        source_path.write_text(TEMPLATE.format(source=source), encoding="utf-8")
+        subprocess.run(
+            ["cc", "-O3", "-std=c11", str(source_path), "-o", str(binary)],
+            check=True,
+        )
         prepare_ns = time.perf_counter_ns() - prepare_started
-        completed = subprocess.run([str(binary), workload, expected, windows, calls, str(prepare_ns)])
+        completed = subprocess.run(
+            [str(binary), workload, expected, windows, calls, str(prepare_ns)],
+            check=False,
+        )
         raise SystemExit(completed.returncode)
 
 

@@ -14,6 +14,7 @@ jobs:
     timeout-minutes: 30
     env:
       CLOJURE_DEPS: '{:mvn/repos {"central" {:url "https://repo.maven.apache.org/maven2/"}} :deps {org.clojure/clojure {:mvn/version "1.12.5"}}}'
+      HARA_BENCH_CHEZ_EXECUTABLE: /usr/bin/chezscheme
     steps:
       - uses: actions/checkout@v4
       - uses: actions/checkout@v4
@@ -41,7 +42,11 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends chezscheme
-          sudo ln -sf "$(command -v chezscheme)" /usr/local/bin/chez
+          cat <<'SH' | sudo tee /usr/local/bin/chez >/dev/null
+          #!/bin/sh
+          exec /usr/bin/chezscheme "$@"
+          SH
+          sudo chmod +x /usr/local/bin/chez
           chez --version
       - name: Prime pinned Clojure dependencies
         working-directory: suites/language

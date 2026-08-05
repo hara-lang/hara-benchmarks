@@ -277,12 +277,17 @@ def main() -> int:
         except (OSError, subprocess.SubprocessError, IndexError):
             clojure_version = "unavailable"
         versions["clojure"] = clojure_version
-        data.setdefault("environment", {}).update({
+        environment = data.setdefault("environment", {})
+        environment.update({
             "container_image": os.environ.get("HARA_BENCH_CONTAINER_IMAGE"),
             "runner": os.environ.get("RUNNER_NAME"),
             "github_run_id": os.environ.get("GITHUB_RUN_ID"),
             "github_run_attempt": os.environ.get("GITHUB_RUN_ATTEMPT"),
         })
+        if os.environ.get("HARA_BENCHMARK_REVISION"):
+            environment["benchmark_revision"] = os.environ["HARA_BENCHMARK_REVISION"]
+        if os.environ.get("HARA_REVISION"):
+            environment["git_revision"] = os.environ["HARA_REVISION"]
         path.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
     return int(result or 0)
 

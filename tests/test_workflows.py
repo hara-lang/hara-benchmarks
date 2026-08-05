@@ -33,6 +33,8 @@ class WorkflowContractTest(unittest.TestCase):
         self.assertNotIn("-eval", runtime_line)
         self.assertIn("RUNTIME_ARGS: ${{ steps.profile.outputs.runtime_args }}", workflow)
         self.assertIn("$RUNTIME_ARGS", workflow)
+        self.assertIn("Verify comparison runtime coverage", workflow)
+        self.assertIn("scripts/verify_language_coverage.py", workflow)
 
     def test_canonical_container_installs_portable_java_clojure_and_chez(self):
         workflow = Path(".github/workflows/benchmarks.yml").read_text(encoding="utf-8")
@@ -44,8 +46,9 @@ class WorkflowContractTest(unittest.TestCase):
         self.assertIn("--retry 5 --retry-all-errors", workflow)
         self.assertIn("for attempt in 1 2 3 4 5", workflow)
         self.assertIn('echo "HARA_BENCH_JAVA_HOME=$java_home"', workflow)
-        self.assertIn('ln -sf "$(command -v chezscheme)" /usr/local/bin/chez', workflow)
-        self.assertIn("chez --version", workflow)
+        self.assertIn("HARA_BENCH_CHEZ_EXECUTABLE: /usr/bin/chezscheme", workflow)
+        self.assertIn("/usr/bin/chezscheme --version", workflow)
+        self.assertNotIn("/usr/local/bin/chez", workflow)
         self.assertIn('HARA_BENCHMARK_REVISION=$GITHUB_SHA', workflow)
         self.assertNotIn("cli: 1.12.5.1664", workflow)
 
@@ -54,8 +57,11 @@ class WorkflowContractTest(unittest.TestCase):
         self.assertIn("--runtime java-prepared", workflow)
         self.assertIn("--runtime chez-prepared", workflow)
         self.assertIn("apt-get install -y --no-install-recommends chezscheme", workflow)
-        self.assertIn('ln -sf "$(command -v chezscheme)" /usr/local/bin/chez', workflow)
+        self.assertIn("HARA_BENCH_CHEZ_EXECUTABLE: /usr/bin/chezscheme", workflow)
+        self.assertIn("/usr/bin/chezscheme --version", workflow)
+        self.assertNotIn("/usr/local/bin/chez", workflow)
         self.assertIn("repo.maven.apache.org/maven2/", workflow)
+        self.assertIn("Verify smoke runtime coverage", workflow)
 
     def test_published_data_explicitly_dispatches_pages(self):
         workflow = Path(".github/workflows/benchmarks.yml").read_text(encoding="utf-8")

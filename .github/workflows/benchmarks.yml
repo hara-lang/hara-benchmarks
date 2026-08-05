@@ -40,6 +40,7 @@ jobs:
       HARA_ROOT: ${{ github.workspace }}/vendor/hara
       HARA_BENCH_ROOT: ${{ github.workspace }}
       HARA_BENCH_CONTAINER_IMAGE: ubuntu:24.04
+      HARA_BENCH_CHEZ_EXECUTABLE: /usr/bin/chezscheme
       CLOJURE_DEPS: '{:mvn/repos {"central" {:url "https://repo.maven.apache.org/maven2/"}} :deps {org.clojure/clojure {:mvn/version "1.12.5"}}}'
     steps:
       - name: Install runner dependencies
@@ -49,8 +50,7 @@ jobs:
           DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
             build-essential ca-certificates curl git gzip tar time python3 python3-pip \
             openjdk-21-jdk-headless sbcl chezscheme guile-3.0 luajit pypy3
-          ln -sf "$(command -v chezscheme)" /usr/local/bin/chez
-          chez --version
+          /usr/bin/chezscheme --version
       - uses: actions/checkout@v4
       - uses: actions/checkout@v4
         with:
@@ -123,6 +123,15 @@ jobs:
             --profile "${{ steps.profile.outputs.value }}" \
             --hara-root "$HARA_ROOT" \
             $RUNTIME_ARGS
+      - name: Verify comparison runtime coverage
+        run: >-
+          python3 scripts/verify_language_coverage.py results/local/language.json
+          --runtime hara-rust-whole-wasm-prepared --runtime luajit-prepared
+          --runtime pypy-prepared --runtime node-prepared
+          --runtime ruby-yjit-prepared --runtime clojure-prepared
+          --runtime sbcl-prepared --runtime chez-prepared --runtime guile-prepared
+          --runtime bb-prepared --runtime python-prepared --runtime c-prepared
+          --runtime java-prepared --minimum 6
       - name: Normalize evidence
         if: always()
         run: test ! -f results/local/language.json || python3 -m hara_bench import-language results/local/language.json results/local/normalized.json

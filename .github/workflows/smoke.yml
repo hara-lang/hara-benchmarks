@@ -14,6 +14,7 @@ jobs:
     timeout-minutes: 30
     env:
       CLOJURE_DEPS: '{:mvn/repos {"central" {:url "https://repo.maven.apache.org/maven2/"}} :deps {org.clojure/clojure {:mvn/version "1.12.5"}}}'
+      HARA_BENCH_CHEZ_EXECUTABLE: /usr/bin/chezscheme
     steps:
       - uses: actions/checkout@v4
       - uses: actions/checkout@v4
@@ -36,13 +37,12 @@ jobs:
       - uses: DeLaGuardo/setup-clojure@13.4
         with:
           cli: 1.12.5.1664
-      - name: Install Chez Scheme command
+      - name: Install Chez Scheme
         shell: bash
         run: |
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends chezscheme
-          sudo ln -sf "$(command -v chezscheme)" /usr/local/bin/chez
-          chez --version
+          /usr/bin/chezscheme --version
       - name: Prime pinned Clojure dependencies
         working-directory: suites/language
         run: clojure -Sdeps "$CLOJURE_DEPS" -P
@@ -56,6 +56,12 @@ jobs:
           --runtime python-prepared --runtime c-prepared --runtime java-prepared
           --runtime chez-prepared --runtime clojure-prepared --runtime node-prepared
           --runtime ruby-yjit-prepared
+      - name: Verify smoke runtime coverage
+        run: >-
+          python scripts/verify_language_coverage.py results/local/language.json
+          --runtime python-prepared --runtime c-prepared --runtime java-prepared
+          --runtime chez-prepared --runtime clojure-prepared --runtime node-prepared
+          --runtime ruby-yjit-prepared --minimum 6
       - name: Normalize smoke evidence
         run: python -m hara_bench import-language results/local/language.json results/local/normalized.json
       - run: python -m hara_bench validate results/local/normalized.json

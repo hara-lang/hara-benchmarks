@@ -28,6 +28,20 @@ jobs:
           mkdir -p data/history
           git archive origin/benchmarks-data runs | tar -x -C data/history
       - run: python -m hara_bench build-site --data data --output dist
+      - name: Set canonical public URL
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path("dist/index.html")
+          content = path.read_text(encoding="utf-8")
+          previous = "https://benchmarks.hara-lang.org/"
+          canonical = "https://www.hara-lang.org/benchmarks/"
+          if previous not in content:
+              raise SystemExit("dashboard template no longer contains the expected previous public URL")
+          path.write_text(content.replace(previous, canonical), encoding="utf-8")
+          PY
       - name: Verify published comparison data
         run: python scripts/verify_dashboard_data.py dist/data/runs.json
       - name: Publish embeddable www bundle

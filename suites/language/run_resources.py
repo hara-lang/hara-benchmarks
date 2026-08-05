@@ -150,6 +150,10 @@ def ruby_version() -> str:
 
 def main() -> int:
     coordinator = load_coordinator()
+    configured_chez = os.environ.get("HARA_BENCH_CHEZ_EXECUTABLE")
+    if configured_chez:
+        coordinator.LANGUAGE_RUNTIMES["chez"]["command"][0] = configured_chez
+        coordinator.LANGUAGE_RUNTIMES["chez"]["binary"] = configured_chez
     coordinator.LANGUAGE_RUNTIMES["pypy"] = {
         "command": ["pypy3", str(coordinator.PYTHON_RUNNER)],
         "source_field": "python_source",

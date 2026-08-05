@@ -50,12 +50,7 @@ jobs:
           DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
             build-essential ca-certificates curl git gzip tar time python3 python3-pip \
             openjdk-21-jdk-headless sbcl chezscheme guile-3.0 luajit pypy3
-          cat >/usr/local/bin/chez <<'SH'
-          #!/bin/sh
-          exec /usr/bin/chezscheme "$@"
-          SH
-          chmod +x /usr/local/bin/chez
-          chez --version
+          /usr/bin/chezscheme --version
       - uses: actions/checkout@v4
       - uses: actions/checkout@v4
         with:

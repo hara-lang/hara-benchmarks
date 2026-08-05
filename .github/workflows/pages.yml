@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -30,6 +30,33 @@ jobs:
       - run: python -m hara_bench build-site --data data --output dist
       - name: Verify published comparison data
         run: python scripts/verify_dashboard_data.py dist/data/runs.json
+      - name: Publish embeddable www bundle
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          rm -rf published
+          mkdir published
+          git -C published init
+          git -C published remote add origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          if git -C published fetch --depth=1 origin benchmark-site; then
+            git -C published checkout -B benchmark-site FETCH_HEAD
+          else
+            git -C published checkout --orphan benchmark-site
+          fi
+          find published -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
+          cp -R dist/. published/
+          rm -f published/CNAME
+          printf '%s\n' "$GITHUB_SHA" > published/.source-revision
+          git -C published config user.name github-actions[bot]
+          git -C published config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git -C published add -A
+          if git -C published diff --cached --quiet; then
+            echo "Embeddable benchmark site already current"
+          else
+            git -C published commit -m "publish benchmark site ${GITHUB_RUN_ID}"
+            git -C published push origin HEAD:benchmark-site
+          fi
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

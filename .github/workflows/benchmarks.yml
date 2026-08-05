@@ -23,6 +23,7 @@ on:
     - cron: '41 4 * * 0'
 
 permissions:
+  actions: write
   contents: write
 
 concurrency:
@@ -164,13 +165,28 @@ jobs:
       - name: Promote validated evidence
         run: PYTHONPATH=source python3 source/scripts/publish_results.py --inputs artifacts --output history
       - name: Commit benchmark history
+        id: history
+        shell: bash
         run: |
           git -C history config user.name github-actions[bot]
           git -C history config user.email 41898282+github-actions[bot]@users.noreply.github.com
           git -C history add runs manifest.json
           if git -C history diff --cached --quiet; then
             echo "Benchmark evidence already published"
+            echo "changed=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
           git -C history commit -m "publish benchmark run ${{ github.run_id }}"
           git -C history push origin HEAD:benchmarks-data
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+      - name: Rebuild dashboard from published evidence
+        if: steps.history.outputs.changed == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.actions.createWorkflowDispatch({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'pages.yml',
+              ref: 'main'
+            })

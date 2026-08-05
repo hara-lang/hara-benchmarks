@@ -28,6 +28,8 @@ jobs:
           mkdir -p data/history
           git archive origin/benchmarks-data runs | tar -x -C data/history
       - run: python -m hara_bench build-site --data data --output dist
+      - name: Verify published comparison data
+        run: python scripts/verify_dashboard_data.py dist/data/runs.json
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

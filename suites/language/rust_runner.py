@@ -14,7 +14,7 @@ use std::env;
 use std::hint::black_box;
 use std::time::Instant;
 
-static BENCHMARK_SEED: i64 = 0;
+static mut BENCHMARK_SEED: i64 = 0;
 
 #[inline(never)]
 fn benchmark_seed() -> i64 {
@@ -36,6 +36,15 @@ fn main() {
     let calls: usize = args[4].parse().expect("invalid call count");
     let prepare_ns: u128 = args[5].parse().expect("invalid preparation time");
     let artifact_bytes: u64 = args[6].parse().expect("invalid artifact size");
+
+    // The seed must be runtime-opaque. An immutable zero-valued static allowed
+    // LLVM to constant-fold recursive and numeric workloads while still
+    // preserving the volatile read. Writing an opaque value through a mutable
+    // static keeps the workload input dynamic without changing its checksum.
+    let seed = black_box(0_i64);
+    unsafe {
+        std::ptr::write_volatile(std::ptr::addr_of_mut!(BENCHMARK_SEED), seed);
+    }
 
     let started = Instant::now();
     let mut value = black_box(benchmark());

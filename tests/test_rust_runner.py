@@ -20,6 +20,7 @@ class RustRunnerTest(unittest.TestCase):
         expected_ids = {workload["id"] for workload in corpus}
         self.assertEqual(set(sources), expected_ids)
 
+        samples_by_workload = {}
         for workload in corpus:
             with self.subTest(workload=workload["id"]):
                 result = subprocess.run(
@@ -46,6 +47,17 @@ class RustRunnerTest(unittest.TestCase):
                 self.assertGreater(payload["artifact_bytes"], 0)
                 self.assertEqual(len(payload["samples_ns"]), 2)
                 self.assertTrue(all(sample >= 0 for sample in payload["samples_ns"]))
+                samples_by_workload[workload["id"]] = payload["samples_ns"]
+
+        # These workloads contain hundreds of thousands of recursive calls and
+        # thousands of matrix operations. Sub-microsecond samples mean the
+        # optimizer recovered the fixed input and removed the intended work.
+        for workload_id in ("towers-recursive", "matrix-multiply"):
+            with self.subTest(optimization_barrier=workload_id):
+                self.assertTrue(
+                    all(sample >= 1_000 for sample in samples_by_workload[workload_id]),
+                    f"{workload_id} was optimized below the workload floor",
+                )
 
     def test_eval_mode_is_rejected(self):
         result = subprocess.run(

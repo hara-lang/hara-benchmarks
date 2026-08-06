@@ -22,6 +22,7 @@ LANGUAGES = {
     "ruby": ("ruby_source", "Ruby", "suites/language/ruby_runner.rb"),
     "python": ("python_source", "Python", "suites/language/python_runner.py"),
     "pypy": ("python_source", "Python", "suites/language/python_runner.py"),
+    "rust": ("rust_source", "Rust", "suites/language/rust_runner.py"),
     "c": ("c_source", "C", "suites/language/c_runner.py"),
     "java": ("java_source", "Java", "suites/language/java_runner.py"),
 }
@@ -43,6 +44,7 @@ def source_catalog() -> dict[str, Any]:
     external_sources = {
         "node": read_json(ROOT / "suites/language/node_workloads.json")["workloads"],
         "ruby": read_json(ROOT / "suites/language/ruby_workloads.json")["workloads"],
+        "rust": read_json(ROOT / "suites/language/rust_workloads.json")["workloads"],
     }
     workloads = []
     for workload in corpus["workloads"]:
@@ -74,6 +76,7 @@ def preparation(runtime: str) -> dict[str, Any]:
     details = {
         "hara": ("Parse Hara → bytecode → whole-function Wasm → load module", "cargo build --release --features whole-wasm --bin hara-bytecode-benchmark"),
         "c": ("Generate translation unit and compile with cc -O3", "cc -O3 -std=c11 benchmark.c -o benchmark"),
+        "rust": ("Generate a Rust crate unit and compile with rustc -C opt-level=3", "rustc --edition=2021 -C opt-level=3 -C codegen-units=1 benchmark.rs -o benchmark"),
         "java": ("Generate class and compile without debug metadata", "javac -g:none HaraAlgorithmBenchmark.java"),
         "python": ("compile(source, workload, 'exec'), then resolve benchmark", "python3 python_runner.py prepared …"),
         "pypy": ("Use the identical Python source under PyPy's tracing JIT", "pypy3 python_runner.py prepared …"),

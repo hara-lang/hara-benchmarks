@@ -34,6 +34,7 @@ jobs:
         with:
           distribution: temurin
           java-version: '21'
+      - uses: dtolnay/rust-toolchain@stable
       - uses: DeLaGuardo/setup-clojure@13.4
         with:
           cli: 1.12.5.1664
@@ -48,20 +49,21 @@ jobs:
         run: clojure -Sdeps "$CLOJURE_DEPS" -P
       - run: python -m unittest discover -v
       - run: node --check site/app.js
+      - run: node --check site/shootout.js
       - run: node --check suites/language/node_runner.mjs
       - run: ruby --yjit -c suites/language/ruby_runner.rb
       - name: Run portable smoke corpus
         run: >-
           python -m hara_bench run --suite algorithms --profile smoke
-          --runtime python-prepared --runtime c-prepared --runtime java-prepared
-          --runtime chez-prepared --runtime clojure-prepared --runtime node-prepared
-          --runtime ruby-yjit-prepared
+          --runtime python-prepared --runtime rust-prepared --runtime c-prepared
+          --runtime java-prepared --runtime chez-prepared --runtime clojure-prepared
+          --runtime node-prepared --runtime ruby-yjit-prepared
       - name: Verify smoke runtime coverage
         run: >-
           python scripts/verify_language_coverage.py results/local/language.json
-          --runtime python-prepared --runtime c-prepared --runtime java-prepared
-          --runtime chez-prepared --runtime clojure-prepared --runtime node-prepared
-          --runtime ruby-yjit-prepared --minimum 6
+          --runtime python-prepared --runtime rust-prepared --runtime c-prepared
+          --runtime java-prepared --runtime chez-prepared --runtime clojure-prepared
+          --runtime node-prepared --runtime ruby-yjit-prepared --minimum 6
       - name: Normalize smoke evidence
         run: python -m hara_bench import-language results/local/language.json results/local/normalized.json
       - run: python -m hara_bench validate results/local/normalized.json

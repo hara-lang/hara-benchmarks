@@ -3,8 +3,9 @@
 
 This is a thin wrapper around ``run.py`` so the benchmark coordinator remains
 usable on developer machines while CI can add RSS, executable-size and source-
-size evidence. It enables PyPy, Node.js/V8, Ruby/YJIT and Clojure/HotSpot while
-keeping runtime-specific sources explicit and inspectable.
+size evidence. It enables PyPy, Node.js/V8, Ruby/YJIT, Clojure/HotSpot and the
+standalone Rust native reference while keeping runtime-specific sources explicit
+and inspectable.
 """
 from __future__ import annotations
 
@@ -184,6 +185,13 @@ def main() -> int:
                 (HERE / "ruby_workloads.json").read_text(encoding="utf-8")
             )["workloads"],
         },
+        "rust": {
+            "command": [sys.executable, str(HERE / "rust_runner.py")],
+            "sources": json.loads(
+                (HERE / "rust_workloads.json").read_text(encoding="utf-8")
+            )["workloads"],
+            "modes": ("prepared",),
+        },
     }
     base_adapters = coordinator.adapters
 
@@ -211,7 +219,7 @@ def main() -> int:
             ]
 
         for runtime, spec in external_specs.items():
-            for mode in ("eval", "prepared"):
+            for mode in spec.get("modes", ("eval", "prepared")):
                 result[f"{runtime}-{mode}"] = (
                     lambda workload, windows, calls, spec=spec, mode=mode:
                     external_adapter(spec, mode, workload, windows, calls)
@@ -284,6 +292,7 @@ def main() -> int:
         versions["pypy"] = coordinator.version(["pypy3", "--version"])
         versions["node"] = node_version()
         versions["ruby"] = ruby_version()
+        versions["rust"] = coordinator.version(["rustc", "--version"])
         try:
             clojure_version = subprocess.run(
                 [

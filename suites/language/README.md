@@ -1,6 +1,6 @@
 # Language corpus
 
-The language corpus answers three separate questions rather than producing one undifferentiated league table.
+The language corpus answers three separate questions rather than producing one undifferentiated league table. The dashboard's language shootout presents every prepared lane in catalog order, while class-specific summaries remain the primary claims.
 
 ## In-class dynamic JIT
 
@@ -28,17 +28,30 @@ Racket CS is the next Lisp-family addition.
 
 ## References and baselines
 
-- C is the ahead-of-time native reference.
+- Rust and C are ahead-of-time native references.
 - Java / HotSpot is the managed JIT reference.
 - CPython is the familiar dynamic interpreter baseline.
 
-C and Java remain visible, but are categorised and coloured separately from Hara's in-class dynamic-JIT comparison.
+Rust, C and Java remain visible in the language shootout, but are categorised and coloured separately from Hara's in-class dynamic-JIT comparison.
 
 ## Modes
 
 - `prepared` measures already parsed/compiled work and is the primary steady-state comparison.
 - `eval` includes source evaluation and remains a lifecycle result.
-- C and Java are prepared-only because their compiler step is recorded separately.
+- Rust, C and Java are prepared-only because their compiler step is recorded separately.
+
+## Rust lane
+
+`rust_workloads.json` contains an idiomatic Rust implementation for every workload in the shared corpus. `rust_runner.py` writes one temporary translation unit, compiles it with `rustc -C opt-level=3 -C codegen-units=1`, verifies the committed checksum, and then records repeated calls to the compiled `benchmark` function. Compiler time is reported as preparation rather than folded into steady state. Every run records:
+
+- the exact `rustc` version
+- compilation and first-call cost
+- warm-up samples and steady-state timing
+- peak RSS
+- generated native artifact size
+- source bytes
+
+The runner accepts only `prepared`; there is no source-eval Rust lane. Volatile seed reads and `black_box` barriers keep the checksum workloads observable without adding implementation-specific algorithm shortcuts.
 
 ## Node.js / V8 lane
 
@@ -86,4 +99,4 @@ Because Babashka and Clojure consume the same source field, their difference is 
 
 ## Resource collection
 
-`run_resources.py` wraps the existing coordinator with `/usr/bin/time`, records peak RSS, runtime executable size, runtime bundle size and source size, and adds the PyPy, Node, Ruby and Clojure adapters. The normalized schema keeps source, runtime, bundle, generated artifact and image sizes separate.
+`run_resources.py` wraps the existing coordinator with `/usr/bin/time`, records peak RSS, runtime executable size, runtime bundle size and source size, and adds the PyPy, Node, Ruby, Clojure and Rust adapters. The normalized schema keeps source, runtime, bundle, generated artifact and image sizes separate.

@@ -21,6 +21,7 @@ REQUIRED_PREPARED_RUNTIMES = (
     "guile-prepared",
     "bb-prepared",
     "python-prepared",
+    "rust-prepared",
     "c-prepared",
     "java-prepared",
 )

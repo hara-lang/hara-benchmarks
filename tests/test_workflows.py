@@ -22,7 +22,7 @@ class WorkflowContractTest(unittest.TestCase):
             "hara-rust-whole-wasm-prepared", "luajit-prepared", "pypy-prepared",
             "node-prepared", "ruby-yjit-prepared", "clojure-prepared",
             "sbcl-prepared", "chez-prepared", "guile-prepared", "bb-prepared",
-            "python-prepared", "c-prepared", "java-prepared",
+            "python-prepared", "rust-prepared", "c-prepared", "java-prepared",
         )
         for runtime in prepared:
             self.assertIn(f"--runtime {runtime}", workflow)
@@ -36,7 +36,7 @@ class WorkflowContractTest(unittest.TestCase):
         self.assertIn("Verify comparison runtime coverage", workflow)
         self.assertIn("scripts/verify_language_coverage.py", workflow)
 
-    def test_canonical_container_installs_portable_java_clojure_and_chez(self):
+    def test_canonical_container_installs_portable_java_clojure_chez_and_rust(self):
         workflow = Path(".github/workflows/benchmarks.yml").read_text(encoding="utf-8")
         self.assertIn(
             "https://download.clojure.org/install/linux-install-1.12.5.1664.sh",
@@ -48,14 +48,18 @@ class WorkflowContractTest(unittest.TestCase):
         self.assertIn('echo "HARA_BENCH_JAVA_HOME=$java_home"', workflow)
         self.assertIn("HARA_BENCH_CHEZ_EXECUTABLE: /usr/bin/chezscheme", workflow)
         self.assertIn("/usr/bin/chezscheme --version", workflow)
+        self.assertIn("uses: dtolnay/rust-toolchain@stable", workflow)
         self.assertNotIn("/usr/local/bin/chez", workflow)
         self.assertIn('HARA_BENCHMARK_REVISION=$GITHUB_SHA', workflow)
         self.assertNotIn("cli: 1.12.5.1664", workflow)
 
-    def test_smoke_exercises_java_chez_and_canonical_clojure_repository(self):
+    def test_smoke_exercises_rust_java_chez_and_canonical_clojure_repository(self):
         workflow = Path(".github/workflows/smoke.yml").read_text(encoding="utf-8")
+        self.assertIn("--runtime rust-prepared", workflow)
         self.assertIn("--runtime java-prepared", workflow)
         self.assertIn("--runtime chez-prepared", workflow)
+        self.assertIn("uses: dtolnay/rust-toolchain@stable", workflow)
+        self.assertIn("node --check site/shootout.js", workflow)
         self.assertIn("apt-get install -y --no-install-recommends chezscheme", workflow)
         self.assertIn("HARA_BENCH_CHEZ_EXECUTABLE: /usr/bin/chezscheme", workflow)
         self.assertIn("/usr/bin/chezscheme --version", workflow)

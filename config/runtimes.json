@@ -18,7 +18,7 @@
     "reference-native": {
       "title": "Native reference ceiling",
       "short": "Native reference",
-      "description": "Ahead-of-time native code. Useful as a ceiling, but not an in-class peer.",
+      "description": "Ahead-of-time native code in Rust and C. Useful as a ceiling, but not an in-class peer.",
       "accent": "amber",
       "priority": 30
     },
@@ -111,6 +111,12 @@
       "status": "measured",
       "runtime_prefix": "python-"
     },
+    "rust": {
+      "name": "Rust",
+      "groups": ["reference-native"],
+      "status": "measured",
+      "runtime_prefix": "rust-"
+    },
     "c": {
       "name": "C",
       "groups": ["reference-native"],
@@ -127,6 +133,6 @@
   "display_order": [
     "luajit", "pypy", "node", "ruby", "clojure",
     "sbcl", "chez", "guile", "bb", "racket",
-    "c", "java", "python"
+    "rust", "c", "java", "python"
   ]
 }

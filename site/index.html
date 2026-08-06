@@ -3,11 +3,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="Reproducible dynamic-JIT, Lisp, footprint and HTTP evidence for Hara and Hoplite.">
+  <meta name="description" content="Reproducible dynamic-JIT, Lisp, native-language, footprint and HTTP evidence for Hara and Hoplite.">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Hara Benchmarks">
   <meta property="og:title" content="Hara Performance Observatory">
-  <meta property="og:description" content="Hara against its dynamic-JIT class, the Lisp family and explicit native references.">
+  <meta property="og:description" content="Hara against its dynamic-JIT class, the complete language field and explicit native references.">
   <meta property="og:url" content="https://benchmarks.hara-lang.org/">
   <meta property="og:image" content="https://benchmarks.hara-lang.org/og-hara-benchmarks.jpg">
   <meta property="og:image:width" content="3840">
@@ -17,18 +17,20 @@
   <link rel="canonical" href="https://benchmarks.hara-lang.org/">
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="classes.css">
+  <link rel="stylesheet" href="shootout.css">
   <title>Hara Performance Observatory</title>
 </head>
 <body>
   <header class="site-header"><a class="brand" href="https://www.hara-lang.org/"><span class="brand-mark">H</span><span>HARA</span></a><nav><a href="https://www.hara-lang.org/">HOME</a><a href="https://docs.hara-lang.org/">DOCS</a><a href="https://github.com/hara-lang/hara-benchmarks">SOURCE</a></nav></header>
-  <header class="hero class-hero"><div><p class="eyebrow">HARA // DYNAMIC LANGUAGE EVIDENCE</p><h1>Best in its<br><em>own class.</em></h1></div><div class="hero-copy"><p>Hara is measured first against dynamic runtimes with adaptive compilation. Lisp implementations form a second family view. C and Java remain visible as differently coloured reference ceilings—not as peers.</p><p id="run-summary" class="muted">Loading benchmark evidence…</p></div></header>
-  <nav class="tabs" role="tablist" aria-label="Benchmark views"><button role="tab" data-view="overview" aria-selected="true">In-class</button><button role="tab" data-view="lisp">Lisp family</button><button role="tab" data-view="references">Reference ceilings</button><button role="tab" data-view="footprint">Footprint</button><button role="tab" data-view="workload">Workload</button><button role="tab" data-view="lifecycle">Lifecycle</button><button role="tab" data-view="code">Code</button><button role="tab" data-view="http">HTTP / Hoplite</button><button role="tab" data-view="runs">Runs</button></nav>
+  <header class="hero class-hero"><div><p class="eyebrow">HARA // DYNAMIC LANGUAGE EVIDENCE</p><h1>Best in its<br><em>own class.</em></h1></div><div class="hero-copy"><p>Hara is measured first against dynamic runtimes with adaptive compilation. The language shootout then exposes every prepared peer—including native Rust—without turning unlike runtime classes into one headline ranking.</p><p id="run-summary" class="muted">Loading benchmark evidence…</p></div></header>
+  <nav class="tabs" role="tablist" aria-label="Benchmark views"><button role="tab" data-view="overview" aria-selected="true">In-class</button><button role="tab" data-view="shootout" aria-selected="false">Language shootout</button><button role="tab" data-view="lisp" aria-selected="false">Lisp family</button><button role="tab" data-view="references" aria-selected="false">Reference ceilings</button><button role="tab" data-view="footprint" aria-selected="false">Footprint</button><button role="tab" data-view="workload" aria-selected="false">Workload</button><button role="tab" data-view="lifecycle" aria-selected="false">Lifecycle</button><button role="tab" data-view="code" aria-selected="false">Code</button><button role="tab" data-view="http" aria-selected="false">HTTP / Hoplite</button><button role="tab" data-view="runs" aria-selected="false">Runs</button></nav>
   <main>
     <section class="toolbar" aria-label="Result filters"><label>Run<select id="run"></select></label><label>Platform<select id="platform"></select></label><label>Units<select id="units"><option value="auto">Automatic</option><option value="ms">Milliseconds</option><option value="us">Microseconds</option><option value="ns">Nanoseconds</option></select></label></section>
 
     <section id="overview" class="view active" role="tabpanel"><div class="section-head"><div><p class="eyebrow">PRIMARY CLAIM</p><h2>Hara against dynamic JIT peers</h2></div><p>Pairwise geometric means use only common, verified workloads. Planned lanes stay visible but cannot affect the result.</p></div><div id="hara-profile"></div><div id="overview-cards"></div></section>
+    <section id="shootout" class="view" role="tabpanel"><div class="section-head"><div><p class="eyebrow">COMPLETE FIELD</p><h2>Language shootout</h2></div><p>Every measured prepared lane is shown in catalog order. Overall cells are pairwise geometric means; workload cells expose the absolute evidence behind them.</p></div><div id="shootout-summary"></div><div id="shootout-content"></div></section>
     <section id="lisp" class="view" role="tabpanel"><div class="section-head"><div><p class="eyebrow">LANGUAGE FAMILY</p><h2>Hara in the Lisp lineage</h2></div><p>Common Lisp, Scheme and Clojure-derived runtimes are grouped separately from the dynamic-JIT claim.</p></div><div id="lisp-cards"></div></section>
-    <section id="references" class="view" role="tabpanel"><div class="section-head"><div><p class="eyebrow">CONTEXT, NOT CLASS</p><h2>Native and managed ceilings</h2></div><p>C and Java remain essential context, but their cards use reference categories and are excluded from in-class summaries.</p></div><div id="reference-cards"></div></section>
+    <section id="references" class="view" role="tabpanel"><div class="section-head"><div><p class="eyebrow">CONTEXT, NOT CLASS</p><h2>Native and managed ceilings</h2></div><p>Rust, C and Java remain essential context, but their cards use reference categories and are excluded from in-class summaries.</p></div><div id="reference-cards"></div></section>
     <section id="footprint" class="view" role="tabpanel"><div class="section-head"><div><p class="eyebrow">WHAT SHIPS + WHAT RUNS</p><h2>Memory and size are first-class</h2></div><p>Runtime, bundle, source, generated artifact and resident memory are distinct measurements.</p></div><div id="footprint-content"></div></section>
     <section id="workload" class="view" role="tabpanel"><div class="section-head"><div><p class="eyebrow">ABSOLUTE EVIDENCE</p><h2>One workload, Hara first</h2></div><p>Inspect absolute timings and pairwise deltas without turning the page into a global ranking.</p></div><div class="toolbar compact"><label>Workload<select id="workload-select"></select></label></div><div id="workload-content"></div></section>
     <section id="lifecycle" class="view" role="tabpanel"><div class="section-head"><div><p class="eyebrow">SOURCE TO STEADY STATE</p><h2>Lifecycle comparison</h2></div><p>Preparation, first use, warm-up, steady state and footprint remain separate.</p></div><div class="toolbar compact three"><label>Comparator<select id="lifecycle-comparator"></select></label><label>Workload<select id="lifecycle-workload"></select></label><label>Phase<select id="phase"><option value="prepare_ns">Preparation</option><option value="cold_total_ns">Cold total</option><option value="first_call_ns">First call</option><option value="warmup">Warm-up</option><option value="steady">Steady state</option><option value="peak_rss_bytes">Peak RSS</option><option value="runtime_executable_bytes">Runtime executable</option><option value="artifact_bytes">Generated artifact</option><option value="source_bytes">Source</option></select></label></div><div id="lifecycle-content"></div></section>
@@ -36,5 +38,17 @@
     <section id="http" class="view" role="tabpanel"><div class="section-head"><div><p class="eyebrow">HOPLITE // HTTP EVIDENCE</p><h2>Controlled locally, submitted independently</h2></div><p>Hoplite has a controlled OpenResty comparison and a separate submission track for maintained public suites.</p></div><div class="http-grid"><article class="http-card in-class"><span>CONTROLLED</span><h3>Hoplite ↔ OpenResty</h3><p>GitHub container runs for plaintext, route parameters, adapters, worker counts, latency, throughput, RSS, startup and image size.</p><code>python -m hara_bench run --suite hoplite</code></article><article class="http-card public"><span>PUBLIC SUITE</span><h3>The Benchmarker</h3><p>A Docker-compatible Hoplite scaffold implements the required root, parameter and POST routes. External results remain independently labelled.</p><code>suites/hoplite-openresty/external/the-benchmarker/</code></article><article class="http-card historical"><span>HISTORICAL</span><h3>TechEmpower</h3><p>Retained as a methodology reference. It is not treated as an active submission destination.</p></article></div></section>
     <section id="runs" class="view" role="tabpanel"><div class="section-head"><div><p class="eyebrow">REPRODUCIBLE CONTEXT</p><h2>Build and run provenance</h2></div><p>Container, revisions and runtime versions behind the displayed evidence.</p></div><div id="runs-content"></div></section>
   </main>
-  <footer><div><strong>HARA</strong><span>Dynamic language evidence, published in the open.</span></div><nav><a href="data/runs.json">RESULT DATA</a><a href="data/catalog.json">SOURCE CATALOG</a><a href="https://github.com/hara-lang/hara-benchmarks/blob/main/docs/benchmark-strategy.md">METHODOLOGY</a></nav></footer><script src="app.js"></script>
+  <footer><div><strong>HARA</strong><span>Dynamic language evidence, published in the open.</span></div><nav><a href="data/runs.json">RESULT DATA</a><a href="data/catalog.json">SOURCE CATALOG</a><a href="https://github.com/hara-lang/hara-benchmarks/blob/main/docs/benchmark-strategy.md">METHODOLOGY</a></nav></footer>
+  <script>
+    (() => {
+      const legacyViews = {'#class-comparison': 'overview', '#language-shootout': 'shootout'};
+      const view = legacyViews[location.hash];
+      if (!view) return;
+      const params = new URLSearchParams(location.search);
+      params.set('view', view);
+      history.replaceState(null, '', `${location.pathname}?${params}`);
+    })();
+  </script>
+  <script src="app.js"></script>
+  <script src="shootout.js"></script>
 </body></html>

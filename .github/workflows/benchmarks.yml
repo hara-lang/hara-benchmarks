@@ -103,7 +103,7 @@ jobs:
           runtime_args=""
           if [ "${{ github.event_name }}" = "push" ]; then
             value=smoke
-            runtime_args="--runtime hara-rust-whole-wasm-prepared --runtime luajit-prepared --runtime pypy-prepared --runtime node-prepared --runtime ruby-yjit-prepared --runtime clojure-prepared --runtime sbcl-prepared --runtime chez-prepared --runtime guile-prepared --runtime bb-prepared --runtime python-prepared --runtime c-prepared --runtime java-prepared"
+            runtime_args="--runtime hara-rust-whole-wasm-prepared --runtime luajit-prepared --runtime pypy-prepared --runtime node-prepared --runtime ruby-yjit-prepared --runtime clojure-prepared --runtime sbcl-prepared --runtime chez-prepared --runtime guile-prepared --runtime bb-prepared --runtime python-prepared --runtime rust-prepared --runtime c-prepared --runtime java-prepared"
           elif [ -z "$value" ]; then
             if [ "${{ github.event.schedule }}" = "41 4 * * 0" ]; then value=weekly; else value=nightly; fi
           fi
@@ -130,8 +130,8 @@ jobs:
           --runtime pypy-prepared --runtime node-prepared
           --runtime ruby-yjit-prepared --runtime clojure-prepared
           --runtime sbcl-prepared --runtime chez-prepared --runtime guile-prepared
-          --runtime bb-prepared --runtime python-prepared --runtime c-prepared
-          --runtime java-prepared --minimum 6
+          --runtime bb-prepared --runtime python-prepared --runtime rust-prepared
+          --runtime c-prepared --runtime java-prepared --minimum 6
       - name: Normalize evidence
         if: always()
         run: test ! -f results/local/language.json || python3 -m hara_bench import-language results/local/language.json results/local/normalized.json

@@ -25,6 +25,7 @@ class SiteTest(unittest.TestCase):
                 self.assertIn("clojure", implementations)
                 self.assertIn("node", implementations)
                 self.assertIn("ruby", implementations)
+                self.assertIn("rust", implementations)
                 self.assertEqual(
                     implementations["bb"]["source"],
                     implementations["clojure"]["source"],
@@ -43,18 +44,31 @@ class SiteTest(unittest.TestCase):
             catalog["runtimes"]["clojure"]["groups"],
             ["dynamic-jit", "lisp"],
         )
+        self.assertEqual(catalog["runtimes"]["rust"]["status"], "measured")
+        self.assertEqual(catalog["runtimes"]["rust"]["groups"], ["reference-native"])
         self.assertIn("reference-native", catalog["runtimes"]["c"]["groups"])
         self.assertIn("reference-managed", catalog["runtimes"]["java"]["groups"])
+        for runtime in ("luajit", "pypy", "node", "ruby", "clojure", "rust"):
+            self.assertIn(runtime, catalog["display_order"])
 
     def test_class_language_and_brand_tokens(self):
         html = Path("site/index.html").read_text()
-        script = Path("site/app.js").read_text()
-        css = Path("site/styles.css").read_text() + Path("site/classes.css").read_text()
+        script = Path("site/app.js").read_text() + Path("site/shootout.js").read_text()
+        css = (
+            Path("site/styles.css").read_text()
+            + Path("site/classes.css").read_text()
+            + Path("site/shootout.css").read_text()
+        )
         self.assertIn("Hara against dynamic JIT peers", html)
+        self.assertIn("Language shootout", html)
         self.assertIn("Lisp family", html)
         self.assertIn("Reference ceilings", html)
         self.assertIn("runtime_catalog", script)
         self.assertIn("Hara is", script)
+        self.assertIn("shootoutRows", script)
+        self.assertIn("runtimeCatalog().display_order", script)
+        self.assertIn("'#class-comparison': 'overview'", html)
+        self.assertIn("'#language-shootout': 'shootout'", html)
         for forbidden in ("Runtime rankings", "fastest runtime", "cell-rank"):
             self.assertNotIn(forbidden, html + script)
         for token in ("#020408", "#071018", "#41f5e4", "#e4eff7", "#8da2b4", "#526a7b"):

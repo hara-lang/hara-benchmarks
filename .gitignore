@@ -6,3 +6,5 @@ build/
 dist/
 results/local/
 vendor/
+node_modules/
+target/

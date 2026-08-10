@@ -1,0 +1,14 @@
+#!/bin/sh
+set -eu
+
+. "$(dirname "$0")/workspace-paths"
+
+exec "$BENCHMARK_ROOT/scripts/hara-runtime/run-runtime-benchmarks" \
+  --profile standard \
+  --corpus "$BENCHMARK_ROOT/runtime/hara/runtime/vm-small.json" \
+  --output "$BENCHMARK_ROOT/runtime/hara/target/vm-bb-benchmark.json" \
+  --runtime bb \
+  --runtime hara-rust-vm \
+  --runtime hara-rust-trace-native \
+  --check-regressions "$BENCHMARK_ROOT/runtime/hara/runtime/vm-small-baselines.json" \
+  "$@"

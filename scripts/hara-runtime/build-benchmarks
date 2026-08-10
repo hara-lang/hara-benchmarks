@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+. "$(dirname "$0")/workspace-paths"
+
+if [[ -f "$BENCHMARK_ROOT/runtime/hara/results/reference-v2.json" ]]; then
+  python3 "$BENCHMARK_ROOT/runtime/hara/validate_evidence.py" "$BENCHMARK_ROOT/runtime/hara/results/reference-v2.json"
+fi
+
+npm run build --prefix "$BENCHMARK_ROOT/astro"

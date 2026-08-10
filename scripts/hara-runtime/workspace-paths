@@ -1,0 +1,6 @@
+SCRIPT_DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+BENCHMARK_ROOT=$(CDPATH= cd -- "$SCRIPT_DIR/../.." && pwd)
+WORKSPACE_ROOT=${HARA_WORKSPACE_ROOT:-$(CDPATH= cd -- "$BENCHMARK_ROOT/../.." && pwd)}
+HARA_ROOT="$WORKSPACE_ROOT/technology/hara"
+ROOT="$HARA_ROOT"
+export BENCHMARK_ROOT WORKSPACE_ROOT HARA_ROOT

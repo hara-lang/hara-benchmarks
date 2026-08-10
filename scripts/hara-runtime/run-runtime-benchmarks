@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+set -euo pipefail
+. "$(dirname "$0")/workspace-paths"
+exec python3 "$BENCHMARK_ROOT/runtime/hara/runtime/run.py" "$@"

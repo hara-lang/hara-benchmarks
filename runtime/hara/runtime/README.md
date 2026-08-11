@@ -28,6 +28,12 @@ by an earlier adapter:
 - `hara-rust-trace-checked` — guarded checked Trace IR;
 - `hara-rust-trace-native` — guarded Wasmtime/Cranelift trace backend.
 
+These four engine tiers compile once and time `execute-only`. Namespace,
+macro, and protocol registry installation is intentionally outside their warm
+samples: it is integration/setup work, not opcode execution. The benchmark
+driver retains `runtime-registry-execute` as a separate diagnostic mode for
+embedders; its cost must not be compared with the VM/JIT ratios below.
+
 Absolute performance values are machine-specific evidence. The optional rules
 in `regression-baselines.json` compare runtimes measured in the same invocation,
 using ratios rather than historical wall-clock values. They are intended for

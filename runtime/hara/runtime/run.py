@@ -18,11 +18,14 @@ import tempfile
 import time
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[3]
-DEFAULT_CORPUS = ROOT / "lib/bench/lisp-hara/general-workloads.json"
-RESULTS = ROOT / "lib/bench/results/reference.json"
-REPORT = ROOT / "website/docs/reference/runtime-benchmarks.md"
-DEFAULT_BASELINE = ROOT / "lib/bench/runtime/regression-baselines.json"
+BENCHMARK_ROOT = Path(
+    os.environ.get("HARA_BENCHMARK_ROOT", Path(__file__).resolve().parents[3])
+)
+ROOT = Path(os.environ.get("HARA_CORE_ROOT", BENCHMARK_ROOT / "vendor/hara/core"))
+DEFAULT_CORPUS = BENCHMARK_ROOT / "runtime/hara/lisp-hara/general-workloads.json"
+RESULTS = BENCHMARK_ROOT / "runtime/hara/results/reference.json"
+REPORT = BENCHMARK_ROOT / "runtime/hara/results/runtime-benchmarks.md"
+DEFAULT_BASELINE = BENCHMARK_ROOT / "runtime/hara/runtime/regression-baselines.json"
 BYTECODE_VARIANTS = {
     "hara-rust-vm": ("bytecode-vm", "vm"),
     "hara-rust-full": ("whole-wasm", "whole-wasm"),
@@ -99,8 +102,8 @@ def encoded(source):
 
 def adapters():
     clj_cp, truffle_cp = classpaths()
-    clj_script = str(ROOT / "lib/bench/runtime/clojure_runner.clj")
-    node_script = str(ROOT / "lib/bench/runtime/node_runner.mjs")
+    clj_script = str(BENCHMARK_ROOT / "runtime/hara/runtime/clojure_runner.clj")
+    node_script = str(BENCHMARK_ROOT / "runtime/hara/runtime/node_runner.mjs")
     glue = ROOT / "target/wasm-bindgen/hara_wasm.js"
 
     def common(command, runtime, workload, windows, calls, source_encoding="base64"):
@@ -146,13 +149,13 @@ def adapters():
             [str(ROOT / "target/hara-truffle-full"), "benchmark"],
             "hara-truffle-full", "full", w, n, c),
         "hara-rust-vm": lambda w, n, c: bytecode(
-            bytecode_binary("vm"), "hara-rust-vm", "runtime-registry-execute", w, n, c),
+            bytecode_binary("vm"), "hara-rust-vm", "execute-only", w, n, c),
         "hara-rust-full": lambda w, n, c: bytecode(
             bytecode_binary("whole-wasm"), "hara-rust-full", "whole-wasm", w, n, c),
         "hara-rust-trace-checked": lambda w, n, c: bytecode(
-            bytecode_binary("trace-checked"), "hara-rust-trace-checked", "runtime-registry-execute", w, n, c),
+            bytecode_binary("trace-checked"), "hara-rust-trace-checked", "execute-only", w, n, c),
         "hara-rust-trace-native": lambda w, n, c: bytecode(
-            bytecode_binary("trace-native"), "hara-rust-trace-native", "runtime-registry-execute", w, n, c),
+            bytecode_binary("trace-native"), "hara-rust-trace-native", "execute-only", w, n, c),
     }, glue
 
 

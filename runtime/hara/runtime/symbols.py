@@ -54,7 +54,6 @@ HARA_INTERNAL_FUNCTIONS = {
     "module-revision",
     "partition-all-transform",
     "partition-transform",
-    "requiring-resolve",
 }
 HARA_LIBRARIES = {
     "std.foundation.string": "str",

@@ -79,14 +79,61 @@ jobs:
       - name: Verify independent publication artifact
         run: npm run verify --prefix astro
 
-      - name: Upload validated Pages artifact
+      - name: Preserve validated Netlify artifact
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-artifact@v4
+        with:
+          name: hara-benchmarks-astro-site
+          path: dist
+          if-no-files-found: error
+          retention-days: 1
+
+      - name: Upload validated Pages compatibility artifact
         if: github.event_name != 'pull_request'
         uses: actions/upload-pages-artifact@v3
         with:
           path: dist
 
-  deploy:
-    name: Deploy independent benchmark dashboard
+  deploy-origin:
+    name: Deploy independent Netlify benchmark origin
+    if: github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-24.04
+    environment:
+      name: netlify-production
+      url: https://hara-benchmarks.netlify.app/
+    env:
+      NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+      NETLIFY_SITE_ID: 7d87b558-d5b4-4d05-b3c9-7a52d3f05dc8
+    steps:
+      - name: Download validated benchmark site
+        uses: actions/download-artifact@v4
+        with:
+          name: hara-benchmarks-astro-site
+          path: site
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Verify independent deployment credential
+        run: |
+          if [ -z "${NETLIFY_AUTH_TOKEN:-}" ]; then
+            echo "NETLIFY_AUTH_TOKEN is required for independent benchmark publication." >&2
+            exit 1
+          fi
+
+      - name: Deploy validated artifact to Netlify
+        run: >-
+          npx --yes netlify-cli@latest deploy
+          --prod
+          --dir site
+          --site "$NETLIFY_SITE_ID"
+          --message "hara-benchmarks ${GITHUB_SHA}"
+
+  deploy-pages:
+    name: Deploy GitHub Pages compatibility origin
     if: github.event_name != 'pull_request'
     needs: build
     runs-on: ubuntu-24.04
@@ -104,10 +151,10 @@ jobs:
   smoke:
     name: Smoke-test benchmark origin and canonical route
     if: github.event_name != 'pull_request'
-    needs: deploy
+    needs: deploy-origin
     runs-on: ubuntu-24.04
     env:
-      BENCHMARK_ORIGIN: https://benchmarks.hara-lang.org
+      BENCHMARK_ORIGIN: https://hara-benchmarks.netlify.app
       BENCHMARK_CANONICAL: https://www.hara-lang.org/benchmarks
     steps:
       - name: Verify origin compatibility and canonical hostname

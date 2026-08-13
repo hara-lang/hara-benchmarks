@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "check": "ASTRO_TELEMETRY_DISABLED=1 astro check",
-    "build": "ASTRO_TELEMETRY_DISABLED=1 astro check && ASTRO_TELEMETRY_DISABLED=1 astro build",
+    "build": "ASTRO_TELEMETRY_DISABLED=1 astro check && ASTRO_TELEMETRY_DISABLED=1 astro build && node scripts/mirror-origin.mjs",
+    "verify": "node scripts/verify-build.mjs",
     "test": "node --test test/*.test.mjs"
   },
   "dependencies": {
@@ -14,6 +15,9 @@
     "astro": "^5.16.0",
     "sharp": "^0.35.3"
   },
-  "devDependencies": { "@astrojs/check": "^0.9.10", "typescript": "^5.9.2" },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "typescript": "^5.9.2"
+  },
   "engines": { "node": ">=22" }
 }

@@ -3,74 +3,155 @@ name: Publish benchmark dashboard
 on:
   push:
     branches: [main, benchmarks-data]
+  pull_request:
   workflow_dispatch:
 
 permissions:
-  contents: write
-  pages: write
-  id-token: write
+  contents: read
 
 concurrency:
-  group: pages
+  group: "benchmark-pages-${{ github.ref }}"
   cancel-in-progress: true
 
 jobs:
   build:
+    name: Build independently published benchmark dashboard
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout benchmark source
+        uses: actions/checkout@v4
         with:
-          ref: main
+          ref: ${{ github.ref_name == 'benchmarks-data' && 'main' || github.sha }}
           fetch-depth: 0
-      - name: Add benchmark history when available
+
+      - name: Restore published benchmark history
         run: |
-          git fetch origin benchmarks-data:refs/remotes/origin/benchmarks-data || exit 0
+          set -euo pipefail
+          git fetch origin benchmarks-data:refs/remotes/origin/benchmarks-data
+          rm -rf data/history
           mkdir -p data/history
           git archive origin/benchmarks-data runs | tar -x -C data/history
-      - name: Prepare canonical benchmark evidence
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Build canonical benchmark evidence bundle
         run: python -m hara_bench build-site --data data --output .benchmark-site
-      - uses: actions/setup-node@v4
+
+      - name: Derive dashboard presentation evidence
+        run: >-
+          python scripts/prepare_presentation_data.py
+          --catalog .benchmark-site/data/catalog.json
+          --runs .benchmark-site/data/runs.json
+          --language runtime/hara/results/language-reference.json
+          --classes runtime/hara/results/class-reference.json
+
+      - name: Stage public benchmark data
+        run: |
+          rm -rf astro/public/data
+          mkdir -p astro/public/data
+          cp -R .benchmark-site/data/. astro/public/data/
+
+      - name: Test presentation data derivation
+        run: python -m unittest -v tests/test_presentation_data.py tests/test_workflows.py
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: npm
           cache-dependency-path: astro/package-lock.json
-      - name: Build Astro benchmark presentation
-        run: |
-          npm ci --prefix astro
-          npm run build --prefix astro
-          mkdir -p dist/data
-          cp -R .benchmark-site/data/. dist/data/
+
+      - name: Install Astro dependencies
+        run: npm ci --prefix astro
+
+      - name: Test benchmark presentation contracts
+        run: npm test --prefix astro
+
+      - name: Build root-compatible Astro benchmark artifact
+        run: npm run build --prefix astro
+
       - name: Verify published comparison data
         run: python scripts/verify_dashboard_data.py dist/data/runs.json
-      - name: Publish embeddable www bundle
-        env:
-          GH_TOKEN: ${{ github.token }}
-        shell: bash
-        run: |
-          rm -rf published
-          mkdir published
-          git -C published init
-          git -C published remote add origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
-          if git -C published fetch --depth=1 origin benchmark-site; then
-            git -C published checkout -B benchmark-site FETCH_HEAD
-          else
-            git -C published checkout --orphan benchmark-site
-          fi
-          find published -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
-          cp -R dist/. published/
-          rm -f published/CNAME
-          printf '%s\n' "$GITHUB_SHA" > published/.source-revision
-          git -C published config user.name github-actions[bot]
-          git -C published config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          git -C published add -A
-          if git -C published diff --cached --quiet; then
-            echo "Embeddable benchmark site already current"
-          else
-            git -C published commit -m "publish benchmark site ${GITHUB_RUN_ID}"
-            git -C published push origin HEAD:benchmark-site
-          fi
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
+
+      - name: Verify independent publication artifact
+        run: npm run verify --prefix astro
+
+      - name: Upload validated Pages artifact
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@v3
         with:
           path: dist
-      - uses: actions/deploy-pages@v4
+
+  deploy:
+    name: Deploy independent benchmark dashboard
+    if: github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-24.04
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy validated artifact
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+  smoke:
+    name: Smoke-test benchmark origin and canonical route
+    if: github.event_name != 'pull_request'
+    needs: deploy
+    runs-on: ubuntu-24.04
+    env:
+      BENCHMARK_ORIGIN: https://benchmarks.hara-lang.org
+      BENCHMARK_CANONICAL: https://www.hara-lang.org/benchmarks
+    steps:
+      - name: Verify origin compatibility and canonical hostname
+        run: |
+          set -euo pipefail
+
+          fetch() {
+            curl --fail --location --silent --show-error \
+              --retry 4 --retry-all-errors --retry-delay 2 \
+              -H 'Cache-Control: no-cache' "$1" --output "$2"
+          }
+
+          for attempt in $(seq 1 24); do
+            if fetch "$BENCHMARK_ORIGIN/" /tmp/origin-root.html \
+              && fetch "$BENCHMARK_ORIGIN/benchmarks/" /tmp/origin-nested.html \
+              && grep -Fq '<title>Hara Benchmarks</title>' /tmp/origin-root.html \
+              && grep -Fq 'https://www.hara-lang.org/benchmarks/' /tmp/origin-root.html \
+              && grep -Fq 'id="class-comparison"' /tmp/origin-root.html \
+              && ! grep -Fq '/benchmarks/benchmarks/' /tmp/origin-root.html \
+              && cmp -s /tmp/origin-root.html /tmp/origin-nested.html; then
+              break
+            fi
+            if [ "$attempt" -eq 24 ]; then
+              echo "The independent benchmark origin did not pass its route checks." >&2
+              exit 1
+            fi
+            sleep 5
+          done
+
+          fetch "$BENCHMARK_ORIGIN/homepage.json" /tmp/homepage.json
+          fetch "$BENCHMARK_ORIGIN/benchmarks/homepage.json" /tmp/homepage-nested.json
+          fetch "$BENCHMARK_ORIGIN/data/runs.json" /tmp/runs.json
+          cmp -s /tmp/homepage.json /tmp/homepage-nested.json
+          grep -Fq 'hara.benchmarks-homepage/v1' /tmp/homepage.json
+          test -s /tmp/runs.json
+
+          asset="$(grep -oE '/benchmarks/_astro/[^" ]+\.css' /tmp/origin-root.html | head -n 1)"
+          test -n "$asset"
+          fetch "$BENCHMARK_ORIGIN$asset" /tmp/benchmark.css
+          test -s /tmp/benchmark.css
+
+          effective_url="$(curl --fail --location --silent --show-error \
+            --output /tmp/canonical.html --write-out '%{url_effective}' \
+            "$BENCHMARK_CANONICAL/")"
+          test "$effective_url" = "$BENCHMARK_CANONICAL/"
+          grep -Fq '<title>Hara Benchmarks</title>' /tmp/canonical.html
+          grep -Fq 'https://www.hara-lang.org/benchmarks/' /tmp/canonical.html

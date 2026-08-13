@@ -37,7 +37,7 @@ jobs:
       image: ubuntu:24.04
       options: --cpus 4 --memory 7g
     env:
-      HARA_ROOT: ${{ github.workspace }}/vendor/hara
+      HARA_ROOT: ${{ github.workspace }}/vendor/hara/core
       HARA_BENCH_ROOT: ${{ github.workspace }}
       HARA_BENCH_CONTAINER_IMAGE: ubuntu:24.04
       HARA_BENCH_CHEZ_EXECUTABLE: /usr/bin/chezscheme

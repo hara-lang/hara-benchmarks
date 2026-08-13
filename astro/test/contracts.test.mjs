@@ -74,8 +74,10 @@ test("owns evidence transformation and publication inside hara-benchmarks", () =
   assert.match(workflow, /prepare_presentation_data\.py/);
   assert.match(workflow, /npm test --prefix astro/);
   assert.match(workflow, /npm run verify --prefix astro/);
-  assert.match(workflow, /Smoke-test benchmark origin and canonical route/);
-  assert.doesNotMatch(workflow, /Publish embeddable www bundle|HEAD:benchmark-site/);
+  assert.match(workflow, /Publish verified artifact branch/);
+  assert.match(workflow, /\.benchmark-source-revision/);
+  assert.match(workflow, /HEAD:benchmark-site/);
+  assert.doesNotMatch(workflow, /Smoke-test benchmark origin|netlify-cli|NETLIFY_AUTH_TOKEN|Publish embeddable www bundle/);
   assert.ok(packageJson.scripts.build.includes("mirror-origin.mjs"));
   assert.equal(packageJson.scripts.verify, "node scripts/verify-build.mjs");
   assert.match(mirror, /resolve\(dist, "benchmarks"\)/);

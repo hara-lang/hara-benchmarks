@@ -15,12 +15,13 @@ jobs:
     env:
       CLOJURE_DEPS: '{:mvn/repos {"central" {:url "https://repo.maven.apache.org/maven2/"}} :deps {org.clojure/clojure {:mvn/version "1.12.5"}}}'
       HARA_BENCH_CHEZ_EXECUTABLE: /usr/bin/chezscheme
+      HARA_ROOT: ${{ github.workspace }}/.benchmark-runtime/hara
     steps:
       - uses: actions/checkout@v4
       - uses: actions/checkout@v4
         with:
           repository: hara-lang/hara
-          path: vendor/hara
+          path: .benchmark-runtime/hara
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -52,6 +53,10 @@ jobs:
       - run: node --check site/shootout.js
       - run: node --check suites/language/node_runner.mjs
       - run: ruby --yjit -c suites/language/ruby_runner.rb
+      - name: Verify isolated Hara checkout
+        run: |
+          test -s "$HARA_ROOT/core/rust/Cargo.toml"
+          test -s "$HARA_ROOT/core/rust/web/hta.js"
       - name: Run portable smoke corpus
         run: >-
           python -m hara_bench run --suite algorithms --profile smoke

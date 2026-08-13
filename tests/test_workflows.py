@@ -78,7 +78,7 @@ class WorkflowContractTest(unittest.TestCase):
         self.assertIn("workflow_id: 'pages.yml'", workflow)
         self.assertIn("ref: 'main'", workflow)
 
-    def test_repository_owns_pages_without_a_generated_site_branch(self):
+    def test_repository_owns_independent_publication_without_a_generated_site_branch(self):
         workflow = Path(".github/workflows/pages.yml").read_text(encoding="utf-8")
         self.assertIn("branches: [main, benchmarks-data]", workflow)
         self.assertIn("pull_request:", workflow)
@@ -91,6 +91,11 @@ class WorkflowContractTest(unittest.TestCase):
         self.assertIn("npm test --prefix astro", workflow)
         self.assertIn("npm run verify --prefix astro", workflow)
         self.assertIn("python scripts/verify_dashboard_data.py dist/data/runs.json", workflow)
+        self.assertIn("name: hara-benchmarks-astro-site", workflow)
+        self.assertIn("NETLIFY_SITE_ID: 7d87b558-d5b4-4d05-b3c9-7a52d3f05dc8", workflow)
+        self.assertIn("https://hara-benchmarks.netlify.app/", workflow)
+        self.assertIn("netlify-cli@latest deploy", workflow)
+        self.assertIn("BENCHMARK_CANONICAL: https://www.hara-lang.org/benchmarks", workflow)
         self.assertIn("uses: actions/deploy-pages@v4", workflow)
         self.assertIn("Smoke-test benchmark origin and canonical route", workflow)
         self.assertNotIn("Publish embeddable www bundle", workflow)

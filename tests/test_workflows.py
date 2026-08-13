@@ -11,10 +11,7 @@ class WorkflowContractTest(unittest.TestCase):
         self.assertIn("- cron: '23 3 * * *'", workflow)
         self.assertIn("- cron: '41 4 * * 0'", workflow)
         self.assertIn("git -C history push origin HEAD:benchmarks-data", workflow)
-        self.assertIn(
-            "cancel-in-progress: ${{ github.event_name == 'push' }}",
-            workflow,
-        )
+        self.assertIn("cancel-in-progress: ${{ github.event_name == 'push' }}", workflow)
 
     def test_main_push_uses_the_complete_prepared_peer_set(self):
         workflow = Path(".github/workflows/benchmarks.yml").read_text(encoding="utf-8")
@@ -38,10 +35,7 @@ class WorkflowContractTest(unittest.TestCase):
 
     def test_canonical_container_installs_portable_java_clojure_chez_and_rust(self):
         workflow = Path(".github/workflows/benchmarks.yml").read_text(encoding="utf-8")
-        self.assertIn(
-            "https://download.clojure.org/install/linux-install-1.12.5.1664.sh",
-            workflow,
-        )
+        self.assertIn("https://download.clojure.org/install/linux-install-1.12.5.1664.sh", workflow)
         self.assertIn("repo.maven.apache.org/maven2/", workflow)
         self.assertIn("--retry 5 --retry-all-errors", workflow)
         self.assertIn("for attempt in 1 2 3 4 5", workflow)
@@ -53,7 +47,7 @@ class WorkflowContractTest(unittest.TestCase):
         self.assertIn('HARA_BENCHMARK_REVISION=$GITHUB_SHA', workflow)
         self.assertNotIn("cli: 1.12.5.1664", workflow)
 
-    def test_smoke_exercises_rust_java_chez_and_canonical_clojure_repository(self):
+    def test_smoke_exercises_portable_runtimes(self):
         workflow = Path(".github/workflows/smoke.yml").read_text(encoding="utf-8")
         self.assertIn("--runtime rust-prepared", workflow)
         self.assertIn("--runtime java-prepared", workflow)
@@ -78,22 +72,23 @@ class WorkflowContractTest(unittest.TestCase):
         self.assertIn("workflow_id: 'pages.yml'", workflow)
         self.assertIn("ref: 'main'", workflow)
 
-    def test_benchmark_data_rebuilds_pages_from_main(self):
+    def test_repository_owns_pages_without_a_generated_site_branch(self):
         workflow = Path(".github/workflows/pages.yml").read_text(encoding="utf-8")
         self.assertIn("branches: [main, benchmarks-data]", workflow)
+        self.assertIn("pull_request:", workflow)
         self.assertIn("workflow_dispatch:", workflow)
-        self.assertIn("ref: main", workflow)
-        self.assertIn(
-            "git fetch origin benchmarks-data:refs/remotes/origin/benchmarks-data",
-            workflow,
-        )
+        self.assertIn("github.ref_name == 'benchmarks-data' && 'main' || github.sha", workflow)
+        self.assertIn("git fetch origin benchmarks-data:refs/remotes/origin/benchmarks-data", workflow)
         self.assertIn("git archive origin/benchmarks-data runs", workflow)
-        self.assertIn(
-            "python scripts/verify_dashboard_data.py dist/data/runs.json",
-            workflow,
-        )
-        self.assertNotIn("if: github.ref == 'refs/heads/main'", workflow)
+        self.assertIn("prepare_presentation_data.py", workflow)
+        self.assertIn("python -m unittest -v tests/test_presentation_data.py", workflow)
+        self.assertIn("npm test --prefix astro", workflow)
+        self.assertIn("npm run verify --prefix astro", workflow)
+        self.assertIn("python scripts/verify_dashboard_data.py dist/data/runs.json", workflow)
         self.assertIn("uses: actions/deploy-pages@v4", workflow)
+        self.assertIn("Smoke-test benchmark origin and canonical route", workflow)
+        self.assertNotIn("Publish embeddable www bundle", workflow)
+        self.assertNotIn("HEAD:benchmark-site", workflow)
 
 
 if __name__ == "__main__":

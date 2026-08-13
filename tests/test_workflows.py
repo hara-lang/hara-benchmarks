@@ -78,11 +78,12 @@ class WorkflowContractTest(unittest.TestCase):
         self.assertIn("workflow_id: 'pages.yml'", workflow)
         self.assertIn("ref: 'main'", workflow)
 
-    def test_repository_owns_independent_publication_without_a_generated_site_branch(self):
+    def test_repository_publishes_one_verified_artifact_for_external_deployment(self):
         workflow = Path(".github/workflows/pages.yml").read_text(encoding="utf-8")
         self.assertIn("branches: [main, benchmarks-data]", workflow)
         self.assertIn("pull_request:", workflow)
         self.assertIn("workflow_dispatch:", workflow)
+        self.assertIn("permissions:\n  contents: write", workflow)
         self.assertIn("github.ref_name == 'benchmarks-data' && 'main' || github.sha", workflow)
         self.assertIn("git fetch origin benchmarks-data:refs/remotes/origin/benchmarks-data", workflow)
         self.assertIn("git archive origin/benchmarks-data runs", workflow)
@@ -92,14 +93,11 @@ class WorkflowContractTest(unittest.TestCase):
         self.assertIn("npm run verify --prefix astro", workflow)
         self.assertIn("python scripts/verify_dashboard_data.py dist/data/runs.json", workflow)
         self.assertIn("name: hara-benchmarks-astro-site", workflow)
-        self.assertIn("NETLIFY_SITE_ID: 7d87b558-d5b4-4d05-b3c9-7a52d3f05dc8", workflow)
-        self.assertIn("https://hara-benchmarks.netlify.app/", workflow)
-        self.assertIn("netlify-cli@latest deploy", workflow)
-        self.assertIn("BENCHMARK_CANONICAL: https://www.hara-lang.org/benchmarks", workflow)
+        self.assertIn("Publish verified artifact branch", workflow)
+        self.assertIn(".benchmark-source-revision", workflow)
+        self.assertIn("git push --force origin HEAD:benchmark-site", workflow)
         self.assertIn("uses: actions/deploy-pages@v4", workflow)
-        self.assertIn("Smoke-test benchmark origin and canonical route", workflow)
-        self.assertNotIn("Publish embeddable www bundle", workflow)
-        self.assertNotIn("HEAD:benchmark-site", workflow)
+        self.assertNotIn("netlify-cli@latest deploy", workflow)
 
 
 if __name__ == "__main__":

@@ -60,11 +60,11 @@ class WorkflowContractTest(unittest.TestCase):
         self.assertNotIn("/usr/local/bin/chez", workflow)
         self.assertIn("repo.maven.apache.org/maven2/", workflow)
         self.assertIn("Verify smoke runtime coverage", workflow)
-        self.assertIn("HARA_ROOT: ${{ github.workspace }}/.benchmark-runtime/hara", workflow)
+        self.assertIn("HARA_ROOT: ${{ github.workspace }}/.benchmark-runtime/hara/core", workflow)
         self.assertIn("path: .benchmark-runtime/hara", workflow)
         self.assertIn("Verify isolated Hara checkout", workflow)
-        self.assertIn('test -s "$HARA_ROOT/core/rust/Cargo.toml"', workflow)
-        self.assertIn('test -s "$HARA_ROOT/core/rust/web/hta.js"', workflow)
+        self.assertIn('test -s "$HARA_ROOT/rust/Cargo.toml"', workflow)
+        self.assertIn('test -s "$HARA_ROOT/rust/web/hta.js"', workflow)
         self.assertNotIn("path: vendor/hara", workflow)
 
     def test_published_data_explicitly_dispatches_pages(self):

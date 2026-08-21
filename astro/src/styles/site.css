@@ -1,3 +1,6 @@
+@import "@hara-lang/visual-language/v2.css";
+@import "@hara-lang/visual-language/v2-data.css";
 @import "./shell.css";
 @import "./language.css";
 @import "./results.css";
+@import "./v2-adoption.css";

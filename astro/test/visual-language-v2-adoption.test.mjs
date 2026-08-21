@@ -43,9 +43,10 @@ test("the dashboard opts into v2 while preserving benchmark interaction authorit
 
 test("the product mapping preserves touch, focus, contained matrices and reduced motion", async () => {
   const css = await read("../src/styles/v2-adoption.css");
-  assert.match(css, /min-height: 44px/);
+  assert.match(css, /min-height:\s*44px/);
   assert.match(css, /:focus-visible/);
-  assert.match(css, /\.matrix-scroll[\s\S]*overflow: auto/);
+  assert.match(css, /\.benchmark-product \.matrix-scroll\s*\{/);
+  assert.match(css, /overflow:\s*auto/);
   assert.match(css, /scroll-margin-top/);
   assert.match(css, /@media \(prefers-reduced-motion: reduce\)/);
 });

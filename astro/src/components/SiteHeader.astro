@@ -1,16 +1,21 @@
 ---
+import Header from "@hara-lang/visual-language/astro/v2/Header.astro";
 import ThemeToggle from "@hara-lang/visual-language/astro/ThemeToggle.astro";
-import HaraMark from "@hara-lang/visual-language/astro/HaraMark.astro";
+
+const nav = [
+  { href: "https://www.hara-lang.org/benchmarks/", label: "Benchmarks", current: true, external: true },
+  { href: "https://www.hara-lang.org/docs/", label: "Docs", external: true },
+  { href: "https://specs.hara-lang.org/", label: "Specs", external: true },
+  { href: "https://world.hara-lang.org/", label: "World", external: true }
+];
 ---
-<header class="site-header">
-  <a class="brand" href="https://www.hara-lang.org/"><HaraMark size={26} /><span>Hara</span></a>
-  <nav aria-label="Primary navigation">
-    <span aria-current="page" aria-disabled="true">Benchmarks</span>
-    <a href="https://www.hara-lang.org/docs/">Docs</a>
-    <a href="https://specs.hara-lang.org/">Specs</a>
-  </nav>
-  <div class="header-actions">
-    <a class="sign-in" href="https://id.hara-lang.org/">Sign in</a>
-    <ThemeToggle />
-  </div>
-</header>
+<Header
+  homeHref="https://www.hara-lang.org/"
+  section="Benchmarks"
+  nav={nav}
+  activePath="/benchmarks/"
+  label="Hara Benchmarks"
+>
+  <a class="sign-in" href="https://id.hara-lang.org/">Sign in</a>
+  <ThemeToggle label="Theme" />
+</Header>

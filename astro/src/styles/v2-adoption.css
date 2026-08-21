@@ -1,0 +1,156 @@
+/* Product-owned mapping from the accepted Hara v2 evidence contract to Benchmarks. */
+
+.benchmark-product {
+  margin: 0;
+  color: var(--hara-v2-ink);
+  background: var(--hara-v2-canvas);
+}
+
+.benchmark-product .hara-v2-header {
+  position: sticky;
+  z-index: 80;
+  top: 0;
+}
+
+.benchmark-product .hara-v2-header-actions,
+.benchmark-product .hara-v2-ecosystem-nav {
+  min-width: 0;
+}
+
+.benchmark-product .sign-in,
+.benchmark-product .hara-theme-toggle,
+.benchmark-product .hara-v2-ecosystem-nav a,
+.benchmark-product .tabs button,
+.benchmark-product .matrix-cell {
+  min-height: 44px;
+}
+
+.benchmark-product .sign-in {
+  display: inline-flex;
+  align-items: center;
+  padding: .45rem .7rem;
+  color: var(--hara-v2-ink);
+  border: 1px solid var(--hara-v2-line);
+  border-radius: var(--hara-v2-radius);
+  background: var(--hara-v2-panel);
+  font-size: .78rem;
+  font-weight: 680;
+  text-decoration: none;
+  clip-path: polygon(var(--hara-v2-cut-small) 0, 100% 0, 100% calc(100% - var(--hara-v2-cut-small)), calc(100% - var(--hara-v2-cut-small)) 100%, 0 100%, 0 var(--hara-v2-cut-small));
+}
+
+.benchmark-product .benchmark-skip-link {
+  position: fixed;
+  z-index: 120;
+  top: .5rem;
+  left: .5rem;
+  padding: .65rem .8rem;
+  color: #fff;
+  border: 1px solid color-mix(in srgb, var(--hara-v2-signal) 72%, #0b1726);
+  border-radius: var(--hara-v2-radius);
+  background: var(--hara-v2-signal);
+  text-decoration: none;
+  transform: translateY(-180%);
+}
+
+.benchmark-product .benchmark-skip-link:focus-visible { transform: translateY(0); }
+.benchmark-product #benchmark-content:focus { outline: none; }
+.benchmark-product [id] { scroll-margin-top: calc(var(--hara-v2-header-height) + 4rem); }
+
+.benchmark-evidence-contract {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  width: min(var(--benchmark-content), calc(100% - 2 * var(--hara-space-page)));
+  margin: -2rem auto 0;
+  border: 1px solid var(--hara-v2-line-strong);
+  border-radius: var(--hara-v2-radius-large);
+  overflow: hidden;
+  background: var(--hara-v2-line);
+  box-shadow: var(--hara-v2-shadow);
+}
+
+.benchmark-evidence-contract > div {
+  display: grid;
+  gap: .28rem;
+  min-height: 92px;
+  padding: .8rem;
+  background: var(--hara-v2-panel);
+}
+
+.benchmark-evidence-contract span {
+  color: var(--hara-v2-faint);
+  font: 700 .56rem var(--hara-v2-font-code);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.benchmark-evidence-contract strong { font-size: .68rem; line-height: 1.45; }
+.benchmark-evidence-contract code { color: var(--hara-v2-muted); font-size: .55rem; }
+
+.benchmark-product .summary,
+.benchmark-product .results-shell,
+.benchmark-product .runtime-reference {
+  color: var(--hara-v2-ink);
+}
+
+.benchmark-product .comparison-results,
+.benchmark-product .language-overview,
+.benchmark-product .result-explanation,
+.benchmark-product .runtime-reference,
+.benchmark-product .matrix-detail {
+  border-radius: var(--hara-v2-radius-large);
+  box-shadow: none;
+}
+
+.benchmark-product .comparison-results,
+.benchmark-product .result-explanation,
+.benchmark-product .runtime-reference {
+  border-color: var(--hara-v2-line-strong);
+}
+
+.benchmark-product .tabs {
+  top: var(--hara-v2-header-height);
+  border-color: var(--hara-v2-line);
+  background: color-mix(in srgb, var(--hara-v2-panel-raised) 95%, transparent);
+}
+
+.benchmark-product .tabs button[aria-selected="true"] {
+  color: var(--hara-v2-ink);
+  border-color: var(--hara-v2-signal);
+}
+
+.benchmark-product .matrix-scroll {
+  max-width: 100%;
+  overflow: auto;
+  overscroll-behavior-inline: contain;
+}
+
+.benchmark-product .comparison-matrix { border-color: var(--hara-v2-line); }
+.benchmark-product .matrix-cell:focus-visible,
+.benchmark-product .tabs button:focus-visible,
+.benchmark-product .sign-in:focus-visible {
+  outline: 2px solid var(--hara-v2-signal);
+  outline-offset: 2px;
+}
+
+@media (max-width: 820px) {
+  .benchmark-evidence-contract { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: -1rem; }
+  .benchmark-product .hara-v2-ecosystem-nav { overflow-x: auto; scrollbar-width: none; }
+}
+
+@media (max-width: 560px) {
+  .benchmark-evidence-contract { grid-template-columns: 1fr; width: calc(100% - 2rem); }
+  .benchmark-product .hara-v2-wordmark,
+  .benchmark-product .sign-in { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .benchmark-product *,
+  .benchmark-product *::before,
+  .benchmark-product *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}

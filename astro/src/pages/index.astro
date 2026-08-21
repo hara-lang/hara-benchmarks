@@ -41,10 +41,17 @@ const socialImage = new URL(`${basePath}og-hara-benchmarks.jpg`, Astro.site);
   <link rel="icon" href={`${basePath}assets/hara-favicon.svg`} type="image/svg+xml" />
   <title>Hara Benchmarks</title>
 </head>
-<body>
+<body class="hara-v2 benchmark-product">
+  <a class="benchmark-skip-link" href="#benchmark-content">Skip to benchmark evidence</a>
   <SiteHeader />
-  <main>
+  <main id="benchmark-content" tabindex="-1">
     <section class="summary hara-motif" data-motif="rack"><div class="summary-inner"><p class="hara-kicker">Reproducible performance evidence</p><h1>Hara benchmarks</h1><p class="lede">Start with best in class: Hara against dynamic-JIT peers, then the Lisp family, HTTP frameworks, and the exact workloads behind every comparison.</p><div class="evidence-line"><span class="evidence-dot ready"></span><span>Published {evidenceDate}</span><span aria-hidden="true">·</span><span>{workloads.length} workloads</span><span aria-hidden="true">·</span><span>{comparisonRows.length} comparison languages</span></div></div></section>
+    <section class="benchmark-evidence-contract" aria-label="Benchmark evidence contract">
+      <div><span>Measure</span><strong>Prepared execution time</strong><code>lower is better</code></div>
+      <div><span>Comparison</span><strong>One verified run, one Hara baseline</strong><code>no cross-run ratios</code></div>
+      <div><span>Uncertainty</span><strong>Samples and distribution remain adjacent</strong><code>missing ≠ failed</code></div>
+      <div><span>Authority</span><strong>Raw data and methods stay in hara-benchmarks</strong><code>presentation never rewrites evidence</code></div>
+    </section>
     <section class="results-shell">
       <div class="tabs" role="tablist" aria-label="Benchmark sections"><button role="tab" aria-selected="true" aria-controls="class-comparison" id="tab-class">Best in class</button><button role="tab" aria-selected="false" aria-controls="language-shootout" id="tab-languages" tabindex="-1">Language shootout</button><button role="tab" aria-selected="false" aria-controls="http-results" id="tab-http" tabindex="-1">HTTP</button><button role="tab" aria-selected="false" aria-controls="hara-artifacts" id="tab-hara" tabindex="-1">Hara runtimes</button></div>
       <ClassPanel /><LanguagePanel /><HttpPanel /><RuntimePanel />

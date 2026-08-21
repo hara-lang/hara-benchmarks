@@ -18,8 +18,16 @@ test("benchmark publication pins and materialises the accepted visual-language c
     assert.match(prepare, new RegExp(value.replaceAll(".", "\\.")));
   }
   assert.match(prepare, /manifest\.files/);
+  assert.match(prepare, /await cp\(from, to, \{ recursive: true, dereference: true \}\)/);
   assert.match(prepare, /materialised @hara-lang\/visual-language/);
   assert.match(packageJson, /prepare:visual-language/);
+});
+
+test("the checked-out package source is not treated as benchmark application source", async () => {
+  const tsconfig = JSON.parse(await read("../tsconfig.json"));
+  assert.ok(tsconfig.exclude?.includes("packages/visual-language/**"));
+  assert.equal(tsconfig.compilerOptions?.allowJs, true);
+  assert.equal(tsconfig.compilerOptions?.checkJs, false);
 });
 
 test("the dashboard opts into v2 while preserving benchmark interaction authority", async () => {

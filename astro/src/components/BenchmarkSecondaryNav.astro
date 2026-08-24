@@ -1,0 +1,188 @@
+---
+const suites = [
+  { id: "class-comparison", label: "Best in class" },
+  { id: "language-shootout", label: "Language shootout" },
+  { id: "http-results", label: "HTTP" },
+  { id: "hara-artifacts", label: "Hara runtimes" }
+];
+const evidence = [
+  { id: "benchmark-summary", label: "Summary" },
+  { id: "evidence-contract", label: "Evidence contract" },
+  { id: "benchmark-results", label: "Results" },
+  { id: "runtime-reference", label: "Runtime reference" }
+];
+---
+<nav
+  class="benchmark-secondary"
+  aria-label="Benchmark page navigation"
+  data-benchmark-secondary
+  data-suite-open="false"
+  data-evidence-open="false"
+>
+  <div class="benchmark-secondary__line">
+    <a class="benchmark-secondary__parent" href="https://www.hara-lang.org/benchmarks/" aria-label="Benchmarks home">
+      <span aria-hidden="true">←</span>
+      <span>Benchmarks</span>
+    </a>
+
+    <button
+      class="benchmark-secondary__trigger"
+      type="button"
+      aria-expanded="false"
+      aria-controls="benchmark-suite-menu"
+      aria-label="Show benchmark suites"
+      data-benchmark-suite-trigger
+    >
+      <span data-benchmark-suite-current>Best in class</span>
+      <i aria-hidden="true"></i>
+    </button>
+
+    <button
+      class="benchmark-secondary__trigger"
+      type="button"
+      aria-expanded="false"
+      aria-controls="benchmark-evidence-menu"
+      aria-label="Show benchmark evidence sections"
+      data-benchmark-evidence-trigger
+    >
+      <span data-benchmark-evidence-current>Summary</span>
+      <i aria-hidden="true"></i>
+    </button>
+  </div>
+
+  <div class="benchmark-secondary__panel" id="benchmark-suite-menu" data-benchmark-suite-menu aria-hidden="true">
+    <span class="benchmark-secondary__panel-label">Suites and runtimes</span>
+    {suites.map((suite, index) => (
+      <a
+        href={`#${suite.id}`}
+        data-benchmark-suite-link={suite.id}
+        aria-current={index === 0 ? "location" : undefined}
+      >
+        <span>{suite.label}</span>
+      </a>
+    ))}
+  </div>
+
+  <div class="benchmark-secondary__panel" id="benchmark-evidence-menu" data-benchmark-evidence-menu aria-hidden="true">
+    <span class="benchmark-secondary__panel-label">Evidence sections</span>
+    {evidence.map((section, index) => (
+      <a
+        href={`#${section.id}`}
+        data-benchmark-evidence-link={section.id}
+        aria-current={index === 0 ? "location" : undefined}
+      >
+        <span>{section.label}</span>
+      </a>
+    ))}
+  </div>
+</nav>
+
+<script>
+  const initialiseBenchmarkSecondaryNavigation = () => {
+    document.querySelectorAll("[data-benchmark-secondary]").forEach((nav) => {
+      if (!(nav instanceof HTMLElement) || nav.dataset.ready === "true") return;
+      const suiteTrigger = nav.querySelector("[data-benchmark-suite-trigger]");
+      const suiteMenu = nav.querySelector("[data-benchmark-suite-menu]");
+      const suiteCurrent = nav.querySelector("[data-benchmark-suite-current]");
+      const evidenceTrigger = nav.querySelector("[data-benchmark-evidence-trigger]");
+      const evidenceMenu = nav.querySelector("[data-benchmark-evidence-menu]");
+      const evidenceCurrent = nav.querySelector("[data-benchmark-evidence-current]");
+      if (!(suiteTrigger instanceof HTMLButtonElement) || !(suiteMenu instanceof HTMLElement) || !(evidenceTrigger instanceof HTMLButtonElement) || !(evidenceMenu instanceof HTMLElement)) return;
+
+      nav.dataset.ready = "true";
+      const suiteLinks = [...suiteMenu.querySelectorAll<HTMLAnchorElement>("[data-benchmark-suite-link]")];
+      const evidenceLinks = [...evidenceMenu.querySelectorAll<HTMLAnchorElement>("[data-benchmark-evidence-link]")];
+
+      const setSuiteOpen = (requestedOpen: boolean, restoreFocus = false) => {
+        const open = Boolean(requestedOpen);
+        nav.dataset.suiteOpen = String(open);
+        suiteTrigger.setAttribute("aria-expanded", String(open));
+        suiteTrigger.setAttribute("aria-label", `${open ? "Hide" : "Show"} benchmark suites`);
+        suiteMenu.setAttribute("aria-hidden", String(!open));
+        if (open) setEvidenceOpen(false);
+        if (!open && restoreFocus) suiteTrigger.focus();
+      };
+
+      const setEvidenceOpen = (requestedOpen: boolean, restoreFocus = false) => {
+        const open = Boolean(requestedOpen);
+        nav.dataset.evidenceOpen = String(open);
+        evidenceTrigger.setAttribute("aria-expanded", String(open));
+        evidenceTrigger.setAttribute("aria-label", `${open ? "Hide" : "Show"} benchmark evidence sections`);
+        evidenceMenu.setAttribute("aria-hidden", String(!open));
+        if (open) setSuiteOpen(false);
+        if (!open && restoreFocus) evidenceTrigger.focus();
+      };
+
+      const setSuiteCurrent = (id: string) => {
+        suiteLinks.forEach((link) => {
+          if (link.dataset.benchmarkSuiteLink === id) link.setAttribute("aria-current", "location");
+          else link.removeAttribute("aria-current");
+        });
+        const active = suiteLinks.find((link) => link.dataset.benchmarkSuiteLink === id);
+        if (suiteCurrent instanceof HTMLElement && active) suiteCurrent.textContent = active.textContent?.trim() || "Best in class";
+      };
+
+      const setEvidenceCurrent = (id: string) => {
+        evidenceLinks.forEach((link) => {
+          if (link.dataset.benchmarkEvidenceLink === id) link.setAttribute("aria-current", "location");
+          else link.removeAttribute("aria-current");
+        });
+        const active = evidenceLinks.find((link) => link.dataset.benchmarkEvidenceLink === id);
+        if (evidenceCurrent instanceof HTMLElement && active) evidenceCurrent.textContent = active.textContent?.trim() || "Summary";
+      };
+
+      suiteTrigger.addEventListener("click", () => setSuiteOpen(nav.dataset.suiteOpen !== "true"));
+      evidenceTrigger.addEventListener("click", () => setEvidenceOpen(nav.dataset.evidenceOpen !== "true"));
+
+      suiteLinks.forEach((link) => link.addEventListener("click", (event) => {
+        const id = link.dataset.benchmarkSuiteLink;
+        if (!id) return;
+        const tab = document.querySelector<HTMLButtonElement>(`[role="tab"][aria-controls="${CSS.escape(id)}"]`);
+        if (tab) {
+          event.preventDefault();
+          tab.click();
+        }
+        setSuiteCurrent(id);
+        setSuiteOpen(false);
+      }));
+
+      evidenceLinks.forEach((link) => link.addEventListener("click", () => {
+        const id = link.dataset.benchmarkEvidenceLink;
+        if (id) setEvidenceCurrent(id);
+        setEvidenceOpen(false);
+      }));
+
+      document.querySelectorAll<HTMLButtonElement>('[role="tab"][aria-controls]').forEach((tab) => {
+        tab.addEventListener("click", () => {
+          const id = tab.getAttribute("aria-controls");
+          if (id) setSuiteCurrent(id);
+        });
+      });
+
+      const evidenceTargets = evidenceLinks
+        .map((link) => link.dataset.benchmarkEvidenceLink ? document.getElementById(link.dataset.benchmarkEvidenceLink) : null)
+        .filter((target): target is HTMLElement => target instanceof HTMLElement);
+      if ("IntersectionObserver" in window && evidenceTargets.length > 0) {
+        const observer = new IntersectionObserver((entries) => {
+          const visible = entries
+            .filter((entry) => entry.isIntersecting)
+            .sort((left, right) => left.boundingClientRect.top - right.boundingClientRect.top)[0];
+          if (visible?.target instanceof HTMLElement) setEvidenceCurrent(visible.target.id);
+        }, { rootMargin: "-30% 0px -62% 0px", threshold: [0, .05, .25] });
+        evidenceTargets.forEach((target) => observer.observe(target));
+      }
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key !== "Escape") return;
+        if (nav.dataset.evidenceOpen === "true") setEvidenceOpen(false, true);
+        else if (nav.dataset.suiteOpen === "true") setSuiteOpen(false, true);
+      });
+
+      setSuiteOpen(false);
+      setEvidenceOpen(false);
+    });
+  };
+
+  initialiseBenchmarkSecondaryNavigation();
+  document.addEventListener("astro:page-load", initialiseBenchmarkSecondaryNavigation);
+</script>

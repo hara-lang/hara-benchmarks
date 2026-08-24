@@ -42,16 +42,25 @@ test("the benchmark shell uses one product hamburger and one all-width context l
   assert.doesNotMatch(secondary, /matchMedia/);
 });
 
-test("the context shell stays compact on desktop and uses left-anchored bounded popouts", async () => {
+test("the context shell stays compact and non-floating at every viewport", async () => {
   const css = await read("../src/styles/shell.css");
+  const shellStart = css.indexOf(".benchmark-secondary {");
+  const shellEnd = css.indexOf("}", shellStart);
+  const shellRule = css.slice(shellStart, shellEnd + 1);
 
-  assert.match(css, /\.benchmark-secondary \{[\s\S]*?min-height: 48px;[\s\S]*?max-height: 48px;/);
+  assert.match(shellRule, /position: relative/);
+  assert.match(shellRule, /isolation: isolate/);
+  assert.match(shellRule, /min-height: 48px/);
+  assert.match(shellRule, /max-height: 48px/);
+  assert.doesNotMatch(shellRule, /position:\s*(?:sticky|fixed)/);
+  assert.doesNotMatch(shellRule, /top:\s*var\(--hara-v2-header-height\)/);
   assert.match(css, /\.benchmark-secondary__line \{[\s\S]*?display: flex;[\s\S]*?max-height: 48px;/);
-  assert.match(css, /\.benchmark-secondary__panel \{[\s\S]*?left: clamp\(12px, 2vw, 28px\);[\s\S]*?width: min\(360px, calc\(100vw - 56px\)\);/);
+  assert.match(css, /\.benchmark-secondary__panel \{[\s\S]*?position: absolute;[\s\S]*?top: 100%;[\s\S]*?left: clamp\(12px, 2vw, 28px\);[\s\S]*?width: min\(360px, calc\(100vw - 56px\)\);/);
   assert.match(css, /@media \(max-width: 840px\)[\s\S]*?\.benchmark-secondary__panel \{[\s\S]*?right: 0;[\s\S]*?left: 0;[\s\S]*?width: 100%;/);
   assert.match(css, /min-height: 44px/);
   assert.match(css, /@media \(prefers-reduced-motion: reduce\)/);
   assert.doesNotMatch(css, /\.tabs \{[\s\S]*?position:\s*sticky/);
+  assert.match(css, /scroll-margin-top: calc\(var\(--hara-v2-header-height\) \+ 1rem\)/);
   assert.doesNotMatch(css, /--hara-v2-[A-Za-z0-9_-]+\s*:/, "Benchmarks may consume but not redefine protected v2 tokens");
 });
 

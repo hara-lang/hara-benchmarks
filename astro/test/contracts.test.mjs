@@ -129,13 +129,16 @@ test("moves the product-mode table to a collapsed reference at the end", () => {
   assert.ok(page.indexOf("RuntimeReference") > page.indexOf("LanguagePanel"));
 });
 
-test("uses the shared v2 Hara navigation and sign-in button", () => {
-  assert.match(header, /import Header from "@hara-lang\/visual-language\/astro\/v2\/Header\.astro"/);
+test("uses the shared Hara product hamburger and sign-in contract", () => {
+  assert.match(header, /import Header from "\.\.\/\.\.\/packages\/hara-ui\/foundation\/astro\/v2\/Header\.astro"/);
   assert.match(header, /<Header[\s\S]*section="Benchmarks"/);
+  assert.match(header, /menuMode="product"/);
+  assert.match(header, /menuControls="benchmark-product-menu"/);
   assert.match(header, /Benchmarks[\s\S]*Docs[\s\S]*Specs[\s\S]*World/);
   assert.doesNotMatch(header, />Source<\/a>/);
   assert.match(header, /https:\/\/specs\.hara-lang\.org\//);
-  assert.ok(header.includes('href="https://id.hara-lang.org/">Sign in</a>'));
+  assert.match(header, /accountHref="https:\/\/id\.hara-lang\.org\/"/);
+  assert.match(header, /accountLabel="Sign in"/);
   assert.doesNotMatch(source, /api\/session|auth\/github|return_to/);
 });
 

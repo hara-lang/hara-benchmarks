@@ -31,6 +31,13 @@ jobs:
           ref: a2ab66d0fde79edb1cee46b79528098b3fda68cf
           path: astro/packages/visual-language
 
+      - name: Checkout shared Hara UI shell
+        uses: actions/checkout@v4
+        with:
+          repository: hara-lang/hara-ui
+          ref: 0e8a9d3d0f6ba9c9aedb8e6ddb48d758a40517a5
+          path: astro/packages/hara-ui
+
       - name: Restore published benchmark history
         run: |
           set -euo pipefail

@@ -5,10 +5,11 @@ import test from "node:test";
 const read = (path) => readFile(new URL(path, import.meta.url), "utf8");
 const haraUiRevision = "0e8a9d3d0f6ba9c9aedb8e6ddb48d758a40517a5";
 
-test("publication checks out the merged shared Hara header contract", async () => {
-  const [workflow, config] = await Promise.all([
+test("publication checks out the merged shared Hara header contract without scanning the package source", async () => {
+  const [workflow, config, tsconfig] = await Promise.all([
     read("../../.github/workflows/pages.yml"),
-    read("../astro.config.mjs")
+    read("../astro.config.mjs"),
+    read("../tsconfig.json")
   ]);
 
   assert.match(workflow, /repository: hara-lang\/hara-ui/);
@@ -16,6 +17,9 @@ test("publication checks out the merged shared Hara header contract", async () =
   assert.match(workflow, /path: astro\/packages\/hara-ui/);
   assert.match(config, /@hara-lang\/ui\/v2\/header\.js/);
   assert.match(config, /packages\/hara-ui\/foundation\/v2\/header\.js/);
+  assert.match(tsconfig, /"@hara-lang\/ui\/v2\/header\.js"/);
+  assert.match(tsconfig, /"packages\/hara-ui\/foundation\/v2\/header\.js"/);
+  assert.match(tsconfig, /"packages\/hara-ui\/\*\*"/);
 });
 
 test("the benchmark shell uses one product hamburger and one all-width context line", async () => {

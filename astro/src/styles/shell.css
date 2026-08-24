@@ -105,19 +105,20 @@ button { font: inherit; }
 .benchmark-product-menu-fallback a { color: var(--hara-v2-ink); }
 html[data-benchmark-menu-open="true"] { overflow: hidden; }
 
-/* One-line secondary shell ----------------------------------------------- */
+/* One-line secondary shell -----------------------------------------------
+ * The global Hara header is the only persistent navigation layer. This
+ * local context row stays in normal document flow and anchors its own panels.
+ */
 .benchmark-secondary {
-  position: sticky;
-  z-index: 55;
-  top: var(--hara-v2-header-height);
+  position: relative;
+  z-index: 20;
+  isolation: isolate;
   min-height: 48px;
   max-height: 48px;
   overflow: visible;
   color: var(--hara-v2-ink);
   border-bottom: 1px solid var(--hara-v2-line-strong);
-  background: color-mix(in srgb, var(--hara-v2-panel-raised) 98%, transparent);
-  box-shadow: 0 1px 0 var(--hara-v2-sketch);
-  backdrop-filter: blur(14px) saturate(106%);
+  background: var(--hara-v2-panel-raised);
   white-space: nowrap;
 }
 
@@ -186,7 +187,7 @@ html[data-benchmark-menu-open="true"] { overflow: hidden; }
 
 .benchmark-secondary__panel {
   position: absolute;
-  z-index: 58;
+  z-index: 2;
   top: 100%;
   left: clamp(12px, 2vw, 28px);
   display: none;
@@ -273,7 +274,7 @@ html[data-benchmark-menu-open="true"] { overflow: hidden; }
 .tab-panel > header p:last-child,.language-overview > div > p:last-child,.section-heading p { color: var(--hara-muted); line-height: 1.65; }
 
 #benchmark-content :where(section, article, [role="tabpanel"])[id] {
-  scroll-margin-top: calc(var(--hara-v2-header-height) + 48px + 1rem);
+  scroll-margin-top: calc(var(--hara-v2-header-height) + 1rem);
 }
 
 footer { display: flex; justify-content: space-between; gap: 1rem; padding: 1.5rem var(--hara-space-page); border-top: 1px solid var(--hara-line); color: var(--hara-muted); font-size: .78rem; }

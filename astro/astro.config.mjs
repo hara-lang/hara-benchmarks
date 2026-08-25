@@ -3,4 +3,15 @@ import sitemap from "@astrojs/sitemap";
 const base = process.env.HARA_BENCHMARK_BASE || "/benchmarks";
 const site = "https://www.hara-lang.org";
 const outDir = process.env.HARA_BENCHMARK_OUT_DIR || "../dist";
-export default defineConfig({ site, base, output: "static", outDir, integrations: [sitemap()] });
+export default defineConfig({
+  site,
+  base,
+  output: "static",
+  outDir,
+  integrations: [sitemap()],
+  vite: {
+    resolve: {
+      preserveSymlinks: true
+    }
+  }
+});

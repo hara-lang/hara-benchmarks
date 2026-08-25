@@ -1,16 +1,21 @@
 ---
 import ThemeToggle from "@hara-lang/ui-astro/astro/ThemeToggle.astro";
-import HaraMark from "@hara-lang/ui-astro/astro/HaraMark.astro";
+import V2Header from "@hara-lang/ui-astro/astro/v2/Header.astro";
+const navigation = [
+  { label: "Benchmarks", href: "/", current: true },
+  { label: "Docs", href: "https://hara-lang.org/docs/", external: true },
+  { label: "Build", href: "https://build.hara-lang.org/", external: true }
+];
 ---
-<header class="site-header">
-  <a class="brand" href="https://www.hara-lang.org/"><HaraMark size={26} /><span>Hara</span></a>
-  <nav aria-label="Primary navigation">
-    <span aria-current="page" aria-disabled="true">Benchmarks</span>
-    <a href="https://www.hara-lang.org/docs/">Docs</a>
-    <a href="https://specs.hara-lang.org/">Specs</a>
-  </nav>
-  <div class="header-actions">
-    <a class="sign-in" href="https://id.hara-lang.org/">Sign in</a>
-    <ThemeToggle />
-  </div>
-</header>
+<V2Header
+  class="benchmarks-v2-header"
+  homeHref="https://hara-lang.org/"
+  section="Benchmarks"
+  nav={navigation}
+  activePath="/"
+  label="Hara Benchmarks"
+  variant="document"
+  accountHref="https://id.hara-lang.org/"
+>
+  <ThemeToggle />
+</V2Header>

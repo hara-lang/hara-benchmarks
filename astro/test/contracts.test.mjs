@@ -130,11 +130,11 @@ test("moves the product-mode table to a collapsed reference at the end", () => {
 });
 
 test("uses the shared Hara navigation and sign-in button", () => {
-  assert.match(header, /aria-current="page" aria-disabled="true">Benchmarks/);
-  assert.match(header, /Benchmarks[\s\S]*Docs[\s\S]*Specs/);
+  assert.match(header, /label: "Benchmarks", href: "\/", current: true/);
+  assert.match(header, /Benchmarks[\s\S]*Docs[\s\S]*Build/);
   assert.doesNotMatch(header, />Source<\/a>/);
-  assert.match(header, /https:\/\/specs\.hara-lang\.org\//);
-  assert.ok(header.includes('href="https://id.hara-lang.org/">Sign in</a>'));
+  assert.match(header, /https:\/\/build\.hara-lang\.org\//);
+  assert.match(header, /accountHref="https:\/\/id\.hara-lang\.org\//);
   assert.doesNotMatch(source, /api\/session|auth\/github|return_to/);
 });
 
@@ -142,6 +142,15 @@ test("uses a dedicated maximum-resolution benchmark social card", () => {
   assert.match(page, /og-hara-benchmarks\.jpg/);
   assert.match(page, /og:image:width" content="1200"/);
   assert.match(page, /og:image:height" content="630"/);
+});
+
+test("uses the shared v2 shell and header for the benchmark product frame", () => {
+  assert.match(page, /@hara-lang\/ui-astro\/astro\/v2\/Shell\.astro/);
+  assert.match(page, /<V2Shell[\s\S]*class="benchmarks-v2-shell"/);
+  assert.match(page, /<SiteHeader slot="header" \/>/);
+  assert.match(header, /@hara-lang\/ui-astro\/astro\/v2\/Header\.astro/);
+  assert.match(header, /variant="document"/);
+  assert.match(header, /accountHref="https:\/\/id\.hara-lang\.org\//);
 });
 
 test("external comparisons use only the native full Hara tier", () => {

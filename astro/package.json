@@ -12,7 +12,9 @@
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.6.0",
-    "@hara-lang/visual-language": "github:hara-lang/visual-language#5123b7050fdf50a41b917bc2b5c68047e24ca293",
+    "@hara-lang/ui": "file:../../../technology/hara-ui",
+    "@hara-lang/ui-astro": "file:../../../technology/hara-ui/packages/ui-astro",
+    "@hara-lang/ui-tool": "file:../../../technology/hara-ui/packages/ui-tool",
     "astro": "^5.16.0",
     "sharp": "^0.35.3"
   },

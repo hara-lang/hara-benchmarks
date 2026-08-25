@@ -142,6 +142,13 @@ test("uses the shared Hara product hamburger and sign-in contract", () => {
   assert.doesNotMatch(source, /api\/session|auth\/github|return_to/);
 });
 
+test("uses the shared V2Shell for the benchmark product frame", () => {
+  assert.match(page, /foundation\/astro\/v2\/Shell\.astro/);
+  assert.match(page, /<V2Shell[\s\S]*mainId="benchmark-content"/);
+  assert.match(page, /<SiteHeader slot="header" \/>/);
+  assert.match(page, /<BenchmarkSecondaryNav slot="context" \/>/);
+});
+
 test("uses a dedicated maximum-resolution benchmark social card", () => {
   assert.match(page, /og-hara-benchmarks\.jpg/);
   assert.match(page, /og:image:width" content="1200"/);

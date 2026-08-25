@@ -1,21 +1,127 @@
 ---
-import ThemeToggle from "@hara-lang/ui-astro/astro/ThemeToggle.astro";
-import V2Header from "@hara-lang/ui-astro/astro/v2/Header.astro";
-const navigation = [
-  { label: "Benchmarks", href: "/", current: true },
-  { label: "Docs", href: "https://hara-lang.org/docs/", external: true },
-  { label: "Build", href: "https://build.hara-lang.org/", external: true }
+import Header from "../../packages/hara-ui/foundation/astro/v2/Header.astro";
+import ThemeToggle from "@hara-lang/visual-language/astro/ThemeToggle.astro";
+
+const nav = [
+  { href: "https://www.hara-lang.org/benchmarks/", label: "Benchmarks", current: true, external: true },
+  { href: "https://www.hara-lang.org/docs/", label: "Docs", external: true },
+  { href: "https://specs.hara-lang.org/", label: "Specs", external: true },
+  { href: "https://world.hara-lang.org/", label: "World", external: true }
 ];
 ---
-<V2Header
-  class="benchmarks-v2-header"
-  homeHref="https://hara-lang.org/"
-  section="Benchmarks"
-  nav={navigation}
-  activePath="/"
-  label="Hara Benchmarks"
-  variant="document"
-  accountHref="https://id.hara-lang.org/"
->
-  <ThemeToggle />
-</V2Header>
+<div class="benchmark-masthead" data-benchmark-masthead data-menu-open="false">
+  <Header
+    homeHref="https://www.hara-lang.org/"
+    section="Benchmarks"
+    showSection={true}
+    nav={[]}
+    activePath="/benchmarks/"
+    label="Hara Benchmarks"
+    account="logged-out"
+    accountHref="https://id.hara-lang.org/"
+    accountLabel="Sign in"
+    menuMode="product"
+    menuControls="benchmark-product-menu"
+    menuLabel="Open benchmark menu"
+    menuCloseLabel="Close benchmark menu"
+  >
+    <ThemeToggle label="Theme" />
+  </Header>
+
+  <aside
+    class="benchmark-product-menu"
+    id="benchmark-product-menu"
+    data-benchmark-product-menu
+    aria-hidden="true"
+    hidden
+  >
+    <header>
+      <div>
+        <span>Hara Benchmarks</span>
+        <strong>Performance evidence</strong>
+      </div>
+      <button type="button" data-benchmark-menu-close aria-label="Close benchmark menu" title="Close benchmark menu">
+        <span aria-hidden="true">×</span>
+      </button>
+    </header>
+    <nav aria-label="Benchmark product navigation">
+      {nav.map((item) => (
+        <a
+          href={item.href}
+          aria-current={item.current ? "page" : undefined}
+          target={item.external ? "_blank" : undefined}
+          rel={item.external ? "noreferrer" : undefined}
+        >
+          <span>{item.label}</span>
+          <span aria-hidden="true">↗</span>
+        </a>
+      ))}
+    </nav>
+  </aside>
+
+  <button
+    class="benchmark-menu-backdrop"
+    type="button"
+    data-benchmark-menu-backdrop
+    aria-label="Close benchmark menu"
+    hidden
+  ></button>
+
+  <noscript>
+    <nav class="benchmark-product-menu-fallback" aria-label="Benchmark product navigation">
+      {nav.map((item) => (
+        <a href={item.href}>{item.label}</a>
+      ))}
+    </nav>
+  </noscript>
+</div>
+
+<script>
+  import { setHaraHeaderMenuState } from "../../packages/hara-ui/foundation/v2/header.js";
+
+  const initialiseBenchmarkProductMenu = () => {
+    document.querySelectorAll("[data-benchmark-masthead]").forEach((masthead) => {
+      if (!(masthead instanceof HTMLElement) || masthead.dataset.ready === "true") return;
+      const header = masthead.querySelector("[data-hara-shell-header]");
+      const menu = masthead.querySelector("[data-benchmark-product-menu]");
+      const backdrop = masthead.querySelector("[data-benchmark-menu-backdrop]");
+      const close = masthead.querySelector("[data-benchmark-menu-close]");
+      if (!(header instanceof HTMLElement) || !(menu instanceof HTMLElement) || !(backdrop instanceof HTMLButtonElement)) return;
+
+      masthead.dataset.ready = "true";
+      const setOpen = (requestedOpen: boolean, restoreFocus = false) => {
+        const open = Boolean(requestedOpen);
+        masthead.dataset.menuOpen = String(open);
+        menu.hidden = !open;
+        menu.setAttribute("aria-hidden", String(!open));
+        backdrop.hidden = !open;
+        document.documentElement.dataset.benchmarkMenuOpen = String(open);
+        setHaraHeaderMenuState(header, open, {
+          compact: window.matchMedia("(max-width: 840px)").matches,
+          restoreFocus,
+          syncNavigation: false
+        });
+        if (open) {
+          const firstLink = menu.querySelector("a[aria-current], a");
+          if (firstLink instanceof HTMLAnchorElement) requestAnimationFrame(() => firstLink.focus());
+        }
+      };
+
+      header.addEventListener("hara:header-menu-request", (event) => {
+        if (!(event instanceof CustomEvent)) return;
+        event.preventDefault();
+        setOpen(Boolean(event.detail?.open), Boolean(event.detail?.restoreFocus));
+      });
+      backdrop.addEventListener("click", () => setOpen(false, true));
+      if (close instanceof HTMLButtonElement) close.addEventListener("click", () => setOpen(false, true));
+      menu.querySelectorAll("a").forEach((link) => link.addEventListener("click", () => setOpen(false)));
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && masthead.dataset.menuOpen === "true") setOpen(false, true);
+      });
+      setOpen(false);
+    });
+  };
+
+  initialiseBenchmarkProductMenu();
+  document.addEventListener("astro:page-load", initialiseBenchmarkProductMenu);
+</script>

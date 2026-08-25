@@ -129,28 +129,30 @@ test("moves the product-mode table to a collapsed reference at the end", () => {
   assert.ok(page.indexOf("RuntimeReference") > page.indexOf("LanguagePanel"));
 });
 
-test("uses the shared Hara navigation and sign-in button", () => {
-  assert.match(header, /label: "Benchmarks", href: "\/", current: true/);
-  assert.match(header, /Benchmarks[\s\S]*Docs[\s\S]*Build/);
+test("uses the shared Hara product hamburger and sign-in contract", () => {
+  assert.match(header, /import Header from "\.\.\/\.\.\/packages\/hara-ui\/foundation\/astro\/v2\/Header\.astro"/);
+  assert.match(header, /<Header[\s\S]*section="Benchmarks"/);
+  assert.match(header, /menuMode="product"/);
+  assert.match(header, /menuControls="benchmark-product-menu"/);
+  assert.match(header, /Benchmarks[\s\S]*Docs[\s\S]*Specs[\s\S]*World/);
   assert.doesNotMatch(header, />Source<\/a>/);
-  assert.match(header, /https:\/\/build\.hara-lang\.org\//);
-  assert.match(header, /accountHref="https:\/\/id\.hara-lang\.org\//);
+  assert.match(header, /https:\/\/specs\.hara-lang\.org\//);
+  assert.match(header, /accountHref="https:\/\/id\.hara-lang\.org\/"/);
+  assert.match(header, /accountLabel="Sign in"/);
   assert.doesNotMatch(source, /api\/session|auth\/github|return_to/);
+});
+
+test("uses the shared V2Shell for the benchmark product frame", () => {
+  assert.match(page, /foundation\/astro\/v2\/Shell\.astro/);
+  assert.match(page, /<V2Shell[\s\S]*mainId="benchmark-content"/);
+  assert.match(page, /<SiteHeader slot="header" \/>/);
+  assert.match(page, /<BenchmarkSecondaryNav slot="context" \/>/);
 });
 
 test("uses a dedicated maximum-resolution benchmark social card", () => {
   assert.match(page, /og-hara-benchmarks\.jpg/);
   assert.match(page, /og:image:width" content="1200"/);
   assert.match(page, /og:image:height" content="630"/);
-});
-
-test("uses the shared v2 shell and header for the benchmark product frame", () => {
-  assert.match(page, /@hara-lang\/ui-astro\/astro\/v2\/Shell\.astro/);
-  assert.match(page, /<V2Shell[\s\S]*class="benchmarks-v2-shell"/);
-  assert.match(page, /<SiteHeader slot="header" \/>/);
-  assert.match(header, /@hara-lang\/ui-astro\/astro\/v2\/Header\.astro/);
-  assert.match(header, /variant="document"/);
-  assert.match(header, /accountHref="https:\/\/id\.hara-lang\.org\//);
 });
 
 test("external comparisons use only the native full Hara tier", () => {

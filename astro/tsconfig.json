@@ -1,1 +1,15 @@
-{ "extends": "astro/tsconfigs/strict" }
+{
+  "extends": "astro/tsconfigs/strict",
+  "compilerOptions": {
+    "allowJs": true,
+    "checkJs": false,
+    "baseUrl": ".",
+    "paths": {
+      "@hara-lang/ui/v2/header.js": ["packages/hara-ui/foundation/v2/header.js"]
+    }
+  },
+  "exclude": [
+    "packages/visual-language/**",
+    "packages/hara-ui/**"
+  ]
+}

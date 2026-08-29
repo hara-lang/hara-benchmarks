@@ -58,7 +58,7 @@ def validate_run(data: dict[str, Any]) -> list[str]:
     byte_fields = (
         "peak_rss_bytes", "idle_rss_bytes", "source_bytes", "artifact_bytes",
         "compressed_artifact_bytes", "runtime_executable_bytes",
-        "runtime_bundle_bytes", "container_image_bytes",
+        "runtime_bundle_bytes", "container_image_bytes", "allocation_bytes_per_call",
     )
     for index, row in enumerate(measurements):
         for key in required:

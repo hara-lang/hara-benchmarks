@@ -6,6 +6,12 @@
   "required": ["schema_version", "run", "environment", "measurements"],
   "properties": {
     "schema_version": {"enum": [1, 2, 3]},
+    "benchmark": {"type": ["string", "null"]},
+    "issue": {"type": ["string", "null"]},
+    "decision_policy": {"type": ["string", "null"]},
+    "storage_model": {"type": ["string", "null"]},
+    "corpus": {"type": ["string", "null"]},
+    "corpus_schema_version": {"type": ["integer", "null"]},
     "run": {
       "type": "object",
       "required": ["id", "profile"],
@@ -25,6 +31,13 @@
         "properties": {
           "suite": {"type": "string"},
           "workload": {"type": "string"},
+          "pair_id": {"type": ["string", "null"]},
+          "candidate": {"type": ["string", "null"]},
+          "lane": {"type": ["string", "null"]},
+          "operation": {"type": ["string", "null"]},
+          "value_class": {"type": ["string", "null"]},
+          "representation": {"type": ["string", "null"]},
+          "result_kind": {"type": ["string", "null"]},
           "runtime": {"type": "string"},
           "mode": {"enum": ["prepared", "eval"]},
           "status": {"enum": ["ok", "unsupported", "error"]},
@@ -43,9 +56,29 @@
           "source_bytes": {"type": ["number", "null"], "minimum": 0},
           "artifact_bytes": {"type": ["number", "null"], "minimum": 0},
           "compressed_artifact_bytes": {"type": ["number", "null"], "minimum": 0},
+          "allocation_bytes_per_call": {"type": ["number", "null"], "minimum": 0},
+          "allocation_unsupported_reason": {"type": ["string", "null"]},
+          "native_entry": {"type": ["boolean", "null"]},
+          "execution_path": {"type": ["string", "null"]},
           "runtime_executable_bytes": {"type": ["number", "null"], "minimum": 0},
           "runtime_bundle_bytes": {"type": ["number", "null"], "minimum": 0},
           "container_image_bytes": {"type": ["number", "null"], "minimum": 0}
+        }
+      }
+    },
+    "candidate_comparisons": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["runtime", "pair_id", "split_steady_ns", "unified_steady_ns"],
+        "properties": {
+          "runtime": {"type": "string"},
+          "pair_id": {"type": "string"},
+          "lane": {"type": ["string", "null"]},
+          "split_steady_ns": {"type": "number", "minimum": 0},
+          "unified_steady_ns": {"type": "number", "minimum": 0},
+          "unified_over_split": {"type": ["number", "null"], "minimum": 0},
+          "faster_candidate": {"enum": ["split", "unified", "tie"]}
         }
       }
     }

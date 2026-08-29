@@ -1,0 +1,274 @@
+{
+  "schema_version": 1,
+  "benchmark": "integer-representation",
+  "issue": "hara-lang/hara#1145",
+  "decision_policy": "evidence-only",
+  "storage_model": "compact-i64-promoting-bigint",
+  "description": "Paired probes for the existing compact integer core. The split and unified candidates are surface adapters over the same storage and arithmetic implementation; this corpus does not change the public integer contract.",
+  "candidates": {
+    "split": {
+      "description": "Width-aware long/bigint surface.",
+      "predicate_probe": "std.native.Base/long?"
+    },
+    "unified": {
+      "description": "One arbitrary-integer surface.",
+      "predicate_probe": "std.native.Base/number?",
+      "proxy_note": "The current public Foundation has no integer? predicate, so number? is the benchmark-only proxy for the future unified surface."
+    }
+  },
+  "profiles": {
+    "smoke": {
+      "startup_samples": 2,
+      "windows": 3,
+      "calls": 1
+    },
+    "standard": {
+      "startup_samples": 30,
+      "windows": 60,
+      "calls": 10
+    }
+  },
+  "workloads": [
+    {
+      "id": "literal-small",
+      "lane": "kernel",
+      "operation": "literal",
+      "value_class": "small",
+      "representation": "compact",
+      "iterations": 1,
+      "candidates": {
+        "split": {"source": "42"},
+        "unified": {"source": "42"}
+      },
+      "expected": "42",
+      "result_kind": "value"
+    },
+    {
+      "id": "literal-i64-max",
+      "lane": "kernel",
+      "operation": "literal",
+      "value_class": "signed-64-boundary",
+      "representation": "compact",
+      "iterations": 1,
+      "candidates": {
+        "split": {"source": "9223372036854775807"},
+        "unified": {"source": "9223372036854775807"}
+      },
+      "expected": "9223372036854775807",
+      "result_kind": "value"
+    },
+    {
+      "id": "literal-i64-min",
+      "lane": "kernel",
+      "operation": "literal",
+      "value_class": "signed-64-boundary",
+      "representation": "compact",
+      "iterations": 1,
+      "candidates": {
+        "split": {"source": "-9223372036854775808"},
+        "unified": {"source": "-9223372036854775808"}
+      },
+      "expected": "-9223372036854775808",
+      "result_kind": "value"
+    },
+    {
+      "id": "literal-promote-above-max",
+      "lane": "kernel",
+      "operation": "literal",
+      "value_class": "promoted",
+      "representation": "bigint",
+      "iterations": 1,
+      "candidates": {
+        "split": {"source": "9223372036854775808"},
+        "unified": {"source": "9223372036854775808"}
+      },
+      "expected": "9223372036854775808",
+      "result_kind": "value"
+    },
+    {
+      "id": "literal-promote-below-min",
+      "lane": "kernel",
+      "operation": "literal",
+      "value_class": "promoted",
+      "representation": "bigint",
+      "iterations": 1,
+      "candidates": {
+        "split": {"source": "-9223372036854775809"},
+        "unified": {"source": "-9223372036854775809"}
+      },
+      "expected": "-9223372036854775809",
+      "result_kind": "value"
+    },
+    {
+      "id": "literal-wide-128",
+      "lane": "kernel",
+      "operation": "literal",
+      "value_class": "wide-128",
+      "representation": "bigint",
+      "iterations": 1,
+      "candidates": {
+        "split": {"source": "170141183460469231731687303715884105727"},
+        "unified": {"source": "170141183460469231731687303715884105727"}
+      },
+      "expected": "170141183460469231731687303715884105727",
+      "result_kind": "value"
+    },
+    {
+      "id": "literal-wide-256",
+      "lane": "kernel",
+      "operation": "literal",
+      "value_class": "wide-256",
+      "representation": "bigint",
+      "iterations": 1,
+      "candidates": {
+        "split": {"source": "115792089237316195423570985008687907853269984665640564039457584007913129639935"},
+        "unified": {"source": "115792089237316195423570985008687907853269984665640564039457584007913129639935"}
+      },
+      "expected": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+      "result_kind": "value"
+    },
+    {
+      "id": "arithmetic-small",
+      "lane": "kernel",
+      "operation": "arithmetic",
+      "value_class": "small",
+      "representation": "compact",
+      "iterations": 4,
+      "candidates": {
+        "split": {"source": "(+ (* 123456 7) 654321)"},
+        "unified": {"source": "(+ (* 123456 7) 654321)"}
+      },
+      "expected": "1518513",
+      "result_kind": "value"
+    },
+    {
+      "id": "arithmetic-promote",
+      "lane": "kernel",
+      "operation": "arithmetic",
+      "value_class": "promoted",
+      "representation": "bigint",
+      "iterations": 2,
+      "candidates": {
+        "split": {"source": "(+ 9223372036854775807 1)"},
+        "unified": {"source": "(+ 9223372036854775807 1)"}
+      },
+      "expected": "9223372036854775808",
+      "result_kind": "value"
+    },
+    {
+      "id": "arithmetic-wide",
+      "lane": "kernel",
+      "operation": "arithmetic",
+      "value_class": "wide-128",
+      "representation": "bigint",
+      "iterations": 3,
+      "candidates": {
+        "split": {"source": "(* 170141183460469231731687303715884105727 3)"},
+        "unified": {"source": "(* 170141183460469231731687303715884105727 3)"}
+      },
+      "expected": "510423550381407695195061911147652317181",
+      "result_kind": "value"
+    },
+    {
+      "id": "compare-wide",
+      "lane": "kernel",
+      "operation": "compare",
+      "value_class": "wide-128",
+      "representation": "bigint",
+      "iterations": 1,
+      "candidates": {
+        "split": {"source": "(< 170141183460469231731687303715884105726 170141183460469231731687303715884105727)"},
+        "unified": {"source": "(< 170141183460469231731687303715884105726 170141183460469231731687303715884105727)"}
+      },
+      "expected": "true",
+      "result_kind": "value"
+    },
+    {
+      "id": "bits-small",
+      "lane": "kernel",
+      "operation": "bits",
+      "value_class": "small",
+      "representation": "compact",
+      "iterations": 1,
+      "candidates": {
+        "split": {"source": "(std.native.Bits/and 255 15)"},
+        "unified": {"source": "(std.native.Bits/and 255 15)"}
+      },
+      "expected": "15",
+      "result_kind": "value"
+    },
+    {
+      "id": "bits-promoted",
+      "lane": "kernel",
+      "operation": "bits",
+      "value_class": "promoted",
+      "representation": "bigint",
+      "iterations": 1,
+      "candidates": {
+        "split": {"source": "(std.native.Bits/and 9223372036854775808 255)"},
+        "unified": {"source": "(std.native.Bits/and 9223372036854775808 255)"}
+      },
+      "expected": "0",
+      "result_kind": "value"
+    },
+    {
+      "id": "display-promoted",
+      "lane": "kernel",
+      "operation": "display",
+      "value_class": "promoted",
+      "representation": "bigint",
+      "iterations": 1,
+      "candidates": {
+        "split": {"source": "(do (IDisplay/display 9223372036854775808) 9223372036854775808)"},
+        "unified": {"source": "(do (IDisplay/display 9223372036854775808) 9223372036854775808)"}
+      },
+      "expected": "9223372036854775808",
+      "result_kind": "value"
+    },
+    {
+      "id": "promotion-loop",
+      "lane": "kernel",
+      "operation": "promotion",
+      "value_class": "promoted",
+      "representation": "bigint",
+      "iterations": 2,
+      "candidates": {
+        "split": {"source": "(loop [i 9223372036854775806] (if (< i 9223372036854775809) (recur (+ i 1)) i))"},
+        "unified": {"source": "(loop [i 9223372036854775806] (if (< i 9223372036854775809) (recur (+ i 1)) i))"}
+      },
+      "expected": "9223372036854775809",
+      "result_kind": "value"
+    },
+    {
+      "id": "predicate-small",
+      "lane": "surface",
+      "operation": "classification",
+      "value_class": "small",
+      "representation": "compact",
+      "iterations": 1,
+      "candidates": {
+        "split": {"source": "(std.native.Base/long? 42)"},
+        "unified": {"source": "(std.native.Base/number? 42)"}
+      },
+      "expected": "true",
+      "result_kind": "value"
+    },
+    {
+      "id": "predicate-promoted",
+      "lane": "surface",
+      "operation": "classification",
+      "value_class": "promoted",
+      "representation": "bigint",
+      "iterations": 1,
+      "candidates": {
+        "split": {"source": "(std.native.Base/long? 9223372036854775808)"},
+        "unified": {"source": "(std.native.Base/number? 9223372036854775808)"}
+      },
+      "expected": {
+        "split": "false",
+        "unified": "true"
+      },
+      "result_kind": "value"
+    }
+  ]
+}

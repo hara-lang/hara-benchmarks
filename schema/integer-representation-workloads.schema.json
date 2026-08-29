@@ -1,0 +1,124 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://benchmarks.hara-lang.org/schema/integer-representation-workloads.schema.json",
+  "title": "Hara integer representation benchmark corpus",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "benchmark",
+    "issue",
+    "decision_policy",
+    "storage_model",
+    "candidates",
+    "profiles",
+    "workloads"
+  ],
+  "properties": {
+    "schema_version": {"const": 1},
+    "benchmark": {"const": "integer-representation"},
+    "issue": {"const": "hara-lang/hara#1145"},
+    "decision_policy": {"const": "evidence-only"},
+    "storage_model": {"const": "compact-i64-promoting-bigint"},
+    "description": {"type": "string"},
+    "candidates": {
+      "type": "object",
+      "required": ["split", "unified"],
+      "additionalProperties": false,
+      "properties": {
+        "split": {"$ref": "#/$defs/candidate"},
+        "unified": {"$ref": "#/$defs/candidate"}
+      }
+    },
+    "profiles": {
+      "type": "object",
+      "required": ["smoke", "standard"],
+      "additionalProperties": false,
+      "properties": {
+        "smoke": {"$ref": "#/$defs/profile"},
+        "standard": {"$ref": "#/$defs/profile"}
+      }
+    },
+    "workloads": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/workload"}
+    }
+  },
+  "$defs": {
+    "candidate": {
+      "type": "object",
+      "required": ["description", "predicate_probe"],
+      "properties": {
+        "description": {"type": "string"},
+        "predicate_probe": {"type": "string"},
+        "proxy_note": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "profile": {
+      "type": "object",
+      "required": ["startup_samples", "windows", "calls"],
+      "properties": {
+        "startup_samples": {"type": "integer", "minimum": 1},
+        "windows": {"type": "integer", "minimum": 1},
+        "calls": {"type": "integer", "minimum": 1}
+      },
+      "additionalProperties": false
+    },
+    "candidate_workload": {
+      "type": "object",
+      "required": ["source"],
+      "properties": {
+        "source": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    },
+    "workload": {
+      "type": "object",
+      "required": [
+        "id",
+        "lane",
+        "operation",
+        "value_class",
+        "representation",
+        "iterations",
+        "candidates",
+        "expected",
+        "result_kind"
+      ],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[a-z0-9-]+$"},
+        "lane": {"enum": ["kernel", "surface"]},
+        "operation": {"type": "string", "minLength": 1},
+        "value_class": {"type": "string", "minLength": 1},
+        "representation": {"enum": ["compact", "bigint"]},
+        "iterations": {"type": "integer", "minimum": 1},
+        "candidates": {
+          "type": "object",
+          "required": ["split", "unified"],
+          "additionalProperties": false,
+          "properties": {
+            "split": {"$ref": "#/$defs/candidate_workload"},
+            "unified": {"$ref": "#/$defs/candidate_workload"}
+          }
+        },
+        "expected": {
+          "oneOf": [
+            {"type": "string"},
+            {
+              "type": "object",
+              "required": ["split", "unified"],
+              "additionalProperties": false,
+              "properties": {
+                "split": {"type": "string"},
+                "unified": {"type": "string"}
+              }
+            }
+          ]
+        },
+        "result_kind": {"const": "value"}
+      },
+      "additionalProperties": false
+    }
+  }
+}

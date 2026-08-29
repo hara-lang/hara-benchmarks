@@ -38,6 +38,132 @@ PROFILES = {
 }
 
 
+def expand_workloads(corpus):
+    """Expand paired candidate definitions into ordinary adapter workloads.
+
+    The adapter protocol intentionally remains one source, one expected
+    display value, and one id.  A corpus can therefore describe split versus
+    unified probes once while retaining exact per-candidate provenance in the
+    expanded rows.
+    """
+    expanded = []
+    seen = set()
+    for workload in corpus:
+        candidates = workload.get("candidates")
+        if not candidates:
+            item = dict(workload)
+            if "source" not in item and "hara_source" in item:
+                item["source"] = item["hara_source"]
+            item.setdefault("pair_id", item.get("id"))
+            rows = [item]
+        else:
+            if not isinstance(candidates, dict):
+                raise ValueError(f"workload {workload.get('id')} candidates must be an object")
+            pair_id = workload.get("id")
+            if not pair_id:
+                raise ValueError("candidate workload is missing id")
+            expected_values = workload.get("expected")
+            rows = []
+            for candidate, definition in candidates.items():
+                if not isinstance(definition, dict):
+                    raise ValueError(f"workload {pair_id}/{candidate} must be an object")
+                source = definition.get("source", definition.get("hara_source"))
+                if not isinstance(source, str) or not source:
+                    raise ValueError(f"workload {pair_id}/{candidate} is missing source")
+                if isinstance(expected_values, dict):
+                    expected = expected_values.get(candidate)
+                else:
+                    expected = expected_values
+                if not isinstance(expected, str):
+                    raise ValueError(f"workload {pair_id}/{candidate} is missing expected display")
+                item = {
+                    key: value for key, value in workload.items()
+                    if key not in {"id", "candidates", "expected", "source", "hara_source"}
+                }
+                item.update(definition)
+                item["id"] = f"{pair_id}/{candidate}"
+                item["pair_id"] = pair_id
+                item["candidate"] = candidate
+                item["source"] = source
+                item["expected"] = expected
+                rows.append(item)
+        for item in rows:
+            identifier = item.get("id")
+            if not identifier:
+                raise ValueError("workload is missing id")
+            if identifier in seen:
+                raise ValueError(f"duplicate workload id: {identifier}")
+            if not isinstance(item.get("source"), str) or not item["source"]:
+                raise ValueError(f"workload {identifier} is missing source")
+            if not isinstance(item.get("expected"), str):
+                raise ValueError(f"workload {identifier} is missing expected display")
+            seen.add(identifier)
+            expanded.append(item)
+    if not expanded:
+        raise ValueError("corpus has no workloads")
+    return expanded
+
+
+def candidate_comparisons(measurements):
+    """Return descriptive split/unified ratios without applying a gate."""
+    groups = {}
+    for row in measurements:
+        candidate = row.get("candidate")
+        pair_id = row.get("pair_id")
+        lane = row.get("lane")
+        steady = row.get("analysis", {}).get("steady_ns")
+        if not candidate or not pair_id or steady is None:
+            continue
+        groups.setdefault((row["runtime"], pair_id, lane), {})[candidate] = row
+    comparisons = []
+    for (runtime, pair_id, lane), rows in sorted(
+        groups.items(), key=lambda item: tuple(str(value) for value in item[0])
+    ):
+        split = rows.get("split")
+        unified = rows.get("unified")
+        if split is None or unified is None:
+            continue
+        split_ns = split["analysis"]["steady_ns"]
+        unified_ns = unified["analysis"]["steady_ns"]
+        comparisons.append({
+            "runtime": runtime,
+            "pair_id": pair_id,
+            "lane": lane,
+            "split_steady_ns": split_ns,
+            "unified_steady_ns": unified_ns,
+            "unified_over_split": unified_ns / split_ns if split_ns else None,
+            "faster_candidate": (
+                "split" if split_ns < unified_ns
+                else "unified" if unified_ns < split_ns
+                else "tie"
+            ),
+        })
+    return comparisons
+
+
+def copy_workload_metadata(result, workload):
+    """Carry corpus dimensions into each raw measurement for later analysis."""
+    for key in (
+        "pair_id", "candidate", "lane", "operation", "value_class",
+        "representation", "result_kind", "native_required",
+    ):
+        if key in workload:
+            result[key] = workload[key]
+    result["source_bytes"] = len(workload["source"].encode())
+    result.setdefault("status", "ok")
+    return result
+
+
+def load_corpus(path):
+    payload = json.loads(path.read_text())
+    if not isinstance(payload, dict):
+        raise ValueError("corpus root must be an object")
+    workloads = payload.get("workloads")
+    if not isinstance(workloads, list):
+        raise ValueError("corpus workloads must be an array")
+    return payload, expand_workloads(workloads)
+
+
 def workload_for_runtime(workload, runtime):
     """Resolve an explicitly equivalent source for a runtime.
 
@@ -129,6 +255,8 @@ def adapters():
 
     def bytecode(binary, runtime, mode, workload, windows, calls):
         source = workload["source"].encode().hex()
+        if runtime == "hara-rust-full" and workload.get("result_kind") == "value":
+            mode = "whole-wasm-value"
         return [str(binary), mode, workload["id"], source, workload["expected"],
                 str(windows), str(calls), runtime]
 
@@ -310,11 +438,23 @@ def markdown(data):
         lines.append(f"| {name} | {item['p50_ns']/1e6:.2f} | {item['p95_ns']/1e6:.2f} | {rss} | {size} |")
     lines += ["", "## Warm evaluation", "", "| Runtime / workload | First ms | Steady ms | ns/iteration | calls/s | Converged window |", "|---|---:|---:|---:|---:|---:|"]
     for row in data["measurements"]:
+        candidate = row.get("candidate", "—")
+        if row.get("status") != "ok":
+            reason = row.get("reason", "unsupported")
+            lines.append(f"| {row['runtime']} / {row['workload']} / {candidate} | — | — | — | — | {reason} |")
+            continue
         convergence = row["analysis"]["converged_window"]
         per_iteration = row["analysis"].get("ns_per_iteration")
         per_iteration_text = "—" if per_iteration is None else f"{per_iteration:.2f}"
-        lines.append(f"| {row['runtime']} / {row['workload']} | {row['first_ns']/1e6:.3f} | {row['analysis']['steady_ns']/1e6:.3f} | {per_iteration_text} | {row['analysis']['throughput_per_sec']:.1f} | {convergence if convergence is not None else '—'} |")
-    lines += ["", "Warm values above are per-call milliseconds (the raw samples are stored as nanoseconds). Lower is better. Adapters receive the same source except where the corpus declares runtime-specific, semantically equivalent APIs (for example Hara mutable collections versus Clojure transients); every adapter checks the same displayed result. Execute-only VM tiers compile once before measurement; their first value is the first execution, not compilation. Convergence is the first five-window run within ±5% of the final ten-window median with CV ≤10%.", ""]
+        lines.append(f"| {row['runtime']} / {row['workload']} / {candidate} | {row['first_ns']/1e6:.3f} | {row['analysis']['steady_ns']/1e6:.3f} | {per_iteration_text} | {row['analysis']['throughput_per_sec']:.1f} | {convergence if convergence is not None else '—'} |")
+    comparisons = data.get("candidate_comparisons", [])
+    if comparisons:
+        lines += ["", "## Candidate comparison", "", "| Runtime / pair | Lane | Split ns | Unified ns | Unified / split | Faster |", "|---|---|---:|---:|---:|---|"]
+        for comparison in comparisons:
+            ratio = comparison["unified_over_split"]
+            ratio_text = "—" if ratio is None else f"{ratio:.3f}"
+            lines.append(f"| {comparison['runtime']} / {comparison['pair_id']} | {comparison.get('lane') or '—'} | {comparison['split_steady_ns']} | {comparison['unified_steady_ns']} | {ratio_text} | {comparison['faster_candidate']} |")
+    lines += ["", "Warm values above are per-call milliseconds (the raw samples are stored as nanoseconds). Lower is better. Adapters receive the same source except where the corpus declares runtime-specific, semantically equivalent APIs (for example Hara mutable collections versus Clojure transients); every adapter checks the same displayed result. Execute-only VM tiers compile once before measurement; their first value is the first execution, not compilation. Convergence is the first five-window run within ±5% of the final ten-window median with CV ≤10%. Candidate ratios are descriptive evidence only and do not gate the run.", ""]
     return "\n".join(lines)
 
 
@@ -340,10 +480,14 @@ def main():
     if not args.no_build:
         build(include_native=False, selected=selected)
     missing = []
-    corpus_path = args.corpus if args.corpus.is_absolute() else ROOT / args.corpus
-    corpus = [({**workload, "source": workload["hara_source"]}
-               if "source" not in workload and "hara_source" in workload else workload)
-              for workload in json.loads(corpus_path.read_text())["workloads"]]
+    if args.corpus.is_absolute():
+        corpus_path = args.corpus
+    else:
+        benchmark_candidate = BENCHMARK_ROOT / args.corpus
+        core_candidate = ROOT / args.corpus
+        corpus_path = benchmark_candidate if benchmark_candidate.exists() else core_candidate
+    corpus_payload, corpus = load_corpus(corpus_path)
+    profile = {**profile, **corpus_payload.get("profiles", {}).get(args.profile, {})}
     env = os.environ.copy()
     env["HARA_WASM_GLUE"] = str(glue)
     measurements = []
@@ -363,20 +507,37 @@ def main():
             resolved = workload_for_runtime(workload, name)
             if resolved is None:
                 continue
-            _, _, result = timed(adapter(resolved, profile["windows"], profile["calls"]), env)
-            result["analysis"] = analyse(result["samples_ns"])
-            if workload.get("iterations"):
-                result["analysis"]["ns_per_iteration"] = (
-                    result["analysis"]["steady_ns"] / workload["iterations"]
+            _, rss, result = timed(adapter(resolved, profile["windows"], profile["calls"]), env)
+            result = copy_workload_metadata(result, resolved)
+            result["peak_rss_bytes"] = None if rss is None else rss * 1024
+            if "native_entry" in result:
+                result["execution_path"] = (
+                    "native" if result["native_entry"]
+                    else "bytecode" if name.endswith("-vm")
+                    else "fallback"
                 )
+            if result.get("status") == "ok":
+                result["analysis"] = analyse(result["samples_ns"])
+                if workload.get("iterations"):
+                    result["analysis"]["ns_per_iteration"] = (
+                        result["analysis"]["steady_ns"] / workload["iterations"]
+                    )
+            else:
+                print(f"{name:18} {workload['id']:18} unavailable: {result.get('reason', 'unsupported')}")
             measurements.append(result)
-            print(f"{name:18} {workload['id']:18} {result['analysis']['steady_ns']/1e6:9.3f} ms")
+            if result.get("status") == "ok":
+                print(f"{name:18} {workload['id']:18} {result['analysis']['steady_ns']/1e6:9.3f} ms")
     try:
         corpus_label = str(corpus_path.relative_to(ROOT))
     except ValueError:
         corpus_label = str(corpus_path)
     data = {"schema_version": 1, "profile": args.profile,
             "corpus": corpus_label,
+            "benchmark": corpus_payload.get("benchmark"),
+            "issue": corpus_payload.get("issue"),
+            "decision_policy": corpus_payload.get("decision_policy"),
+            "storage_model": corpus_payload.get("storage_model"),
+            "corpus_schema_version": corpus_payload.get("schema_version"),
             "environment": {"timestamp": dt.datetime.now(dt.timezone.utc).isoformat(),
                             "platform": platform.platform(), "machine": platform.machine(),
                             "python": platform.python_version(),
@@ -387,6 +548,7 @@ def main():
                          "rust": version(["rustc", "--version"]), "node": version(["node", "--version"]),
                          "native_image": version(["native-image", "--version"])},
             "missing": missing, "startup": startup, "measurements": measurements,
+            "candidate_comparisons": candidate_comparisons(measurements),
             "payload_bytes": payload_sizes(glue)}
     if args.output:
         output = args.output if args.output.is_absolute() else ROOT / args.output

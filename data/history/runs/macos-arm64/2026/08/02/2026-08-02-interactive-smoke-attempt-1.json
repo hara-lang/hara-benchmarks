@@ -1,0 +1,1828 @@
+{
+  "environment": {
+    "benchmark_revision": "b4594dd89bfc09cfe8758cd51123703dd1f04333",
+    "git_dirty": true,
+    "git_revision": "b891172439739134ff254d76befb7c451d47f57f",
+    "machine": "arm64",
+    "platform": "macOS-26.5.2-arm64-arm-64bit-Mach-O",
+    "python": "3.14.6",
+    "timestamp": "2026-08-02T13:45:47.490839+00:00"
+  },
+  "measurements": [
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 354471812,
+      "first_call_ns": 1042,
+      "mode": "prepared",
+      "peak_rss_bytes": null,
+      "prepare_ns": 59930667,
+      "reason": null,
+      "runtime": "c-prepared",
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          292,
+          250,
+          250
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        292,
+        250,
+        250
+      ],
+      "workload": "sieve-array"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 354471812,
+      "first_call_ns": 273083,
+      "mode": "prepared",
+      "peak_rss_bytes": null,
+      "prepare_ns": 47222041,
+      "reason": null,
+      "runtime": "c-prepared",
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          280125,
+          281625,
+          281584
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        280125,
+        281625,
+        281584
+      ],
+      "workload": "towers-recursive"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 354471812,
+      "first_call_ns": 182208,
+      "mode": "prepared",
+      "peak_rss_bytes": null,
+      "prepare_ns": 63864708,
+      "reason": null,
+      "runtime": "c-prepared",
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          161416,
+          88750,
+          742791
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        161416,
+        88750,
+        742791
+      ],
+      "workload": "queens-backtracking"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 354471812,
+      "first_call_ns": 88292,
+      "mode": "prepared",
+      "peak_rss_bytes": null,
+      "prepare_ns": 53461375,
+      "reason": null,
+      "runtime": "c-prepared",
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          88833,
+          90000,
+          89416
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        88833,
+        90000,
+        89416
+      ],
+      "workload": "heap-permute"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 354471812,
+      "first_call_ns": 7644375,
+      "mode": "prepared",
+      "peak_rss_bytes": null,
+      "prepare_ns": 46527375,
+      "reason": null,
+      "runtime": "c-prepared",
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          7619750,
+          7165584,
+          7076667
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        7619750,
+        7165584,
+        7076667
+      ],
+      "workload": "ackermann-deep"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 354471812,
+      "first_call_ns": 43833,
+      "mode": "prepared",
+      "peak_rss_bytes": null,
+      "prepare_ns": 48074958,
+      "reason": null,
+      "runtime": "c-prepared",
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          41167,
+          41125,
+          41125
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        41167,
+        41125,
+        41125
+      ],
+      "workload": "tak-branching"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 354471812,
+      "first_call_ns": 687500,
+      "mode": "prepared",
+      "peak_rss_bytes": null,
+      "prepare_ns": 48289625,
+      "reason": null,
+      "runtime": "c-prepared",
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          684583,
+          684292,
+          683500
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        684583,
+        684292,
+        683500
+      ],
+      "workload": "collatz-range"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 354471812,
+      "first_call_ns": 2209,
+      "mode": "prepared",
+      "peak_rss_bytes": null,
+      "prepare_ns": 52315958,
+      "reason": null,
+      "runtime": "c-prepared",
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          1250,
+          1250,
+          1167
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        1250,
+        1250,
+        1167
+      ],
+      "workload": "matrix-multiply"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 321135104,
+      "first_call_ns": 10583,
+      "mode": "prepared",
+      "peak_rss_bytes": null,
+      "prepare_ns": 212298416,
+      "reason": null,
+      "runtime": "java-prepared",
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          5750,
+          4541,
+          4917
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        5750,
+        4541,
+        4917
+      ],
+      "workload": "sieve-array"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 321135104,
+      "first_call_ns": 577250,
+      "mode": "prepared",
+      "peak_rss_bytes": null,
+      "prepare_ns": 227531042,
+      "reason": null,
+      "runtime": "java-prepared",
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          322292,
+          328542,
+          331750
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        322292,
+        328542,
+        331750
+      ],
+      "workload": "towers-recursive"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 321135104,
+      "first_call_ns": 408417,
+      "mode": "prepared",
+      "peak_rss_bytes": null,
+      "prepare_ns": 220894875,
+      "reason": null,
+      "runtime": "java-prepared",
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          221125,
+          182833,
+          164500
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        221125,
+        182833,
+        164500
+      ],
+      "workload": "queens-backtracking"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 321135104,
+      "first_call_ns": 384750,
+      "mode": "prepared",
+      "peak_rss_bytes": null,
+      "prepare_ns": 212344625,
+      "reason": null,
+      "runtime": "java-prepared",
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          271583,
+          271417,
+          271500
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        271583,
+        271417,
+        271500
+      ],
+      "workload": "heap-permute"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 321135104,
+      "first_call_ns": 4583542,
+      "mode": "prepared",
+      "peak_rss_bytes": null,
+      "prepare_ns": 208505459,
+      "reason": null,
+      "runtime": "java-prepared",
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          4265208,
+          4265708,
+          4253667
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        4265208,
+        4265708,
+        4253667
+      ],
+      "workload": "ackermann-deep"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 321135104,
+      "first_call_ns": 210084,
+      "mode": "prepared",
+      "peak_rss_bytes": null,
+      "prepare_ns": 228704666,
+      "reason": null,
+      "runtime": "java-prepared",
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          121458,
+          121500,
+          122000
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        121458,
+        121500,
+        122000
+      ],
+      "workload": "tak-branching"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 321135104,
+      "first_call_ns": 2305875,
+      "mode": "prepared",
+      "peak_rss_bytes": null,
+      "prepare_ns": 207621000,
+      "reason": null,
+      "runtime": "java-prepared",
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          1340250,
+          1000625,
+          941959
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        1340250,
+        1000625,
+        941959
+      ],
+      "workload": "collatz-range"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 321135104,
+      "first_call_ns": 80959,
+      "mode": "prepared",
+      "peak_rss_bytes": null,
+      "prepare_ns": 230054459,
+      "reason": null,
+      "runtime": "java-prepared",
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          79333,
+          72666,
+          70125
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        79333,
+        72666,
+        70125
+      ],
+      "workload": "matrix-multiply"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 18830229,
+      "first_call_ns": 7833,
+      "mode": "prepared",
+      "peak_rss_bytes": null,
+      "prepare_ns": 756125,
+      "reason": null,
+      "runtime": "python-prepared",
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          5000,
+          4458,
+          3916
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        5000,
+        4458,
+        3916
+      ],
+      "workload": "sieve-array"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 18830229,
+      "first_call_ns": 13000500,
+      "mode": "prepared",
+      "peak_rss_bytes": null,
+      "prepare_ns": 749500,
+      "reason": null,
+      "runtime": "python-prepared",
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          12850917,
+          12149250,
+          12250541
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        12850917,
+        12149250,
+        12250541
+      ],
+      "workload": "towers-recursive"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 18830229,
+      "first_call_ns": 4953875,
+      "mode": "prepared",
+      "peak_rss_bytes": null,
+      "prepare_ns": 771542,
+      "reason": null,
+      "runtime": "python-prepared",
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          4934625,
+          5013334,
+          4901667
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        4934625,
+        5013334,
+        4901667
+      ],
+      "workload": "queens-backtracking"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 18830229,
+      "first_call_ns": 6362541,
+      "mode": "prepared",
+      "peak_rss_bytes": null,
+      "prepare_ns": 762666,
+      "reason": null,
+      "runtime": "python-prepared",
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          6355167,
+          6688041,
+          6766875
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        6355167,
+        6688041,
+        6766875
+      ],
+      "workload": "heap-permute"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 18830229,
+      "first_call_ns": 92280958,
+      "mode": "prepared",
+      "peak_rss_bytes": null,
+      "prepare_ns": 746917,
+      "reason": null,
+      "runtime": "python-prepared",
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          92758417,
+          92128125,
+          91131667
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        92758417,
+        92128125,
+        91131667
+      ],
+      "workload": "ackermann-deep"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 18830229,
+      "first_call_ns": 1396542,
+      "mode": "prepared",
+      "peak_rss_bytes": null,
+      "prepare_ns": 761209,
+      "reason": null,
+      "runtime": "python-prepared",
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          1377833,
+          1398458,
+          1405709
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        1377833,
+        1398458,
+        1405709
+      ],
+      "workload": "tak-branching"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 18830229,
+      "first_call_ns": 34146208,
+      "mode": "prepared",
+      "peak_rss_bytes": null,
+      "prepare_ns": 722208,
+      "reason": null,
+      "runtime": "python-prepared",
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          34202750,
+          34255750,
+          34486625
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        34202750,
+        34255750,
+        34486625
+      ],
+      "workload": "collatz-range"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 18830229,
+      "first_call_ns": 532375,
+      "mode": "prepared",
+      "peak_rss_bytes": null,
+      "prepare_ns": 837958,
+      "reason": null,
+      "runtime": "python-prepared",
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          533291,
+          531875,
+          532666
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        533291,
+        531875,
+        532666
+      ],
+      "workload": "matrix-multiply"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 27938500,
+      "first_call_ns": 2000,
+      "mode": "prepared",
+      "peak_rss_bytes": null,
+      "prepare_ns": 1674000,
+      "reason": null,
+      "runtime": "sbcl-prepared",
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          14000,
+          1000,
+          1000
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        14000,
+        1000,
+        1000
+      ],
+      "workload": "sieve-array"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 27938500,
+      "first_call_ns": 2744000,
+      "mode": "prepared",
+      "peak_rss_bytes": null,
+      "prepare_ns": 328000,
+      "reason": null,
+      "runtime": "sbcl-prepared",
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          2752000,
+          2710000,
+          2693000
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        2752000,
+        2710000,
+        2693000
+      ],
+      "workload": "towers-recursive"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 27938500,
+      "first_call_ns": 489000,
+      "mode": "prepared",
+      "peak_rss_bytes": null,
+      "prepare_ns": 1465000,
+      "reason": null,
+      "runtime": "sbcl-prepared",
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          476000,
+          466000,
+          459000
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        476000,
+        466000,
+        459000
+      ],
+      "workload": "queens-backtracking"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 27938500,
+      "first_call_ns": 874000,
+      "mode": "prepared",
+      "peak_rss_bytes": null,
+      "prepare_ns": 1087000,
+      "reason": null,
+      "runtime": "sbcl-prepared",
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          878000,
+          875000,
+          883000
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        878000,
+        875000,
+        883000
+      ],
+      "workload": "heap-permute"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 27938500,
+      "first_call_ns": 20730000,
+      "mode": "prepared",
+      "peak_rss_bytes": null,
+      "prepare_ns": 324000,
+      "reason": null,
+      "runtime": "sbcl-prepared",
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          20313000,
+          20325000,
+          20144000
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        20313000,
+        20325000,
+        20144000
+      ],
+      "workload": "ackermann-deep"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 27938500,
+      "first_call_ns": 311000,
+      "mode": "prepared",
+      "peak_rss_bytes": null,
+      "prepare_ns": 364000,
+      "reason": null,
+      "runtime": "sbcl-prepared",
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          263000,
+          264000,
+          262000
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        263000,
+        264000,
+        262000
+      ],
+      "workload": "tak-branching"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 27938500,
+      "first_call_ns": 4966000,
+      "mode": "prepared",
+      "peak_rss_bytes": null,
+      "prepare_ns": 787000,
+      "reason": null,
+      "runtime": "sbcl-prepared",
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          4961000,
+          4904000,
+          4991000
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        4961000,
+        4904000,
+        4991000
+      ],
+      "workload": "collatz-range"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 27938500,
+      "first_call_ns": 45000,
+      "mode": "prepared",
+      "peak_rss_bytes": null,
+      "prepare_ns": 2549000,
+      "reason": null,
+      "runtime": "sbcl-prepared",
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          42000,
+          43000,
+          42000
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        42000,
+        43000,
+        42000
+      ],
+      "workload": "matrix-multiply"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 36352396,
+      "first_call_ns": 17000,
+      "mode": "prepared",
+      "peak_rss_bytes": null,
+      "prepare_ns": 515000,
+      "reason": null,
+      "runtime": "chez-prepared",
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          2000,
+          2000,
+          1000
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        2000,
+        2000,
+        1000
+      ],
+      "workload": "sieve-array"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 36352396,
+      "first_call_ns": 750000,
+      "mode": "prepared",
+      "peak_rss_bytes": null,
+      "prepare_ns": 221000,
+      "reason": null,
+      "runtime": "chez-prepared",
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          744000,
+          730000,
+          754000
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        744000,
+        730000,
+        754000
+      ],
+      "workload": "towers-recursive"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 36352396,
+      "first_call_ns": 241000,
+      "mode": "prepared",
+      "peak_rss_bytes": null,
+      "prepare_ns": 660000,
+      "reason": null,
+      "runtime": "chez-prepared",
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          200000,
+          169000,
+          156000
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        200000,
+        169000,
+        156000
+      ],
+      "workload": "queens-backtracking"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 36352396,
+      "first_call_ns": 513000,
+      "mode": "prepared",
+      "peak_rss_bytes": null,
+      "prepare_ns": 535000,
+      "reason": null,
+      "runtime": "chez-prepared",
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          487000,
+          503000,
+          504000
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        487000,
+        503000,
+        504000
+      ],
+      "workload": "heap-permute"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 36352396,
+      "first_call_ns": 2394000,
+      "mode": "prepared",
+      "peak_rss_bytes": null,
+      "prepare_ns": 252000,
+      "reason": null,
+      "runtime": "chez-prepared",
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          2362000,
+          2385000,
+          2335000
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        2362000,
+        2385000,
+        2335000
+      ],
+      "workload": "ackermann-deep"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 36352396,
+      "first_call_ns": 81000,
+      "mode": "prepared",
+      "peak_rss_bytes": null,
+      "prepare_ns": 262000,
+      "reason": null,
+      "runtime": "chez-prepared",
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          54000,
+          54000,
+          51000
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        54000,
+        54000,
+        51000
+      ],
+      "workload": "tak-branching"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 36352396,
+      "first_call_ns": 4945000,
+      "mode": "prepared",
+      "peak_rss_bytes": null,
+      "prepare_ns": 336000,
+      "reason": null,
+      "runtime": "chez-prepared",
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          4914000,
+          5009000,
+          5003000
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        4914000,
+        5009000,
+        5003000
+      ],
+      "workload": "collatz-range"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 36352396,
+      "first_call_ns": 38000,
+      "mode": "prepared",
+      "peak_rss_bytes": null,
+      "prepare_ns": 913000,
+      "reason": null,
+      "runtime": "chez-prepared",
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          22000,
+          23000,
+          21000
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        22000,
+        23000,
+        21000
+      ],
+      "workload": "matrix-multiply"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 29117479,
+      "first_call_ns": 244000,
+      "mode": "prepared",
+      "peak_rss_bytes": null,
+      "prepare_ns": 350000,
+      "reason": null,
+      "runtime": "guile-prepared",
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          141000,
+          93000,
+          119000
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        141000,
+        93000,
+        119000
+      ],
+      "workload": "sieve-array"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 29117479,
+      "first_call_ns": 61276000,
+      "mode": "prepared",
+      "peak_rss_bytes": null,
+      "prepare_ns": 230000,
+      "reason": null,
+      "runtime": "guile-prepared",
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          62723000,
+          62800000,
+          61726000
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        62723000,
+        62800000,
+        61726000
+      ],
+      "workload": "towers-recursive"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 29117479,
+      "first_call_ns": 44943000,
+      "mode": "prepared",
+      "peak_rss_bytes": null,
+      "prepare_ns": 480000,
+      "reason": null,
+      "runtime": "guile-prepared",
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          39581000,
+          41785000,
+          41635000
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        39581000,
+        41785000,
+        41635000
+      ],
+      "workload": "queens-backtracking"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 29117479,
+      "first_call_ns": 78514000,
+      "mode": "prepared",
+      "peak_rss_bytes": null,
+      "prepare_ns": 443000,
+      "reason": null,
+      "runtime": "guile-prepared",
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          73294000,
+          77242000,
+          75194000
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        73294000,
+        77242000,
+        75194000
+      ],
+      "workload": "heap-permute"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 29117479,
+      "first_call_ns": 291964000,
+      "mode": "prepared",
+      "peak_rss_bytes": null,
+      "prepare_ns": 289000,
+      "reason": null,
+      "runtime": "guile-prepared",
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          284988000,
+          287784000,
+          287615000
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        284988000,
+        287784000,
+        287615000
+      ],
+      "workload": "ackermann-deep"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 29117479,
+      "first_call_ns": 9350000,
+      "mode": "prepared",
+      "peak_rss_bytes": null,
+      "prepare_ns": 287000,
+      "reason": null,
+      "runtime": "guile-prepared",
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          4791000,
+          8742000,
+          8246000
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        4791000,
+        8742000,
+        8246000
+      ],
+      "workload": "tak-branching"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 29117479,
+      "first_call_ns": 148966000,
+      "mode": "prepared",
+      "peak_rss_bytes": null,
+      "prepare_ns": 363000,
+      "reason": null,
+      "runtime": "guile-prepared",
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          146658000,
+          145847000,
+          144494000
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        146658000,
+        145847000,
+        144494000
+      ],
+      "workload": "collatz-range"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 29117479,
+      "first_call_ns": 3089000,
+      "mode": "prepared",
+      "peak_rss_bytes": null,
+      "prepare_ns": 711000,
+      "reason": null,
+      "runtime": "guile-prepared",
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          6549000,
+          2479000,
+          6485000
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        6549000,
+        2479000,
+        6485000
+      ],
+      "workload": "matrix-multiply"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 3877374,
+      "first_call_ns": 24000,
+      "mode": "prepared",
+      "peak_rss_bytes": null,
+      "prepare_ns": 5000,
+      "reason": null,
+      "runtime": "luajit-prepared",
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          11000,
+          8000,
+          1000
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        11000,
+        8000,
+        1000
+      ],
+      "workload": "sieve-array"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 3877374,
+      "first_call_ns": 948000,
+      "mode": "prepared",
+      "peak_rss_bytes": null,
+      "prepare_ns": 4000,
+      "reason": null,
+      "runtime": "luajit-prepared",
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          1063000,
+          1401000,
+          1352000
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        1063000,
+        1401000,
+        1352000
+      ],
+      "workload": "towers-recursive"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 3877374,
+      "first_call_ns": 321000,
+      "mode": "prepared",
+      "peak_rss_bytes": null,
+      "prepare_ns": 12000,
+      "reason": null,
+      "runtime": "luajit-prepared",
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          272000,
+          253000,
+          161000
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        272000,
+        253000,
+        161000
+      ],
+      "workload": "queens-backtracking"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 3877374,
+      "first_call_ns": 1120000,
+      "mode": "prepared",
+      "peak_rss_bytes": null,
+      "prepare_ns": 9000,
+      "reason": null,
+      "runtime": "luajit-prepared",
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          261000,
+          306000,
+          274000
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        261000,
+        306000,
+        274000
+      ],
+      "workload": "heap-permute"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 3877374,
+      "first_call_ns": 3180000,
+      "mode": "prepared",
+      "peak_rss_bytes": null,
+      "prepare_ns": 5000,
+      "reason": null,
+      "runtime": "luajit-prepared",
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          5661000,
+          6379000,
+          6382000
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        5661000,
+        6379000,
+        6382000
+      ],
+      "workload": "ackermann-deep"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 3877374,
+      "first_call_ns": 185000,
+      "mode": "prepared",
+      "peak_rss_bytes": null,
+      "prepare_ns": 5000,
+      "reason": null,
+      "runtime": "luajit-prepared",
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          165000,
+          196000,
+          182000
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        165000,
+        196000,
+        182000
+      ],
+      "workload": "tak-branching"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 3877374,
+      "first_call_ns": 3035000,
+      "mode": "prepared",
+      "peak_rss_bytes": null,
+      "prepare_ns": 11000,
+      "reason": null,
+      "runtime": "luajit-prepared",
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          2990000,
+          3063000,
+          2984000
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        2990000,
+        3063000,
+        2984000
+      ],
+      "workload": "collatz-range"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 3877374,
+      "first_call_ns": 69000,
+      "mode": "prepared",
+      "peak_rss_bytes": null,
+      "prepare_ns": 8000,
+      "reason": null,
+      "runtime": "luajit-prepared",
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          12000,
+          13000,
+          23000
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        12000,
+        13000,
+        23000
+      ],
+      "workload": "matrix-multiply"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 21842562,
+      "first_call_ns": 51000,
+      "mode": "prepared",
+      "peak_rss_bytes": null,
+      "prepare_ns": 136458,
+      "reason": null,
+      "runtime": "bb-prepared",
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          22709,
+          22917,
+          24416
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        22709,
+        22917,
+        24416
+      ],
+      "workload": "sieve-array"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 21842562,
+      "first_call_ns": 25549625,
+      "mode": "prepared",
+      "peak_rss_bytes": null,
+      "prepare_ns": 332083,
+      "reason": null,
+      "runtime": "bb-prepared",
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          25744500,
+          28664666,
+          25497667
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        25744500,
+        28664666,
+        25497667
+      ],
+      "workload": "towers-recursive"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 21842562,
+      "first_call_ns": 6739792,
+      "mode": "prepared",
+      "peak_rss_bytes": null,
+      "prepare_ns": 279166,
+      "reason": null,
+      "runtime": "bb-prepared",
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          6670375,
+          6591958,
+          6560000
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        6670375,
+        6591958,
+        6560000
+      ],
+      "workload": "queens-backtracking"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 21842562,
+      "first_call_ns": 14156583,
+      "mode": "prepared",
+      "peak_rss_bytes": null,
+      "prepare_ns": 205208,
+      "reason": null,
+      "runtime": "bb-prepared",
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          14039750,
+          14140791,
+          14240000
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        14039750,
+        14140791,
+        14240000
+      ],
+      "workload": "heap-permute"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 21842562,
+      "first_call_ns": 142901208,
+      "mode": "prepared",
+      "peak_rss_bytes": null,
+      "prepare_ns": 120667,
+      "reason": null,
+      "runtime": "bb-prepared",
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          138228542,
+          139761042,
+          137988083
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        138228542,
+        139761042,
+        137988083
+      ],
+      "workload": "ackermann-deep"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 21842562,
+      "first_call_ns": 2420667,
+      "mode": "prepared",
+      "peak_rss_bytes": null,
+      "prepare_ns": 104958,
+      "reason": null,
+      "runtime": "bb-prepared",
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          2436042,
+          2426292,
+          2425208
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        2436042,
+        2426292,
+        2425208
+      ],
+      "workload": "tak-branching"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 21842562,
+      "first_call_ns": 41527250,
+      "mode": "prepared",
+      "peak_rss_bytes": null,
+      "prepare_ns": 155208,
+      "reason": null,
+      "runtime": "bb-prepared",
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          41697375,
+          42618292,
+          40792708
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        41697375,
+        42618292,
+        40792708
+      ],
+      "workload": "collatz-range"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 21842562,
+      "first_call_ns": 2037375,
+      "mode": "prepared",
+      "peak_rss_bytes": null,
+      "prepare_ns": 255208,
+      "reason": null,
+      "runtime": "bb-prepared",
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          1045833,
+          1042041,
+          1051958
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        1045833,
+        1042041,
+        1051958
+      ],
+      "workload": "matrix-multiply"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 32649813,
+      "first_call_ns": null,
+      "mode": "prepared",
+      "peak_rss_bytes": null,
+      "prepare_ns": null,
+      "reason": "sieve-array: primitive calls support at most 255 arguments [line 1, column 13]",
+      "runtime": "hara-rust-whole-wasm-prepared",
+      "status": "unsupported",
+      "steady_state": {
+        "samples_ns": []
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [],
+      "workload": "sieve-array"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 32649813,
+      "first_call_ns": 844417,
+      "mode": "prepared",
+      "peak_rss_bytes": null,
+      "prepare_ns": 1157459,
+      "reason": null,
+      "runtime": "hara-rust-whole-wasm-prepared",
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          853834,
+          827500,
+          834167
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        853834,
+        827500,
+        834167
+      ],
+      "workload": "towers-recursive"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 32649813,
+      "first_call_ns": 458708,
+      "mode": "prepared",
+      "peak_rss_bytes": null,
+      "prepare_ns": 1967542,
+      "reason": null,
+      "runtime": "hara-rust-whole-wasm-prepared",
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          408667,
+          413166,
+          415208
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        408667,
+        413166,
+        415208
+      ],
+      "workload": "queens-backtracking"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 32649813,
+      "first_call_ns": 611000,
+      "mode": "prepared",
+      "peak_rss_bytes": null,
+      "prepare_ns": 1537375,
+      "reason": null,
+      "runtime": "hara-rust-whole-wasm-prepared",
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          605833,
+          604542,
+          607125
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        605833,
+        604542,
+        607125
+      ],
+      "workload": "heap-permute"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 32649813,
+      "first_call_ns": 9651500,
+      "mode": "prepared",
+      "peak_rss_bytes": null,
+      "prepare_ns": 1087791,
+      "reason": null,
+      "runtime": "hara-rust-whole-wasm-prepared",
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          9844375,
+          9791125,
+          9814708
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        9844375,
+        9791125,
+        9814708
+      ],
+      "workload": "ackermann-deep"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 32649813,
+      "first_call_ns": 147791,
+      "mode": "prepared",
+      "peak_rss_bytes": null,
+      "prepare_ns": 1089625,
+      "reason": null,
+      "runtime": "hara-rust-whole-wasm-prepared",
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          119167,
+          118916,
+          126334
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        119167,
+        118916,
+        126334
+      ],
+      "workload": "tak-branching"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 32649813,
+      "first_call_ns": 3807375,
+      "mode": "prepared",
+      "peak_rss_bytes": null,
+      "prepare_ns": 1348292,
+      "reason": null,
+      "runtime": "hara-rust-whole-wasm-prepared",
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          3590792,
+          3644791,
+          3689667
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        3590792,
+        3644791,
+        3689667
+      ],
+      "workload": "collatz-range"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 32649813,
+      "first_call_ns": 75625,
+      "mode": "prepared",
+      "peak_rss_bytes": null,
+      "prepare_ns": 2043500,
+      "reason": null,
+      "runtime": "hara-rust-whole-wasm-prepared",
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          41458,
+          41125,
+          41000
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        41458,
+        41125,
+        41000
+      ],
+      "workload": "matrix-multiply"
+    }
+  ],
+  "provenance": {
+    "benchmark_revision": "b4594dd89bfc09cfe8758cd51123703dd1f04333",
+    "hara_dirty": true,
+    "hara_revision": "b891172439739134ff254d76befb7c451d47f57f"
+  },
+  "run": {
+    "id": "2026-08-02T13-45-47.490839+00-00",
+    "profile": "smoke",
+    "source": "imported-language-runner"
+  },
+  "schema_version": 2,
+  "versions": {
+    "bb": "babashka v1.12.218",
+    "c": "Apple clang version 17.0.0 (clang-1700.3.19.1)",
+    "chez": "10.4.1",
+    "guile": "guile (GNU Guile) 3.0.11",
+    "java": "The operation couldn\u2019t be completed. Unable to locate a Java Runtime.",
+    "javac": "The operation couldn\u2019t be completed. Unable to locate a Java Runtime.",
+    "luajit": "LuaJIT 2.1.1763318511 -- Copyright (C) 2005-2025 Mike Pall. https://luajit.org/",
+    "python": "3.14.6",
+    "rust": "rustc 1.97.1 (8bab26f4f 2026-07-14) (Homebrew)",
+    "sbcl": "SBCL 2.6.7"
+  }
+}

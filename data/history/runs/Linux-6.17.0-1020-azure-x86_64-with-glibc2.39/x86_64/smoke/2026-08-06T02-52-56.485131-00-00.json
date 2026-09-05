@@ -1,0 +1,3624 @@
+{
+  "environment": {
+    "benchmark_revision": "27e499f6bb61275cf7be82555c0f6718e9b4c6b8",
+    "container_image": "ubuntu:24.04",
+    "git_dirty": false,
+    "git_revision": "5f5caed298f567324561d15bf42d951fd5bfd18c",
+    "github_run_attempt": "1",
+    "github_run_id": "31066702821",
+    "machine": "x86_64",
+    "platform": "Linux-6.17.0-1020-azure-x86_64-with-glibc2.39",
+    "python": "3.12.3",
+    "runner": "GitHub Actions 1000014408",
+    "timestamp": "2026-08-06T02:52:56.485131+00:00"
+  },
+  "measurements": [
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 68355108,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": null,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": null,
+      "prepare_ns": null,
+      "reason": "sieve-array: primitive calls support at most 255 arguments [line 1, column 13]",
+      "runtime": "hara-rust-whole-wasm-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": null,
+      "source_bytes": null,
+      "status": "unsupported",
+      "steady_state": {
+        "samples_ns": []
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [],
+      "workload": "sieve-array"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 68355108,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 1723057,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 21106688,
+      "prepare_ns": 2268152,
+      "reason": null,
+      "runtime": "hara-rust-whole-wasm-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 13696608,
+      "source_bytes": 3,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          1699202,
+          1634386,
+          1458125
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        1699202,
+        1634386,
+        1458125
+      ],
+      "workload": "towers-recursive"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 68355108,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 911046,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 20107264,
+      "prepare_ns": 3677345,
+      "reason": null,
+      "runtime": "hara-rust-whole-wasm-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 13696608,
+      "source_bytes": 1,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          704811,
+          739713,
+          702078
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        704811,
+        739713,
+        702078
+      ],
+      "workload": "queens-backtracking"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 68355108,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 2039234,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 20115456,
+      "prepare_ns": 3076026,
+      "reason": null,
+      "runtime": "hara-rust-whole-wasm-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 13696608,
+      "source_bytes": null,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          2231208,
+          2280631,
+          2261623
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        2231208,
+        2280631,
+        2261623
+      ],
+      "workload": "heap-permute"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 68355108,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 14243572,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 20619264,
+      "prepare_ns": 2311056,
+      "reason": null,
+      "runtime": "hara-rust-whole-wasm-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 13696608,
+      "source_bytes": 2,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          14189152,
+          13471320,
+          13427556
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        14189152,
+        13471320,
+        13427556
+      ],
+      "workload": "ackermann-deep"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 68355108,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 289258,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 19931136,
+      "prepare_ns": 2287331,
+      "reason": null,
+      "runtime": "hara-rust-whole-wasm-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 13696608,
+      "source_bytes": null,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          334144,
+          338390,
+          347734
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        334144,
+        338390,
+        347734
+      ],
+      "workload": "tak-branching"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 68355108,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 7032664,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 20447232,
+      "prepare_ns": 2784125,
+      "reason": null,
+      "runtime": "hara-rust-whole-wasm-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 13696608,
+      "source_bytes": 3,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          7611640,
+          6985175,
+          6927839
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        7611640,
+        6985175,
+        6927839
+      ],
+      "workload": "collatz-range"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 68355108,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 146376,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 20955136,
+      "prepare_ns": 3921255,
+      "reason": null,
+      "runtime": "hara-rust-whole-wasm-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 13696608,
+      "source_bytes": 2,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          120348,
+          126687,
+          114329
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        120348,
+        126687,
+        114329
+      ],
+      "workload": "matrix-multiply"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 2407899,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 52000,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 2834432,
+      "prepare_ns": 14000,
+      "reason": null,
+      "runtime": "luajit-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 604392,
+      "source_bytes": 193,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          35000,
+          18000,
+          3000
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        35000,
+        18000,
+        3000
+      ],
+      "workload": "sieve-array"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 2407899,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 2614000,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 2846720,
+      "prepare_ns": 8000,
+      "reason": null,
+      "runtime": "luajit-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 604392,
+      "source_bytes": 105,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          4234000,
+          5398000,
+          5324000
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        4234000,
+        5398000,
+        5324000
+      ],
+      "workload": "towers-recursive"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 2407899,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 920000,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 2850816,
+      "prepare_ns": 21000,
+      "reason": null,
+      "runtime": "luajit-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 604392,
+      "source_bytes": 369,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          732000,
+          790000,
+          612000
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        732000,
+        790000,
+        612000
+      ],
+      "workload": "queens-backtracking"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 2407899,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 1449000,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 2859008,
+      "prepare_ns": 17000,
+      "reason": null,
+      "runtime": "luajit-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 604392,
+      "source_bytes": 247,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          1512000,
+          955000,
+          898000
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        1512000,
+        955000,
+        898000
+      ],
+      "workload": "heap-permute"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 2407899,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 8280000,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 3055616,
+      "prepare_ns": 10000,
+      "reason": null,
+      "runtime": "luajit-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 604392,
+      "source_bytes": 138,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          23123000,
+          35944000,
+          35982000
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        23123000,
+        35944000,
+        35982000
+      ],
+      "workload": "ackermann-deep"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 2407899,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 794000,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 2850816,
+      "prepare_ns": 10000,
+      "reason": null,
+      "runtime": "luajit-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 604392,
+      "source_bytes": 126,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          564000,
+          663000,
+          638000
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        564000,
+        663000,
+        638000
+      ],
+      "workload": "tak-branching"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 2407899,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 4333000,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 2789376,
+      "prepare_ns": 15000,
+      "reason": null,
+      "runtime": "luajit-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 604392,
+      "source_bytes": 197,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          4315000,
+          4201000,
+          4164000
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        4315000,
+        4201000,
+        4164000
+      ],
+      "workload": "collatz-range"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 2407899,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 118000,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 2863104,
+      "prepare_ns": 19000,
+      "reason": null,
+      "runtime": "luajit-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 604392,
+      "source_bytes": 324,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          30000,
+          26000,
+          79000
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        30000,
+        26000,
+        79000
+      ],
+      "workload": "matrix-multiply"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 46137280,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 59228,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 56762368,
+      "prepare_ns": 111074,
+      "reason": null,
+      "runtime": "pypy-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 14488,
+      "source_bytes": 157,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          42863,
+          45157,
+          533919
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        42863,
+        45157,
+        533919
+      ],
+      "workload": "sieve-array"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 46137280,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 17933045,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 60043264,
+      "prepare_ns": 85697,
+      "reason": null,
+      "runtime": "pypy-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 14488,
+      "source_bytes": 101,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          10075401,
+          10014761,
+          10066398
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        10075401,
+        10014761,
+        10066398
+      ],
+      "workload": "towers-recursive"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 46137280,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 50687826,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 64086016,
+      "prepare_ns": 213095,
+      "reason": null,
+      "runtime": "pypy-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 14488,
+      "source_bytes": 334,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          11800511,
+          12692399,
+          4295529
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        11800511,
+        12692399,
+        4295529
+      ],
+      "workload": "queens-backtracking"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 46137280,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 19588111,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 60227584,
+      "prepare_ns": 152506,
+      "reason": null,
+      "runtime": "pypy-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 14488,
+      "source_bytes": 273,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          2953135,
+          2587464,
+          2539253
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        2953135,
+        2587464,
+        2539253
+      ],
+      "workload": "heap-permute"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 46137280,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 213800225,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 64081920,
+      "prepare_ns": 490515,
+      "reason": null,
+      "runtime": "pypy-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 14488,
+      "source_bytes": 118,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          175869764,
+          173411841,
+          173496566
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        175869764,
+        173411841,
+        173496566
+      ],
+      "workload": "ackermann-deep"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 46137280,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 52924983,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 63393792,
+      "prepare_ns": 117484,
+      "reason": null,
+      "runtime": "pypy-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 14488,
+      "source_bytes": 122,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          12052834,
+          6797307,
+          7985693
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        12052834,
+        6797307,
+        7985693
+      ],
+      "workload": "tak-branching"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 46137280,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 3863481,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 57036800,
+      "prepare_ns": 144764,
+      "reason": null,
+      "runtime": "pypy-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 14488,
+      "source_bytes": 181,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          1830355,
+          1766491,
+          1817346
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        1830355,
+        1766491,
+        1817346
+      ],
+      "workload": "collatz-range"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 46137280,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 12825435,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 59285504,
+      "prepare_ns": 179776,
+      "reason": null,
+      "runtime": "pypy-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 14488,
+      "source_bytes": 256,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          1474809,
+          678083,
+          1076912
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        1474809,
+        678083,
+        1076912
+      ],
+      "workload": "matrix-multiply"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 34080260,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 77575,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 49553408,
+      "prepare_ns": 77705,
+      "reason": null,
+      "runtime": "node-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 123655872,
+      "source_bytes": 265,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          18347,
+          14491,
+          15593
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        18347,
+        14491,
+        15593
+      ],
+      "workload": "sieve-array"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 34080260,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 2370755,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 55177216,
+      "prepare_ns": 104024,
+      "reason": null,
+      "runtime": "node-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 123655872,
+      "source_bytes": 122,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          1944584,
+          1939297,
+          1947598
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        1944584,
+        1939297,
+        1947598
+      ],
+      "workload": "towers-recursive"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 34080260,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 1084383,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 55545856,
+      "prepare_ns": 81891,
+      "reason": null,
+      "runtime": "node-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 123655872,
+      "source_bytes": 446,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          2098121,
+          387743,
+          309618
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        2098121,
+        387743,
+        309618
+      ],
+      "workload": "queens-backtracking"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 34080260,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 1525264,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 55738368,
+      "prepare_ns": 79838,
+      "reason": null,
+      "runtime": "node-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 123655872,
+      "source_bytes": 332,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          2917672,
+          516133,
+          519317
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        2917672,
+        516133,
+        519317
+      ],
+      "workload": "heap-permute"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 34080260,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 17965863,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 55181312,
+      "prepare_ns": 69453,
+      "reason": null,
+      "runtime": "node-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 123655872,
+      "source_bytes": 143,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          18073482,
+          18177241,
+          18137577
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        18073482,
+        18177241,
+        18137577
+      ],
+      "workload": "ackermann-deep"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 34080260,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 691442,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 52817920,
+      "prepare_ns": 76122,
+      "reason": null,
+      "runtime": "node-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 123655872,
+      "source_bytes": 152,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          270169,
+          266794,
+          287995
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        270169,
+        266794,
+        287995
+      ],
+      "workload": "tak-branching"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 34080260,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 3008827,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 55160832,
+      "prepare_ns": 73719,
+      "reason": null,
+      "runtime": "node-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 123655872,
+      "source_bytes": 191,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          1645492,
+          1651000,
+          1731138
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        1645492,
+        1651000,
+        1731138
+      ],
+      "workload": "collatz-range"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 34080260,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 551355,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 56139776,
+      "prepare_ns": 81060,
+      "reason": null,
+      "runtime": "node-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 123655872,
+      "source_bytes": 502,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          438699,
+          77714,
+          80338
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        438699,
+        77714,
+        80338
+      ],
+      "workload": "matrix-multiply"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 69374705,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 32599,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 16797696,
+      "prepare_ns": 88121,
+      "reason": null,
+      "runtime": "ruby-yjit-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 226504,
+      "source_bytes": 284,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          23594,
+          20821,
+          19829
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        23594,
+        20821,
+        19829
+      ],
+      "workload": "sieve-array"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 69374705,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 2744086,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 16334848,
+      "prepare_ns": 62082,
+      "reason": null,
+      "runtime": "ruby-yjit-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 226504,
+      "source_bytes": 98,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          2176988,
+          2192691,
+          2170768
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        2176988,
+        2192691,
+        2170768
+      ],
+      "workload": "towers-recursive"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 69374705,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 8939072,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 16404480,
+      "prepare_ns": 125986,
+      "reason": null,
+      "runtime": "ruby-yjit-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 226504,
+      "source_bytes": 512,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          2175555,
+          1719841,
+          1879218
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        2175555,
+        1719841,
+        1879218
+      ],
+      "workload": "queens-backtracking"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 69374705,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 11718740,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 16334848,
+      "prepare_ns": 102592,
+      "reason": null,
+      "runtime": "ruby-yjit-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 226504,
+      "source_bytes": 320,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          6247694,
+          6248154,
+          5973308
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        6247694,
+        6248154,
+        5973308
+      ],
+      "workload": "heap-permute"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 69374705,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 15301426,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 16969728,
+      "prepare_ns": 67149,
+      "reason": null,
+      "runtime": "ruby-yjit-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 226504,
+      "source_bytes": 134,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          13952051,
+          13894997,
+          13859184
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        13952051,
+        13894997,
+        13859184
+      ],
+      "workload": "ackermann-deep"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 69374705,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 1275776,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 16486400,
+      "prepare_ns": 64385,
+      "reason": null,
+      "runtime": "ruby-yjit-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 226504,
+      "source_bytes": 129,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          271110,
+          268527,
+          268476
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        271110,
+        268527,
+        268476
+      ],
+      "workload": "tak-branching"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 69374705,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 37059103,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 16691200,
+      "prepare_ns": 69943,
+      "reason": null,
+      "runtime": "ruby-yjit-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 226504,
+      "source_bytes": 196,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          36834081,
+          36860670,
+          36939215
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        36834081,
+        36860670,
+        36939215
+      ],
+      "workload": "collatz-range"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 69374705,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 559757,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 16117760,
+      "prepare_ns": 157813,
+      "reason": null,
+      "runtime": "ruby-yjit-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 226504,
+      "source_bytes": 472,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          509823,
+          527520,
+          502673
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        509823,
+        527520,
+        502673
+      ],
+      "workload": "matrix-multiply"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 914134173,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 412760,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 115662848,
+      "prepare_ns": 6404265,
+      "reason": null,
+      "runtime": "clojure-prepared",
+      "runtime_bundle_bytes": 4869249,
+      "runtime_executable_bytes": 13975,
+      "source_bytes": 267,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          235228,
+          163211,
+          174227
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        235228,
+        163211,
+        174227
+      ],
+      "workload": "sieve-array"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 914134173,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 22223225,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 113881088,
+      "prepare_ns": 5360573,
+      "reason": null,
+      "runtime": "clojure-prepared",
+      "runtime_bundle_bytes": 4869249,
+      "runtime_executable_bytes": 13975,
+      "source_bytes": 91,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          3224065,
+          3191767,
+          1905757
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        3224065,
+        3191767,
+        1905757
+      ],
+      "workload": "towers-recursive"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 914134173,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 14628721,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 112754688,
+      "prepare_ns": 14050696,
+      "reason": null,
+      "runtime": "clojure-prepared",
+      "runtime_bundle_bytes": 4869249,
+      "runtime_executable_bytes": 13975,
+      "source_bytes": 423,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          6114426,
+          3948686,
+          1120956
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        6114426,
+        3948686,
+        1120956
+      ],
+      "workload": "queens-backtracking"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 914134173,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 18924911,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 115576832,
+      "prepare_ns": 14104566,
+      "reason": null,
+      "runtime": "clojure-prepared",
+      "runtime_bundle_bytes": 4869249,
+      "runtime_executable_bytes": 13975,
+      "source_bytes": 324,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          9927673,
+          9847214,
+          9810810
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        9927673,
+        9847214,
+        9810810
+      ],
+      "workload": "heap-permute"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 914134173,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 45793182,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 192978944,
+      "prepare_ns": 5024646,
+      "reason": null,
+      "runtime": "clojure-prepared",
+      "runtime_bundle_bytes": 4869249,
+      "runtime_executable_bytes": 13975,
+      "source_bytes": 115,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          21120030,
+          18246158,
+          19118588
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        21120030,
+        18246158,
+        19118588
+      ],
+      "workload": "ackermann-deep"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 914134173,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 6062351,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 116006912,
+      "prepare_ns": 5118765,
+      "reason": null,
+      "runtime": "clojure-prepared",
+      "runtime_bundle_bytes": 4869249,
+      "runtime_executable_bytes": 13975,
+      "source_bytes": 113,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          4827835,
+          4382968,
+          550754
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        4827835,
+        4382968,
+        550754
+      ],
+      "workload": "tak-branching"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 914134173,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 39814235,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 156712960,
+      "prepare_ns": 8098529,
+      "reason": null,
+      "runtime": "clojure-prepared",
+      "runtime_bundle_bytes": 4869249,
+      "runtime_executable_bytes": 13975,
+      "source_bytes": 226,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          7714902,
+          7643977,
+          12398013
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        7714902,
+        7643977,
+        12398013
+      ],
+      "workload": "collatz-range"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 914134173,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 4972189,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 114610176,
+      "prepare_ns": 11702506,
+      "reason": null,
+      "runtime": "clojure-prepared",
+      "runtime_bundle_bytes": 4869249,
+      "runtime_executable_bytes": 13975,
+      "source_bytes": 323,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          1143420,
+          1121027,
+          1119324
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        1143420,
+        1121027,
+        1119324
+      ],
+      "workload": "matrix-multiply"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 34566175,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 6000,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 48779264,
+      "prepare_ns": 1934000,
+      "reason": null,
+      "runtime": "sbcl-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 393104,
+      "source_bytes": 239,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          2000,
+          2000,
+          2000
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        2000,
+        2000,
+        2000
+      ],
+      "workload": "sieve-array"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 34566175,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 3365000,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 56799232,
+      "prepare_ns": 499000,
+      "reason": null,
+      "runtime": "sbcl-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 393104,
+      "source_bytes": 88,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          3345000,
+          3513000,
+          4706000
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        3345000,
+        3513000,
+        4706000
+      ],
+      "workload": "towers-recursive"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 34566175,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 531000,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 55205888,
+      "prepare_ns": 5742000,
+      "reason": null,
+      "runtime": "sbcl-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 393104,
+      "source_bytes": 347,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          481000,
+          479000,
+          465000
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        481000,
+        479000,
+        465000
+      ],
+      "workload": "queens-backtracking"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 34566175,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 1295000,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 49029120,
+      "prepare_ns": 3038000,
+      "reason": null,
+      "runtime": "sbcl-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 393104,
+      "source_bytes": 236,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          1278000,
+          1296000,
+          1281000
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        1278000,
+        1296000,
+        1281000
+      ],
+      "workload": "heap-permute"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 34566175,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 22230000,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 53739520,
+      "prepare_ns": 799000,
+      "reason": null,
+      "runtime": "sbcl-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 393104,
+      "source_bytes": 108,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          21641000,
+          22609000,
+          21687000
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        21641000,
+        22609000,
+        21687000
+      ],
+      "workload": "ackermann-deep"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 34566175,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 373000,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 54874112,
+      "prepare_ns": 1035000,
+      "reason": null,
+      "runtime": "sbcl-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 393104,
+      "source_bytes": 111,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          381000,
+          396000,
+          432000
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        381000,
+        396000,
+        432000
+      ],
+      "workload": "tak-branching"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 34566175,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 6975000,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 52736000,
+      "prepare_ns": 2596000,
+      "reason": null,
+      "runtime": "sbcl-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 393104,
+      "source_bytes": 231,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          6934000,
+          7926000,
+          7237000
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        6934000,
+        7926000,
+        7237000
+      ],
+      "workload": "collatz-range"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 34566175,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 32000,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 55271424,
+      "prepare_ns": 3976000,
+      "reason": null,
+      "runtime": "sbcl-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 393104,
+      "source_bytes": 360,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          28000,
+          28000,
+          28000
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        28000,
+        28000,
+        28000
+      ],
+      "workload": "matrix-multiply"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 78226748,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 40280,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 50798592,
+      "prepare_ns": 1473527,
+      "reason": null,
+      "runtime": "chez-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 354992,
+      "source_bytes": 328,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          7842,
+          3586,
+          1552
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        7842,
+        3586,
+        1552
+      ],
+      "workload": "sieve-array"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 78226748,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 1330677,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 50872320,
+      "prepare_ns": 633847,
+      "reason": null,
+      "runtime": "chez-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 354992,
+      "source_bytes": 99,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          1270958,
+          1261635,
+          1312370
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        1270958,
+        1261635,
+        1312370
+      ],
+      "workload": "towers-recursive"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 78226748,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 419050,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 50692096,
+      "prepare_ns": 1763397,
+      "reason": null,
+      "runtime": "chez-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 354992,
+      "source_bytes": 503,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          351780,
+          386421,
+          322967
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        351780,
+        386421,
+        322967
+      ],
+      "workload": "queens-backtracking"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 78226748,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 896565,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 50778112,
+      "prepare_ns": 1537613,
+      "reason": null,
+      "runtime": "chez-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 354992,
+      "source_bytes": 382,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          834323,
+          833172,
+          835435
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        834323,
+        833172,
+        835435
+      ],
+      "workload": "heap-permute"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 78226748,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 4127770,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 50626560,
+      "prepare_ns": 767555,
+      "reason": null,
+      "runtime": "chez-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 354992,
+      "source_bytes": 121,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          4019311,
+          3989387,
+          3987484
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        4019311,
+        3989387,
+        3987484
+      ],
+      "workload": "ackermann-deep"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 78226748,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 148009,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 50790400,
+      "prepare_ns": 741776,
+      "reason": null,
+      "runtime": "chez-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 354992,
+      "source_bytes": 123,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          116442,
+          132345,
+          108240
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        116442,
+        132345,
+        108240
+      ],
+      "workload": "tak-branching"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 78226748,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 8733738,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 50794496,
+      "prepare_ns": 989212,
+      "reason": null,
+      "runtime": "chez-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 354992,
+      "source_bytes": 263,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          8675171,
+          8639629,
+          8657155
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        8675171,
+        8639629,
+        8657155
+      ],
+      "workload": "collatz-range"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 78226748,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 72758,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 50765824,
+      "prepare_ns": 3495336,
+      "reason": null,
+      "runtime": "chez-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 354992,
+      "source_bytes": 496,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          59828,
+          35091,
+          32598
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        59828,
+        35091,
+        32598
+      ],
+      "workload": "matrix-multiply"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 132237490,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 443330,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 13234176,
+      "prepare_ns": 543699,
+      "reason": null,
+      "runtime": "guile-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 14488,
+      "source_bytes": 328,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          165657,
+          146268,
+          140529
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        165657,
+        146268,
+        140529
+      ],
+      "workload": "sieve-array"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 132237490,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 107761676,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 14438400,
+      "prepare_ns": 202031,
+      "reason": null,
+      "runtime": "guile-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 14488,
+      "source_bytes": 99,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          102872257,
+          105668648,
+          103109666
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        102872257,
+        105668648,
+        103109666
+      ],
+      "workload": "towers-recursive"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 132237490,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 66452519,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 14766080,
+      "prepare_ns": 755115,
+      "reason": null,
+      "runtime": "guile-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 14488,
+      "source_bytes": 503,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          64281805,
+          64982535,
+          64825144
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        64281805,
+        64982535,
+        64825144
+      ],
+      "workload": "queens-backtracking"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 132237490,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 121599766,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 14700544,
+      "prepare_ns": 656327,
+      "reason": null,
+      "runtime": "guile-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 14488,
+      "source_bytes": 382,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          119355273,
+          125107422,
+          120331399
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        119355273,
+        125107422,
+        120331399
+      ],
+      "workload": "heap-permute"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 132237490,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 583470919,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 15208448,
+      "prepare_ns": 394468,
+      "reason": null,
+      "runtime": "guile-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 14488,
+      "source_bytes": 121,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          586383097,
+          590850842,
+          584636481
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        586383097,
+        590850842,
+        584636481
+      ],
+      "workload": "ackermann-deep"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 132237490,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 16339206,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 14938112,
+      "prepare_ns": 352665,
+      "reason": null,
+      "runtime": "guile-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 14488,
+      "source_bytes": 123,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          15078863,
+          11992325,
+          15243445
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        15078863,
+        11992325,
+        15243445
+      ],
+      "workload": "tak-branching"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 132237490,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 270755827,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 14815232,
+      "prepare_ns": 458934,
+      "reason": null,
+      "runtime": "guile-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 14488,
+      "source_bytes": 263,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          271368987,
+          268721235,
+          270557481
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        271368987,
+        268721235,
+        270557481
+      ],
+      "workload": "collatz-range"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 132237490,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 8625832,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 15097856,
+      "prepare_ns": 1001101,
+      "reason": null,
+      "runtime": "guile-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 14488,
+      "source_bytes": 496,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          4503836,
+          8630597,
+          4187705
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        4503836,
+        8630597,
+        4187705
+      ],
+      "workload": "matrix-multiply"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 15191976,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 76513,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 40050688,
+      "prepare_ns": 425109,
+      "reason": null,
+      "runtime": "bb-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 70059328,
+      "source_bytes": 267,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          63324,
+          60560,
+          61370
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        63324,
+        60560,
+        61370
+      ],
+      "workload": "sieve-array"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 15191976,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 69078757,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 103477248,
+      "prepare_ns": 241597,
+      "reason": null,
+      "runtime": "bb-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 70059328,
+      "source_bytes": 91,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          69067982,
+          59086720,
+          54604986
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        69067982,
+        59086720,
+        54604986
+      ],
+      "workload": "towers-recursive"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 15191976,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 16359519,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 64704512,
+      "prepare_ns": 597883,
+      "reason": null,
+      "runtime": "bb-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 70059328,
+      "source_bytes": 423,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          15577193,
+          15775907,
+          15656049
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        15577193,
+        15775907,
+        15656049
+      ],
+      "workload": "queens-backtracking"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 15191976,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 32746689,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 79396864,
+      "prepare_ns": 479219,
+      "reason": null,
+      "runtime": "bb-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 70059328,
+      "source_bytes": 324,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          32043340,
+          32076559,
+          32257556
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        32043340,
+        32076559,
+        32257556
+      ],
+      "workload": "heap-permute"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 15191976,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 305512113,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 104534016,
+      "prepare_ns": 276538,
+      "reason": null,
+      "runtime": "bb-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 70059328,
+      "source_bytes": 115,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          276923350,
+          278046169,
+          277570956
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        276923350,
+        278046169,
+        277570956
+      ],
+      "workload": "ackermann-deep"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 15191976,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 6062049,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 59273216,
+      "prepare_ns": 259664,
+      "reason": null,
+      "runtime": "bb-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 70059328,
+      "source_bytes": 113,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          6681916,
+          6365558,
+          6200614
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        6681916,
+        6365558,
+        6200614
+      ],
+      "workload": "tak-branching"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 15191976,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 103237814,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 103489536,
+      "prepare_ns": 388304,
+      "reason": null,
+      "runtime": "bb-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 70059328,
+      "source_bytes": 226,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          103248279,
+          104682800,
+          91351687
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        103248279,
+        104682800,
+        91351687
+      ],
+      "workload": "collatz-range"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 15191976,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 3143456,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 51535872,
+      "prepare_ns": 664011,
+      "reason": null,
+      "runtime": "bb-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 70059328,
+      "source_bytes": 323,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          2445725,
+          2555006,
+          2829322
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        2445725,
+        2555006,
+        2829322
+      ],
+      "workload": "matrix-multiply"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 25843201,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 13540,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 11223040,
+      "prepare_ns": 1283257,
+      "reason": null,
+      "runtime": "python-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 8020928,
+      "source_bytes": 157,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          10055,
+          9194,
+          8873
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        10055,
+        9194,
+        8873
+      ],
+      "workload": "sieve-array"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 25843201,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 25242458,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 11214848,
+      "prepare_ns": 1268164,
+      "reason": null,
+      "runtime": "python-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 8020928,
+      "source_bytes": 101,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          25042702,
+          25048982,
+          25099657
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        25042702,
+        25048982,
+        25099657
+      ],
+      "workload": "towers-recursive"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 25843201,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 8926834,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 11214848,
+      "prepare_ns": 1461691,
+      "reason": null,
+      "runtime": "python-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 8020928,
+      "source_bytes": 334,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          8904040,
+          8960263,
+          8915377
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        8904040,
+        8960263,
+        8915377
+      ],
+      "workload": "queens-backtracking"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 25843201,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 11222948,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 11280384,
+      "prepare_ns": 1330526,
+      "reason": null,
+      "runtime": "python-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 8020928,
+      "source_bytes": 273,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          11172042,
+          11194725,
+          11198832
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        11172042,
+        11194725,
+        11198832
+      ],
+      "workload": "heap-permute"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 25843201,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 454062439,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 11632640,
+      "prepare_ns": 1246443,
+      "reason": null,
+      "runtime": "python-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 8020928,
+      "source_bytes": 118,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          464340198,
+          462887772,
+          462412600
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        464340198,
+        462887772,
+        462412600
+      ],
+      "workload": "ackermann-deep"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 25843201,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 2656456,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 11280384,
+      "prepare_ns": 1296606,
+      "reason": null,
+      "runtime": "python-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 8020928,
+      "source_bytes": 122,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          2653442,
+          2639752,
+          2658479
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        2653442,
+        2639752,
+        2658479
+      ],
+      "workload": "tak-branching"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 25843201,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 56415832,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 11313152,
+      "prepare_ns": 1261344,
+      "reason": null,
+      "runtime": "python-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 8020928,
+      "source_bytes": 181,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          56119234,
+          56408882,
+          56271158
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        56119234,
+        56408882,
+        56271158
+      ],
+      "workload": "collatz-range"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 25843201,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 1098734,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 11382784,
+      "prepare_ns": 1367462,
+      "reason": null,
+      "runtime": "python-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 8020928,
+      "source_bytes": 256,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          1086906,
+          1104292,
+          1099044
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        1086906,
+        1104292,
+        1099044
+      ],
+      "workload": "matrix-multiply"
+    },
+    {
+      "artifact_bytes": 4381280,
+      "cold_total_ns": 232664808,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 1422,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 242311168,
+      "prepare_ns": 187274480,
+      "reason": null,
+      "runtime": "rust-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 8020928,
+      "source_bytes": 395,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          241,
+          140,
+          150
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        241,
+        140,
+        150
+      ],
+      "workload": "sieve-array"
+    },
+    {
+      "artifact_bytes": 4376504,
+      "cold_total_ns": 232664808,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 938287,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 239878144,
+      "prepare_ns": 157928337,
+      "reason": null,
+      "runtime": "rust-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 8020928,
+      "source_bytes": 183,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          947541,
+          928051,
+          902654
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        947541,
+        928051,
+        902654
+      ],
+      "workload": "towers-recursive"
+    },
+    {
+      "artifact_bytes": 4377304,
+      "cold_total_ns": 232664808,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 164493,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 242102272,
+      "prepare_ns": 168089686,
+      "reason": null,
+      "runtime": "rust-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 8020928,
+      "source_bytes": 727,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          141920,
+          135480,
+          74050
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        141920,
+        135480,
+        74050
+      ],
+      "workload": "queens-backtracking"
+    },
+    {
+      "artifact_bytes": 4376952,
+      "cold_total_ns": 232664808,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 196921,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 239902720,
+      "prepare_ns": 163219728,
+      "reason": null,
+      "runtime": "rust-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 8020928,
+      "source_bytes": 437,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          195759,
+          196090,
+          195979
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        195759,
+        196090,
+        195979
+      ],
+      "workload": "heap-permute"
+    },
+    {
+      "artifact_bytes": 4376496,
+      "cold_total_ns": 232664808,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 2590929,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 241098752,
+      "prepare_ns": 160077204,
+      "reason": null,
+      "runtime": "rust-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 8020928,
+      "source_bytes": 267,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          2531321,
+          2556359,
+          2490481
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        2531321,
+        2556359,
+        2490481
+      ],
+      "workload": "ackermann-deep"
+    },
+    {
+      "artifact_bytes": 4376568,
+      "cold_total_ns": 232664808,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 101089,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 239661056,
+      "prepare_ns": 156021579,
+      "reason": null,
+      "runtime": "rust-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 8020928,
+      "source_bytes": 233,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          129021,
+          98756,
+          98726
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        129021,
+        98756,
+        98726
+      ],
+      "workload": "tak-branching"
+    },
+    {
+      "artifact_bytes": 4376528,
+      "cold_total_ns": 232664808,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 984315,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 239927296,
+      "prepare_ns": 161457824,
+      "reason": null,
+      "runtime": "rust-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 8020928,
+      "source_bytes": 299,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          975561,
+          974440,
+          1002131
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        975561,
+        974440,
+        1002131
+      ],
+      "workload": "collatz-range"
+    },
+    {
+      "artifact_bytes": 4378032,
+      "cold_total_ns": 232664808,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 2724,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 242184192,
+      "prepare_ns": 171019736,
+      "reason": null,
+      "runtime": "rust-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 8020928,
+      "source_bytes": 791,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          2424,
+          2374,
+          2383
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        2424,
+        2374,
+        2383
+      ],
+      "workload": "matrix-multiply"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 100930745,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 661,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 29433856,
+      "prepare_ns": 62308952,
+      "reason": null,
+      "runtime": "c-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 8020928,
+      "source_bytes": 272,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          591,
+          531,
+          451
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        591,
+        531,
+        451
+      ],
+      "workload": "sieve-array"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 100930745,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 553578,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 29040640,
+      "prepare_ns": 60025257,
+      "reason": null,
+      "runtime": "c-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 8020928,
+      "source_bytes": 183,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          530955,
+          531907,
+          521771
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        530955,
+        531907,
+        521771
+      ],
+      "workload": "towers-recursive"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 100930745,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 126027,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 30466048,
+      "prepare_ns": 101728955,
+      "reason": null,
+      "runtime": "c-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 8020928,
+      "source_bytes": 376,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          110873,
+          71586,
+          50735
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        110873,
+        71586,
+        50735
+      ],
+      "workload": "queens-backtracking"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 100930745,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 1282,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 29999104,
+      "prepare_ns": 69827144,
+      "reason": null,
+      "runtime": "c-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 8020928,
+      "source_bytes": 301,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          40,
+          41,
+          30
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        40,
+        41,
+        30
+      ],
+      "workload": "heap-permute"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 100930745,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 3545059,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 29442048,
+      "prepare_ns": 63823641,
+      "reason": null,
+      "runtime": "c-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 8020928,
+      "source_bytes": 201,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          3488126,
+          3568855,
+          3442888
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        3488126,
+        3568855,
+        3442888
+      ],
+      "workload": "ackermann-deep"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 100930745,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 104815,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 29569024,
+      "prepare_ns": 63362660,
+      "reason": null,
+      "runtime": "c-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 8020928,
+      "source_bytes": 221,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          103823,
+          103713,
+          103654
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        103823,
+        103713,
+        103654
+      ],
+      "workload": "tak-branching"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 100930745,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 1275536,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 29659136,
+      "prepare_ns": 71056050,
+      "reason": null,
+      "runtime": "c-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 8020928,
+      "source_bytes": 174,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          1323015,
+          1256657,
+          1248996
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        1323015,
+        1256657,
+        1248996
+      ],
+      "workload": "collatz-range"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 100930745,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 3816,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 30396416,
+      "prepare_ns": 83668311,
+      "reason": null,
+      "runtime": "c-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 8020928,
+      "source_bytes": 413,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          2304,
+          2284,
+          2283
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        2304,
+        2284,
+        2283
+      ],
+      "workload": "matrix-multiply"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 658516016,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 40079,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 102731776,
+      "prepare_ns": 592832914,
+      "reason": null,
+      "runtime": "java-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 8020928,
+      "source_bytes": 232,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          23355,
+          24796,
+          51916
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        23355,
+        24796,
+        51916
+      ],
+      "workload": "sieve-array"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 658516016,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 2480747,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 91471872,
+      "prepare_ns": 556989989,
+      "reason": null,
+      "runtime": "java-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 8020928,
+      "source_bytes": 121,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          878859,
+          969663,
+          794965
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        878859,
+        969663,
+        794965
+      ],
+      "workload": "towers-recursive"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 658516016,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 1052656,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 94703616,
+      "prepare_ns": 558588605,
+      "reason": null,
+      "runtime": "java-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 8020928,
+      "source_bytes": 379,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          677932,
+          686585,
+          706484
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        677932,
+        686585,
+        706484
+      ],
+      "workload": "queens-backtracking"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 658516016,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 1337728,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 94949376,
+      "prepare_ns": 576935899,
+      "reason": null,
+      "runtime": "java-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 8020928,
+      "source_bytes": 304,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          1046607,
+          1042330,
+          557804
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        1046607,
+        1042330,
+        557804
+      ],
+      "workload": "heap-permute"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 658516016,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 6127276,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 93904896,
+      "prepare_ns": 561474146,
+      "reason": null,
+      "runtime": "java-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 8020928,
+      "source_bytes": 139,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          5395014,
+          4586930,
+          4624334
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        5395014,
+        4586930,
+        4624334
+      ],
+      "workload": "ackermann-deep"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 658516016,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 668569,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 93274112,
+      "prepare_ns": 553823834,
+      "reason": null,
+      "runtime": "java-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 8020928,
+      "source_bytes": 153,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          408664,
+          399080,
+          405148
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        408664,
+        399080,
+        405148
+      ],
+      "workload": "tak-branching"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 658516016,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 5740774,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 95301632,
+      "prepare_ns": 563413126,
+      "reason": null,
+      "runtime": "java-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 8020928,
+      "source_bytes": 165,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          2994987,
+          1668636,
+          1602078
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        2994987,
+        1668636,
+        1602078
+      ],
+      "workload": "collatz-range"
+    },
+    {
+      "artifact_bytes": null,
+      "cold_total_ns": 658516016,
+      "compressed_artifact_bytes": null,
+      "container_image_bytes": null,
+      "converged_window": null,
+      "first_call_ns": 385319,
+      "idle_rss_bytes": null,
+      "mode": "prepared",
+      "peak_rss_bytes": 94584832,
+      "prepare_ns": 560445955,
+      "reason": null,
+      "runtime": "java-prepared",
+      "runtime_bundle_bytes": null,
+      "runtime_executable_bytes": 8020928,
+      "source_bytes": 389,
+      "status": "ok",
+      "steady_state": {
+        "samples_ns": [
+          389366,
+          419971,
+          400522
+        ]
+      },
+      "suite": "algorithms",
+      "warmup_samples_ns": [
+        389366,
+        419971,
+        400522
+      ],
+      "workload": "matrix-multiply"
+    }
+  ],
+  "provenance": {
+    "benchmark_revision": "27e499f6bb61275cf7be82555c0f6718e9b4c6b8",
+    "github_repository": "hara-lang/hara-benchmarks",
+    "github_run_attempt": "1",
+    "github_run_id": "31066702821",
+    "hara_dirty": false,
+    "hara_revision": "5f5caed298f567324561d15bf42d951fd5bfd18c",
+    "workflow_sha": "27e499f6bb61275cf7be82555c0f6718e9b4c6b8"
+  },
+  "run": {
+    "id": "2026-08-06T02-52-56.485131+00-00",
+    "profile": "smoke",
+    "source": "imported-language-runner"
+  },
+  "schema_version": 3,
+  "versions": {
+    "bb": "babashka v1.13.219",
+    "c": "cc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+    "chez": "unavailable",
+    "clojure": "1.12.5",
+    "guile": "guile (GNU Guile) 3.0.9",
+    "java": "openjdk 21.0.11 2026-04-21",
+    "javac": "javac 21.0.11",
+    "luajit": "LuaJIT 2.1.1703358377 -- Copyright (C) 2005-2023 Mike Pall. https://luajit.org/",
+    "node": "Node v24.18.0 / V8 13.6.233.17-node.50",
+    "pypy": "Python 3.9.18 (7.3.15+dfsg-1build3, Apr 01 2024, 03:12:48)",
+    "python": "3.12.3",
+    "ruby": "ruby 4.0.6 (2026-07-14 revision 03b6d3f889) +YJIT +PRISM [x86_64-linux] / YJIT enabled",
+    "rust": "rustc 1.97.1 (8bab26f4f 2026-07-14)",
+    "sbcl": "SBCL 2.2.9.debian"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "schema": "hara.benchmarks-homepage/v1",
+  "canonical_url": "https://www.hara-lang.org/benchmarks/",
+  "published": "6 Aug 2026, 02:52 am UTC",
+  "workloads": 8,
+  "comparison_runtimes": 13,
+  "ratios": {
+    "python-prepared": 10.962034319960068,
+    "bb-prepared": 20.227222175732066,
+    "sbcl-prepared": 0.8694987408111235
+  },
+  "http": {
+    "server": "hoplite-request",
+    "route": "/hello",
+    "requests_per_second": 235729.52
+  }
+}

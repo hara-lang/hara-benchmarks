@@ -41,7 +41,7 @@ test("the dashboard opts into v2 while preserving benchmark interaction authorit
   assert.match(siteCss, /@hara-lang\/visual-language\/v2-data\.css/);
   assert.match(page, /body class="hara-v2 benchmark-product"/);
   assert.match(page, /benchmark-skip-link/);
-  assert.match(page, /id="benchmark-content" tabindex="-1"/);
+  assert.match(page, /mainId="benchmark-content"/);
   assert.match(page, /benchmark-evidence-contract/);
   assert.match(header, /astro\/v2\/Header\.astro/);
   assert.match(page, /history\.replaceState/);

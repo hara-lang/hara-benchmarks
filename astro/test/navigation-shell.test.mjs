@@ -29,7 +29,7 @@ test("the benchmark shell uses one product hamburger and one all-width context l
     read("../src/components/BenchmarkSecondaryNav.astro")
   ]);
 
-  assert.match(page, /<SiteHeader \/>[\s\S]*<BenchmarkSecondaryNav \/>/);
+  assert.match(page, /<SiteHeader slot="header" \/>[\s\S]*<BenchmarkSecondaryNav slot="context" \/>/);
   assert.match(header, /packages\/hara-ui\/foundation\/astro\/v2\/Header\.astro/);
   assert.match(header, /menuMode="product"/);
   assert.match(header, /menuControls="benchmark-product-menu"/);
